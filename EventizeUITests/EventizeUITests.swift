@@ -1,5 +1,5 @@
 //
-//  Copyright © Uber Technologies, Inc. All rights reserved.
+//  Copyright © JJG Tech, Inc. All rights reserved.
 //
 
 
