@@ -1,9 +1,10 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © Uber Technologies, Inc. All rights reserved.
 //
 
 
 import XCTest
+@testable import Eventize
 
 final class EventizeTests: XCTestCase {
 
@@ -25,7 +26,7 @@ final class EventizeTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        measure {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
