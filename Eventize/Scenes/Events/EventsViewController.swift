@@ -14,28 +14,34 @@ import UIKit
 
 protocol EventsDisplayLogic: AnyObject
 {
-    func displaySomething(viewModel: Events.Something.ViewModel)
-//    func displaySomethingElse(viewModel: Events.SomethingElse.ViewModel)
+    func displayEvents(viewModel: Events.EventList.ViewModel)
 }
 
-class EventsViewController: UIViewController, EventsDisplayLogic {
+class EventsViewController: UITableViewController, EventsDisplayLogic {
+    
+    private enum Segues: String {
+        case detail = "eventDetails"
+    }
+    
+    private static let reuseIdentifier = "EventsTableViewCell"
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
-
+    var viewModel: Events.EventList.ViewModel?
+    
     // MARK: Object lifecycle
-
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-
-    // MARK: - Setup Clean Code Design Pattern 
-
+    
+    // MARK: - Setup Clean Code Design Pattern
+    
     private func setup() {
         let viewController = self
         let interactor = EventsInteractor()
@@ -48,9 +54,9 @@ class EventsViewController: UIViewController, EventsDisplayLogic {
         router.viewController = viewController
         router.dataStore = interactor
     }
-
+    
     // MARK: - Routing
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
             let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
@@ -59,46 +65,55 @@ class EventsViewController: UIViewController, EventsDisplayLogic {
             }
         }
     }
-
+    
     // MARK: - View lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
-//        doSomethingElse()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        requestEvents()
     }
-    
-    //MARK: - receive events from UI
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-//
-//    @IBAction func someButtonTapped(_ sender: Any) {
-//
-//    }
-//
-//    @IBAction func otherButtonTapped(_ sender: Any) {
-//
-//    }
     
     // MARK: - request data from EventsInteractor
-
-    func doSomething() {
-        let request = Events.Something.Request()
-        interactor?.doSomething(request: request)
+    
+    func requestEvents() {
+        let request = Events.EventList.Request()
+        interactor?.fetchEvents(request: request)
     }
-//
-//    func doSomethingElse() {
-//        let request = Events.SomethingElse.Request()
-//        interactor?.doSomethingElse(request: request)
-//    }
-
+    
     // MARK: - display view model from EventsPresenter
-
-    func displaySomething(viewModel: Events.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    
+    func displayEvents(viewModel: Events.EventList.ViewModel) {
+        self.viewModel = viewModel
+        
+        tableView.reloadData()
     }
-//
-//    func displaySomethingElse(viewModel: Events.SomethingElse.ViewModel) {
-//        // do sometingElse with viewModel
-//    }
+}
+
+extension EventsViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.events.count ?? .zero
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
+        
+        if let eventsCell = cell as? EventsCellDisplayLogic,
+            let event = viewModel?.events[safe: indexPath.row] {
+            
+            eventsCell.display(viewModel: event.content)
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor?.selectEvent(at: indexPath.row)
+        router?.routeToEvent()
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

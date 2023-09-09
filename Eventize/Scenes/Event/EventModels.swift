@@ -14,23 +14,36 @@ import UIKit
 
 enum Event
 {
+    typealias EventObject = Events.EventObject
+    typealias CellViewModel = Events.EventList.CellViewModel
+    
     // MARK: Use cases
 
-    enum Something
-    {
-        struct Request
-        {
+    enum EventDetails {
+        struct Request {
 
         }
 
-        struct Response
-        {
-
+        struct Response {
+            let event: EventObject?
         }
-
-        struct ViewModel
-        {
-
+        
+        struct ViewModel {
+            let event: EventObject
+        }
+        
+        struct CellViewModel {
+            struct Label {
+                let image: UIImage?
+                let text: String
+            }
+            
+            let image: UIImage?
+            let title: String
+            let address: String
+            let price: Double
+            let extraInfo: String?
+            let labels: [Label]?
         }
     }
     

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EventsPresentationLogic {
-    func presentSomething(response: Events.Something.Response)
+    func presentEvents(response: Events.EventList.Response)
 }
 
 class EventsPresenter: EventsPresentationLogic {
@@ -21,13 +21,8 @@ class EventsPresenter: EventsPresentationLogic {
 
     // MARK: Parse and calc respnse from EventsInteractor and send simple view model to EventsViewController to be displayed
 
-    func presentSomething(response: Events.Something.Response) {
-        let viewModel = Events.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentEvents(response: Events.EventList.Response) {
+        let viewModel = Events.EventList.ViewModel(events: response.events)
+        viewController?.displayEvents(viewModel: viewModel)
     }
-//
-//    func presentSomethingElse(response: Events.SomethingElse.Response) {
-//        let viewModel = Events.SomethingElse.ViewModel()
-//        viewController?.displaySomethingElse(viewModel: viewModel)
-//    }
 }

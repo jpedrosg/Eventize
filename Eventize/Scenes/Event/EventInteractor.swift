@@ -13,27 +13,27 @@
 import UIKit
 
 protocol EventBusinessLogic {
-    func doSomething(request: Event.Something.Request)
+    func doSomething(request: Event.EventDetails.Request)
 //    func doSomethingElse(request: Event.SomethingElse.Request)
 }
 
 protocol EventDataStore {
-    //var name: String { get set }
+    var event: Event.EventObject? { get set }
 }
 
 class EventInteractor: EventBusinessLogic, EventDataStore {
     var presenter: EventPresentationLogic?
     var worker: EventWorker?
-    //var name: String = ""
+    var event: Event.EventObject?
 
     // MARK: Do something (and send response to EventPresenter)
 
-    func doSomething(request: Event.Something.Request) {
+    func doSomething(request: Event.EventDetails.Request) {
         worker = EventWorker()
         worker?.doSomeWork()
 
-        let response = Event.Something.Response()
-        presenter?.presentSomething(response: response)
+        let response = Event.EventDetails.Response(event: event!)
+        presenter?.presentEvent(response: response)
     }
 //
 //    func doSomethingElse(request: Event.SomethingElse.Request) {

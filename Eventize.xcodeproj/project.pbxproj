@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */; };
+		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
+		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
+		BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC72AAD064500634334 /* Collection+safe.swift */; };
 		BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */; };
 		BCC91E912AACD77B00DED263 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E902AACD77B00DED263 /* SceneDelegate.swift */; };
 		BCC91E962AACD77B00DED263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E942AACD77B00DED263 /* Main.storyboard */; };
@@ -75,6 +79,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
+		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
+		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
+		BC545EC72AAD064500634334 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		BCC91E8B2AACD77B00DED263 /* Eventize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCC91E902AACD77B00DED263 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +162,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BC545EC12AACF65300634334 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BC545EC22AACF67300634334 /* Double+asCurrency.swift */,
+				BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */,
+				BC545EC72AAD064500634334 /* Collection+safe.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BCC91E822AACD77B00DED263 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +195,7 @@
 		BCC91E8D2AACD77B00DED263 /* Eventize */ = {
 			isa = PBXGroup;
 			children = (
+				BC545EC12AACF65300634334 /* Extensions */,
 				BCC91EC12AACD80B00DED263 /* Application */,
 				BCC91EC02AACD7D000DED263 /* Resources */,
 				BCC91EC22AACD82700DED263 /* Scenes */,
@@ -244,6 +263,7 @@
 				BCC91F092AACD8AB00DED263 /* EventsRouter.swift */,
 				BCC91F062AACD8AB00DED263 /* EventsViewController.swift */,
 				BCC91F082AACD8AB00DED263 /* EventsWorker.swift */,
+				BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -468,6 +488,7 @@
 				BCC91F3F2AACD8D400DED263 /* RegisterWorker.swift in Sources */,
 				BCC91F0C2AACD8AB00DED263 /* EventsViewController.swift in Sources */,
 				BCC91F2E2AACD8D000DED263 /* ProfileInteractor.swift in Sources */,
+				BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */,
 				BCC91F3D2AACD8D400DED263 /* RegisterRouter.swift in Sources */,
 				BCC91F0D2AACD8AB00DED263 /* EventsPresenter.swift in Sources */,
 				BCC91F322AACD8D000DED263 /* ProfileRouter.swift in Sources */,
@@ -477,12 +498,15 @@
 				BCC91F232AACD8C300DED263 /* LoginPresenter.swift in Sources */,
 				BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */,
 				BCC91F192AACD8BD00DED263 /* HomeInteractor.swift in Sources */,
+				BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */,
 				BCC91F0B2AACD8AB00DED263 /* EventsInteractor.swift in Sources */,
 				BCC91F162AACD8BD00DED263 /* HomeWorker.swift in Sources */,
 				BCC91F532AACDD5200DED263 /* EventModels.swift in Sources */,
 				BCC91E912AACD77B00DED263 /* SceneDelegate.swift in Sources */,
+				BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */,
 				BCC91F542AACDD5200DED263 /* EventViewController.swift in Sources */,
 				BCC91F3A2AACD8D400DED263 /* RegisterPresenter.swift in Sources */,
+				BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */,
 				BCC91F172AACD8BD00DED263 /* HomePresenter.swift in Sources */,
 				BCC91F522AACDD5200DED263 /* EventRouter.swift in Sources */,
 				BCC91F312AACD8D000DED263 /* ProfileViewController.swift in Sources */,

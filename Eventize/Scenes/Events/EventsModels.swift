@@ -16,39 +16,35 @@ enum Events
 {
     // MARK: Use cases
 
-    enum Something
-    {
-        struct Request
-        {
+    enum EventList {
+        struct Request {
 
         }
 
-        struct Response
-        {
-
+        struct Response {
+            let events: [EventObject]
         }
-
-        struct ViewModel
-        {
-
+        
+        struct ViewModel {
+            let events: [EventObject]
+        }
+        
+        struct CellViewModel {
+            struct Label {
+                let image: UIImage?
+                let text: String
+            }
+            
+            let image: UIImage?
+            let title: String
+            let address: String
+            let price: Double
+            let extraInfo: String?
+            let labels: [Label]?
         }
     }
     
-//    enum SomethingElse
-//    {
-//        struct Request
-//        {
-//
-//        }
-//
-//        struct Response
-//        {
-//
-//        }
-//
-//        struct ViewModel
-//        {
-//
-//        }
-//    }
+    struct EventObject {
+        let content: EventList.CellViewModel
+    }
 }

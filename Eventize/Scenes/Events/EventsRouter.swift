@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol EventsRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToEvent()
 }
 
 protocol EventsDataPassing {
@@ -26,29 +26,23 @@ class EventsRouter: NSObject, EventsRoutingLogic, EventsDataPassing {
 
 // MARK: Routing (navigating to other screens)
 
-//func routeToSomewhere(segue: UIStoryboardSegue?) {
-//    if let segue = segue {
-//        let destinationVC = segue.destination as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//    } else {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        navigateToSomewhere(source: viewController!, destination: destinationVC)
-//    }
-//}
+func routeToEvent() {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let destinationVC = storyboard.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
+    var destinationDS = destinationVC.router!.dataStore!
+    passDataToEvent(source: dataStore!, destination: &destinationDS)
+    navigateToEvent(source: viewController!, destination: destinationVC)
+}
 
 // MARK: Navigation to other screen
 
-//func navigateToSomewhere(source: EventsViewController, destination: SomewhereViewController) {
-//    source.show(destination, sender: nil)
-//}
+func navigateToEvent(source: EventsViewController, destination: EventViewController) {
+    source.show(destination, sender: nil)
+}
 
 // MARK: Passing data to other screen
 
-//    func passDataToSomewhere(source: EventsDataStore, destination: inout SomewhereDataStore) {
-//        destination.name = source.name
-//    }
+    func passDataToEvent(source: EventsDataStore, destination: inout EventDataStore) {
+        destination.event = source.selectedEvent
+    }
 }

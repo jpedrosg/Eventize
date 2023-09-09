@@ -14,7 +14,7 @@ import UIKit
 
 protocol EventDisplayLogic: AnyObject
 {
-    func displaySomething(viewModel: Event.Something.ViewModel)
+    func displayEvent(viewModel: Event.EventDetails.ViewModel)
 //    func displaySomethingElse(viewModel: Event.SomethingElse.ViewModel)
 }
 
@@ -28,7 +28,8 @@ class EventViewController: UIViewController, EventDisplayLogic {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
-
+    @IBOutlet weak var test: UILabel!
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -83,7 +84,7 @@ class EventViewController: UIViewController, EventDisplayLogic {
     // MARK: - request data from EventInteractor
 
     func doSomething() {
-        let request = Event.Something.Request()
+        let request = Event.EventDetails.Request()
         interactor?.doSomething(request: request)
     }
 //
@@ -94,8 +95,8 @@ class EventViewController: UIViewController, EventDisplayLogic {
 
     // MARK: - display view model from EventPresenter
 
-    func displaySomething(viewModel: Event.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displayEvent(viewModel: Event.EventDetails.ViewModel) {
+        test.text = viewModel.event.content.title
     }
 //
 //    func displaySomethingElse(viewModel: Event.SomethingElse.ViewModel) {
