@@ -50,6 +50,9 @@
 		BCB2D4662AACD34C0023C28B /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2D4602AACD34C0023C28B /* LoginInteractor.swift */; };
 		BCB2D46A2AACD3AA0023C28B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2D4692AACD3AA0023C28B /* AppDelegate.swift */; };
 		BCC91E3F2AACD45200DED263 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E3E2AACD45200DED263 /* Preview Assets.xcassets */; };
+		BCC91E412AACD5D100DED263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E402AACD5D100DED263 /* Main.storyboard */; };
+		BCC91E432AACD5DF00DED263 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E422AACD5DF00DED263 /* LaunchScreen.storyboard */; };
+		BCC91E452AACD64400DED263 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E442AACD64400DED263 /* info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +116,9 @@
 		BCB2D4602AACD34C0023C28B /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		BCB2D4692AACD3AA0023C28B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCC91E3E2AACD45200DED263 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BCC91E402AACD5D100DED263 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BCC91E422AACD5DF00DED263 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BCC91E442AACD64400DED263 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +181,9 @@
 				BCB2D3F12AACC6170023C28B /* ContentView.swift */,
 				BCB2D3F52AACC6180023C28B /* Eventize.entitlements */,
 				BCB2D41A2AACCA450023C28B /* GoogleService-Info.plist */,
+				BCC91E402AACD5D100DED263 /* Main.storyboard */,
+				BCC91E422AACD5DF00DED263 /* LaunchScreen.storyboard */,
+				BCC91E442AACD64400DED263 /* info.plist */,
 			);
 			path = Eventize;
 			sourceTree = "<group>";
@@ -412,7 +421,10 @@
 			files = (
 				BCC91E3F2AACD45200DED263 /* Preview Assets.xcassets in Resources */,
 				BCB2D3F42AACC6180023C28B /* Assets.xcassets in Resources */,
+				BCC91E452AACD64400DED263 /* info.plist in Resources */,
 				BCB2D41B2AACCA450023C28B /* GoogleService-Info.plist in Resources */,
+				BCC91E432AACD5DF00DED263 /* LaunchScreen.storyboard in Resources */,
+				BCC91E412AACD5D100DED263 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
