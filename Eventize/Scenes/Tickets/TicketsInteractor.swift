@@ -21,7 +21,7 @@ protocol TicketsDataStore {
     //var name: String { get set }
 }
 
-class TicketsInteractor: TicketsBusinessLogic, TicketsDataStore {
+final class TicketsInteractor: TicketsBusinessLogic, TicketsDataStore {
     var presenter: TicketsPresentationLogic?
     var worker: TicketsWorker?
     //var name: String = ""

@@ -12,7 +12,7 @@
 
 import UIKit
 
-class EventWorker {
+final class EventWorker {
     func doSomeWork() {
         
     }

@@ -21,7 +21,7 @@ protocol ProfileDataStore {
     //var name: String { get set }
 }
 
-class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
+final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
     var presenter: ProfilePresentationLogic?
     var worker: ProfileWorker?
     //var name: String = ""

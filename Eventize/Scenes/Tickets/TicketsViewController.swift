@@ -18,7 +18,7 @@ protocol TicketsDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Tickets.SomethingElse.ViewModel)
 }
 
-class TicketsViewController: UITableViewController, TicketsDisplayLogic {
+final class TicketsViewController: UITableViewController, TicketsDisplayLogic {
     var interactor: TicketsBusinessLogic?
     var router: (NSObjectProtocol & TicketsRoutingLogic & TicketsDataPassing)?
 

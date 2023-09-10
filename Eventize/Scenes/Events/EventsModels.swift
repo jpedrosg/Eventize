@@ -12,13 +12,16 @@
 
 import UIKit
 
-enum Events
-{
-    // MARK: Use cases
-
+enum Events {
     enum EventList {
         struct Request {
-
+            let address: String?
+            let term: String?
+            
+            init(address: String? = nil, term: String? = nil) {
+                self.address = address
+                self.term = term
+            }
         }
 
         struct Response {
@@ -30,21 +33,45 @@ enum Events
         }
         
         struct CellViewModel {
-            struct Label {
-                let image: UIImage?
-                let text: String
-            }
-            
-            let image: UIImage?
-            let title: String
-            let address: String
-            let price: Double
-            let extraInfo: String?
-            let labels: [Label]?
+            let event: EventObject
         }
     }
     
-    struct EventObject {
-        let content: EventList.CellViewModel
+    struct EventObject: Codable {
+        struct EventContent: Codable {
+            struct BottomInfo: Codable {
+                let imageUrl: String?
+                let text: String
+            }
+            
+            let imageUrl: String?
+            let title: String
+            let subtitle: String?
+            let price: Double?
+            let info: String?
+            let extraBottomInfo: [BottomInfo]?
+            
+            private enum CodingKeys: String, CodingKey {
+                case imageUrl = "image_url"
+                case title
+                case subtitle
+                case price
+                case info
+                case extraBottomInfo = "extra_bottom_info"
+            }
+        }
+        
+        let eventUuid: String
+        let content: EventContent
+        
+        private enum CodingKeys: String, CodingKey {
+            case eventUuid = "event_uuid"
+            case content
+        }
+    }
+    
+    enum EventFetchError: Error {
+        case networkError
+        case dataParsingError
     }
 }

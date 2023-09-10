@@ -12,7 +12,7 @@
 
 import UIKit
 
-class RegisterWorker {
+final class RegisterWorker {
     func doSomeWork() {
         
     }

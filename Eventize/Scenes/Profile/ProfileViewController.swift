@@ -18,7 +18,7 @@ protocol ProfileDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Profile.SomethingElse.ViewModel)
 }
 
-class ProfileViewController: UIViewController, ProfileDisplayLogic {
+final class ProfileViewController: UIViewController, ProfileDisplayLogic {
     var interactor: ProfileBusinessLogic?
     var router: (NSObjectProtocol & ProfileRoutingLogic & ProfileDataPassing)?
 

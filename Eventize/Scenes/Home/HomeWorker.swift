@@ -12,7 +12,7 @@
 
 import UIKit
 
-class HomeWorker {
+final class HomeWorker {
     func doSomeWork() {
         
     }

@@ -16,7 +16,7 @@ protocol LoginPresentationLogic {
     func presentSomething(response: Login.Something.Response)
 }
 
-class LoginPresenter: LoginPresentationLogic {
+final class LoginPresenter: LoginPresentationLogic {
     weak var viewController: LoginDisplayLogic?
 
     // MARK: Parse and calc respnse from LoginInteractor and send simple view model to LoginViewController to be displayed

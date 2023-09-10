@@ -18,7 +18,7 @@ protocol RegisterDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Register.SomethingElse.ViewModel)
 }
 
-class RegisterViewController: UIViewController, RegisterDisplayLogic {
+final class RegisterViewController: UIViewController, RegisterDisplayLogic {
     var interactor: RegisterBusinessLogic?
     var router: (NSObjectProtocol & RegisterRoutingLogic & RegisterDataPassing)?
 

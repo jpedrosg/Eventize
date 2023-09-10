@@ -21,7 +21,7 @@ protocol HomeDataStore {
     //var name: String { get set }
 }
 
-class HomeInteractor: HomeBusinessLogic, HomeDataStore {
+final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var presenter: HomePresentationLogic?
     var worker: HomeWorker?
     //var name: String = ""

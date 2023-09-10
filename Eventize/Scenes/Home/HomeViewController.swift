@@ -18,7 +18,7 @@ protocol HomeDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Home.SomethingElse.ViewModel)
 }
 
-class HomeViewController: UIViewController, HomeDisplayLogic {
+final class HomeViewController: UIViewController, HomeDisplayLogic {
     var interactor: HomeBusinessLogic?
     var router: (NSObjectProtocol & HomeRoutingLogic & HomeDataPassing)?
 

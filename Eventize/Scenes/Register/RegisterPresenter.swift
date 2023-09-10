@@ -16,7 +16,7 @@ protocol RegisterPresentationLogic {
     func presentSomething(response: Register.Something.Response)
 }
 
-class RegisterPresenter: RegisterPresentationLogic {
+final class RegisterPresenter: RegisterPresentationLogic {
     weak var viewController: RegisterDisplayLogic?
 
     // MARK: Parse and calc respnse from RegisterInteractor and send simple view model to RegisterViewController to be displayed

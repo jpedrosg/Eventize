@@ -18,7 +18,7 @@ protocol LoginDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Login.SomethingElse.ViewModel)
 }
 
-class LoginViewController: UIViewController, LoginDisplayLogic {
+final class LoginViewController: UIViewController, LoginDisplayLogic {
     var interactor: LoginBusinessLogic?
     var router: (NSObjectProtocol & LoginRoutingLogic & LoginDataPassing)?
 

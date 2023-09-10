@@ -5,7 +5,10 @@
 
 import UIKit
 
+/// An extension to provide common styling to UIView elements such as adding rounded corners and shadows.
 extension UIView {
+    
+    /// Adds rounded corners and a shadow to the view.
     func addRoundedCornersAndShadow() {
         let cornerRadius: CGFloat = 10
         let shadowColor: UIColor = UIColor.black
@@ -21,6 +24,9 @@ extension UIView {
         layer.shadowRadius = shadowRadius
     }
     
+    /// Adds rounded corners to specified corners of the view.
+    ///
+    /// - Parameter corners: The corners to which rounded corners should be applied.
     func addRoundedCorners(for corners: CACornerMask) {
         clipsToBounds = true
         layer.cornerRadius = 10

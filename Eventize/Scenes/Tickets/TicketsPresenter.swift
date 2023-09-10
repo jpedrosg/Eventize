@@ -16,7 +16,7 @@ protocol TicketsPresentationLogic {
     func presentSomething(response: Tickets.Something.Response)
 }
 
-class TicketsPresenter: TicketsPresentationLogic {
+final class TicketsPresenter: TicketsPresentationLogic {
     weak var viewController: TicketsDisplayLogic?
 
     // MARK: Parse and calc respnse from TicketsInteractor and send simple view model to TicketsViewController to be displayed

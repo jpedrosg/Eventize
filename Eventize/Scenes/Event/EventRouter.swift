@@ -20,7 +20,7 @@ protocol EventDataPassing {
     var dataStore: EventDataStore? { get }
 }
 
-class EventRouter: NSObject, EventRoutingLogic, EventDataPassing {
+final class EventRouter: NSObject, EventRoutingLogic, EventDataPassing {
     weak var viewController: EventViewController?
     var dataStore: EventDataStore?
 

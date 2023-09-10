@@ -9,12 +9,12 @@ protocol EventsCellDisplayLogic: AnyObject {
     func display(viewModel: Events.EventList.CellViewModel)
 }
 
-class EventsTableViewCell: UITableViewCell {
+final class EventsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var customBackgroundView: UIView!
     
     // Top
-    @IBOutlet weak var bannerImageStackView: UIImageView!
+    @IBOutlet weak var bannerImageStackView: NetworkImageView!
     
     // Leading
     @IBOutlet weak var leadingInfoStackView: UIStackView!
@@ -46,35 +46,36 @@ class EventsTableViewCell: UITableViewCell {
 
 extension EventsTableViewCell: EventsCellDisplayLogic {
     func display(viewModel: Events.EventList.CellViewModel) {
+        
         // Top
-        bannerImageStackView.image = viewModel.image
+        bannerImageStackView.setImage(fromUrl: viewModel.event.content.imageUrl, backingImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)"))
         bannerImageStackView.highlightedImage = bannerImageStackView.image?.convertToBlackAndWhite()
         
         // Leading
-        titleLabel.text = viewModel.title
-        locationLabel.text = viewModel.address
+        titleLabel.text = viewModel.event.content.title
+        locationLabel.text = viewModel.event.content.subtitle
         
         // Trailing
-        priceLabel.text = viewModel.price.asCurrency
-        extraLabel.text = viewModel.extraInfo
+        priceLabel.text = viewModel.event.content.price?.asCurrency
+        extraLabel.text = viewModel.event.content.info
         
         // Bottom
         bottomInfoStackView.arrangedSubviews.forEach { subview in
             subview.removeFromSuperview()
         }
         
-        if let labels = viewModel.labels, !labels.isEmpty {
+        if let bottomInfos = viewModel.event.content.extraBottomInfo, !bottomInfos.isEmpty {
             bottomInfoStackView.isHidden = false
             
             let spacerView = UILabel()
-            for (index, label) in labels.enumerated() {
+            for (index, bottomInfo) in bottomInfos.enumerated() {
                 guard index <= 2 else {
                     spacerView.text = "..."
                     break
                 }
                 
-                let labelsStackView = labelsStackView(with: label)
-                bottomInfoStackView.addArrangedSubview(labelsStackView)
+                let bottomInfoStackView = extraBottomInfoStackView(with: bottomInfo)
+                bottomInfoStackView.addArrangedSubview(bottomInfoStackView)
             }
             bottomInfoStackView.addArrangedSubview(spacerView)
         } else {
@@ -89,25 +90,25 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
 // MARK: - Private API
 
 private extension EventsTableViewCell {
-    func labelsStackView(with label: Events.EventList.CellViewModel.Label) -> UIStackView {
-        let labelsStackView = UIStackView(frame: .zero)
-        labelsStackView.alignment = .fill
-        labelsStackView.distribution = .fillProportionally
+    func extraBottomInfoStackView(with bottomInfo: Events.EventObject.EventContent.BottomInfo) -> UIStackView {
+        let bottomInfoStackView = UIStackView(frame: .zero)
+        bottomInfoStackView.alignment = .fill
+        bottomInfoStackView.distribution = .fillProportionally
         
-        let stackViewImageView = UIImageView(frame: .zero)
-        stackViewImageView.image = label.image ?? UIImage(systemName: "checkmark.circle.fill")
+        let stackViewImageView = NetworkImageView(frame: .zero)
+        stackViewImageView.setImage(fromUrl: bottomInfo.imageUrl, backingImage: .init(systemName: "checkmark.circle.fill")!)
         stackViewImageView.highlightedImage = stackViewImageView.image?.convertToBlackAndWhite()
         stackViewImageView.contentMode = .scaleAspectFit
         stackViewImageView.translatesAutoresizingMaskIntoConstraints = false
         stackViewImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         stackViewImageView.widthAnchor.constraint(equalToConstant: 22).isActive = true
-        labelsStackView.addArrangedSubview(stackViewImageView)
+        bottomInfoStackView.addArrangedSubview(stackViewImageView)
         
         let stackViewLabel = UILabel(frame: .zero)
-        stackViewLabel.text = label.text
-        labelsStackView.addArrangedSubview(stackViewLabel)
+        stackViewLabel.text = bottomInfo.text
+        bottomInfoStackView.addArrangedSubview(stackViewLabel)
         
-        return labelsStackView
+        return bottomInfoStackView
     }
     
     func setupViews() {

@@ -18,7 +18,7 @@ protocol EventDisplayLogic: AnyObject
 //    func displaySomethingElse(viewModel: Event.SomethingElse.ViewModel)
 }
 
-class EventViewController: UIViewController, EventDisplayLogic {
+final class EventViewController: UIViewController, EventDisplayLogic {
     var interactor: EventBusinessLogic?
     var router: (NSObjectProtocol & EventRoutingLogic & EventDataPassing)?
 

@@ -17,7 +17,9 @@ protocol EventsDisplayLogic: AnyObject
     func displayEvents(viewModel: Events.EventList.ViewModel)
 }
 
-class EventsViewController: UITableViewController, EventsDisplayLogic {
+final class EventsViewController: UITableViewController, EventsDisplayLogic {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private enum Segues: String {
         case detail = "eventDetails"
@@ -27,16 +29,36 @@ class EventsViewController: UITableViewController, EventsDisplayLogic {
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
     var viewModel: Events.EventList.ViewModel?
+    var searchBarFrame: CGRect?
+    
+    private var isSearchBarHidden: Bool = false {
+        didSet {
+            if !isSearchBarHidden, let frame = searchBarFrame, frame.height > .zero {
+                searchBar.frame = searchBarFrame ?? .zero
+                searchBar.becomeFirstResponder()
+                searchBar.isHidden = false
+            } else {
+                searchBarFrame = searchBar.frame
+                searchBar.frame = .zero
+                searchBar.resignFirstResponder()
+                searchBar.isHidden = true
+            }
+            setupNavigationItem()
+            interactor?.filterEvents(request: .init())
+        }
+    }
     
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         setup()
     }
     
@@ -75,15 +97,18 @@ class EventsViewController: UITableViewController, EventsDisplayLogic {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
         
+        setupSearchBar()
         setupNavigationItem()
+        setupRefreshControl()
         requestEvents()
     }
     
     // MARK: - request data from EventsInteractor
     
     func requestEvents() {
-        let request = Events.EventList.Request()
-        interactor?.fetchEvents(request: request)
+        // TODO: Add Address Filter!
+        searchBar.text = nil
+        interactor?.fetchEvents(request: .init())
     }
     
     // MARK: - display view model from EventsPresenter
@@ -108,7 +133,7 @@ extension EventsViewController {
         if let eventsCell = cell as? EventsCellDisplayLogic,
             let event = viewModel?.events[safe: indexPath.row] {
             
-            eventsCell.display(viewModel: event.content)
+            eventsCell.display(viewModel: .init(event: event))
         }
         
         return cell
@@ -122,18 +147,48 @@ extension EventsViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
+
+extension EventsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let term = searchBar.text, !term.isEmpty else {
+            isSearchBarHidden.toggle()
+            return
+        }
+        
+        interactor?.filterEvents(request: .init(term: searchBar.text))
+    }
+}
+
 // MARK: - Private API
 
 private extension EventsViewController {
     func setupNavigationItem() {
         self.navigationItem.title = "Eventos"
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
         let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket"))
         ticketsButton.target = self
         ticketsButton.action = #selector(didTapTickets)
         
-        let searchButton = UIBarButtonItem(systemItem: .search)
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: isSearchBarHidden ? "magnifyingglass.circle" : "magnifyingglass.circle.fill"))
+        searchButton.target = self
+        searchButton.action = #selector(didTapSearch)
         self.navigationItem.setRightBarButtonItems([ticketsButton, searchButton], animated: true)
+    }
+    
+    func setupRefreshControl() {
+        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+    
+    func setupSearchBar() {
+        searchBar.barTintColor = .systemBackground
+        searchBar.delegate = self
+        isSearchBarHidden = true
+    }
+    
+    @objc func refresh(sender: AnyObject) {
+        requestEvents()
     }
     
     @objc func didTapTickets(sender: UIButton) {
@@ -141,6 +196,6 @@ private extension EventsViewController {
     }
     
     @objc func didTapSearch(sender: UIButton) {
-        // router?.routeToSearch()
+        isSearchBarHidden.toggle()
     }
 }

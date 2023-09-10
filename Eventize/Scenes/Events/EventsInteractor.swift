@@ -14,6 +14,7 @@ import UIKit
 
 protocol EventsBusinessLogic {
     func fetchEvents(request: Events.EventList.Request)
+    func filterEvents(request: Events.EventList.Request)
     func selectEvent(at index: Int)
 }
 
@@ -22,38 +23,43 @@ protocol EventsDataStore {
     var selectedEvent: Events.EventObject? { get set }
 }
 
-class EventsInteractor: EventsBusinessLogic, EventsDataStore {
+final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
     var presenter: EventsPresentationLogic?
-    var worker: EventsWorker?
+    var worker: EventsWorker
     
     var selectedEvent: Events.EventObject?
-    var events: [Events.EventObject] = []
+    var events: [Events.EventObject]
+    
+    init(presenter: EventsPresentationLogic? = nil,
+         worker: EventsWorker = EventsWorker(),
+         selectedEvent: Events.EventObject? = nil,
+         events: [Events.EventObject] = []) {
+        self.presenter = presenter
+        self.worker = worker
+        self.selectedEvent = selectedEvent
+        self.events = events
+    }
 
     // MARK: Do something (and send response to EventsPresenter)
 
     func fetchEvents(request: Events.EventList.Request) {
-        worker = EventsWorker()
-        worker?.doSomeWork()
-
-        var events = [Events.EventObject]()
-        for index in 0...20 {
-            events.append(.init(content: .init(image: UIImage(named: "events_banner_\(index)"),
-                                               title: "Evento da FIAP",
-                                               address: "Rua Maria Eunice de Souza Filha, 49 - Bloco B",
-                                               price: 19.90,
-                                               extraInfo: "Lote 1",
-                                               labels: [.init(image: nil,
-                                                              text: "Ivete Sem Galo"),
-                                                        .init(image: nil,
-                                                                       text: "Luiza Sonsa"),
-                                                        .init(image: nil,
-                                                                       text: "+18"),
-                                                        .init(image: nil,
-                                                                       text: "+18")])))
-        }
-        self.events = events
-        let response = Events.EventList.Response(events: events)
-        presenter?.presentEvents(response: response)
+        worker.fetchEvents(completion: { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let events):
+                self.events = events
+                presenter?.presentEvents(response: .init(events: events))
+            case .failure(_):
+                // TODO: Error Handling!
+                break
+            }
+        })
+    }
+    
+    func filterEvents(request: Events.EventList.Request) {
+        let filteredEvents = worker.filterEvents(events: events, searchTerm: request.term)
+        presenter?.presentEvents(response: .init(events: filteredEvents))
     }
     
     func selectEvent(at index: Int) {

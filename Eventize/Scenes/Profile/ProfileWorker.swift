@@ -12,7 +12,7 @@
 
 import UIKit
 
-class ProfileWorker {
+final class ProfileWorker {
     func doSomeWork() {
         
     }

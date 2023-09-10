@@ -16,7 +16,7 @@ protocol EventPresentationLogic {
     func presentEvent(response: Event.EventDetails.Response)
 }
 
-class EventPresenter: EventPresentationLogic {
+final class EventPresenter: EventPresentationLogic {
     weak var viewController: EventDisplayLogic?
 
     // MARK: Parse and calc respnse from EventInteractor and send simple view model to EventViewController to be displayed

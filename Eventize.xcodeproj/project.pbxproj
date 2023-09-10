@@ -14,6 +14,10 @@
 		BC3BE07D2AAD1F5E00BA0006 /* TicketsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0772AAD1F5E00BA0006 /* TicketsModels.swift */; };
 		BC3BE07E2AAD1F5E00BA0006 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0782AAD1F5E00BA0006 /* TicketsViewController.swift */; };
 		BC3BE07F2AAD1F5E00BA0006 /* TicketsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0792AAD1F5E00BA0006 /* TicketsInteractor.swift */; };
+		BC3BE0812AAE67DD00BA0006 /* JsonMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0802AAE67DD00BA0006 /* JsonMocks.swift */; };
+		BC3BE0842AAE6A6100BA0006 /* LogError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0832AAE6A6100BA0006 /* LogError.swift */; };
+		BC3BE0872AAE6A9B00BA0006 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */; };
+		BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0892AAE729300BA0006 /* NetworkImageView.swift */; };
 		BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */; };
 		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
 		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
@@ -93,6 +97,10 @@
 		BC3BE0772AAD1F5E00BA0006 /* TicketsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsModels.swift; sourceTree = "<group>"; };
 		BC3BE0782AAD1F5E00BA0006 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
 		BC3BE0792AAD1F5E00BA0006 /* TicketsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsInteractor.swift; sourceTree = "<group>"; };
+		BC3BE0802AAE67DD00BA0006 /* JsonMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonMocks.swift; sourceTree = "<group>"; };
+		BC3BE0832AAE6A6100BA0006 /* LogError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogError.swift; sourceTree = "<group>"; };
+		BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		BC3BE0892AAE729300BA0006 /* NetworkImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageView.swift; sourceTree = "<group>"; };
 		BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
 		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
@@ -189,6 +197,24 @@
 			path = Tickets;
 			sourceTree = "<group>";
 		};
+		BC3BE0822AAE6A5600BA0006 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				BC3BE0802AAE67DD00BA0006 /* JsonMocks.swift */,
+				BC3BE0832AAE6A6100BA0006 /* LogError.swift */,
+				BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		BC3BE0882AAE728500BA0006 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BC3BE0892AAE729300BA0006 /* NetworkImageView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		BC545EC12AACF65300634334 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +249,8 @@
 		BCC91E8D2AACD77B00DED263 /* Eventize */ = {
 			isa = PBXGroup;
 			children = (
+				BC3BE0882AAE728500BA0006 /* Components */,
+				BC3BE0822AAE6A5600BA0006 /* Networking */,
 				BC545EC12AACF65300634334 /* Extensions */,
 				BCC91EC12AACD80B00DED263 /* Application */,
 				BCC91EC02AACD7D000DED263 /* Resources */,
@@ -508,6 +536,7 @@
 				BCC91F262AACD8C300DED263 /* LoginModels.swift in Sources */,
 				BCC91F0A2AACD8AB00DED263 /* EventsModels.swift in Sources */,
 				BCC91F502AACDD5200DED263 /* EventPresenter.swift in Sources */,
+				BC3BE0842AAE6A6100BA0006 /* LogError.swift in Sources */,
 				BCC91F3C2AACD8D400DED263 /* RegisterModels.swift in Sources */,
 				BCC91F0E2AACD8AB00DED263 /* EventsWorker.swift in Sources */,
 				BC3BE07A2AAD1F5E00BA0006 /* TicketsPresenter.swift in Sources */,
@@ -517,6 +546,7 @@
 				BC3BE07C2AAD1F5E00BA0006 /* TicketsRouter.swift in Sources */,
 				BCC91F1B2AACD8BD00DED263 /* HomeRouter.swift in Sources */,
 				BCC91F3F2AACD8D400DED263 /* RegisterWorker.swift in Sources */,
+				BC3BE0872AAE6A9B00BA0006 /* NetworkManager.swift in Sources */,
 				BCC91F0C2AACD8AB00DED263 /* EventsViewController.swift in Sources */,
 				BCC91F2E2AACD8D000DED263 /* ProfileInteractor.swift in Sources */,
 				BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */,
@@ -529,6 +559,7 @@
 				BCC91F1A2AACD8BD00DED263 /* HomeModels.swift in Sources */,
 				BCC91F3E2AACD8D400DED263 /* RegisterInteractor.swift in Sources */,
 				BCC91F232AACD8C300DED263 /* LoginPresenter.swift in Sources */,
+				BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */,
 				BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */,
 				BC3BE07E2AAD1F5E00BA0006 /* TicketsViewController.swift in Sources */,
 				BCC91F192AACD8BD00DED263 /* HomeInteractor.swift in Sources */,
@@ -551,6 +582,7 @@
 				BCC91F182AACD8BD00DED263 /* HomeViewController.swift in Sources */,
 				BC3BE07B2AAD1F5E00BA0006 /* TicketsWorker.swift in Sources */,
 				BCC91F3B2AACD8D400DED263 /* RegisterViewController.swift in Sources */,
+				BC3BE0812AAE67DD00BA0006 /* JsonMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

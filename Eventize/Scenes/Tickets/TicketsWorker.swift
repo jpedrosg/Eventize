@@ -12,7 +12,7 @@
 
 import UIKit
 
-class TicketsWorker {
+final class TicketsWorker {
     func doSomeWork() {
         
     }

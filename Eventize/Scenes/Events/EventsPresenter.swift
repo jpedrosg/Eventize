@@ -16,13 +16,12 @@ protocol EventsPresentationLogic {
     func presentEvents(response: Events.EventList.Response)
 }
 
-class EventsPresenter: EventsPresentationLogic {
+final class EventsPresenter: EventsPresentationLogic {
     weak var viewController: EventsDisplayLogic?
 
     // MARK: Parse and calc respnse from EventsInteractor and send simple view model to EventsViewController to be displayed
 
     func presentEvents(response: Events.EventList.Response) {
-        let viewModel = Events.EventList.ViewModel(events: response.events)
-        viewController?.displayEvents(viewModel: viewModel)
+        viewController?.displayEvents(viewModel: .init(events: response.events))
     }
 }

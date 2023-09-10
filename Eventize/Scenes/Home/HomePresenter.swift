@@ -16,7 +16,7 @@ protocol HomePresentationLogic {
     func presentSomething(response: Home.Something.Response)
 }
 
-class HomePresenter: HomePresentationLogic {
+final class HomePresenter: HomePresentationLogic {
     weak var viewController: HomeDisplayLogic?
 
     // MARK: Parse and calc respnse from HomeInteractor and send simple view model to HomeViewController to be displayed

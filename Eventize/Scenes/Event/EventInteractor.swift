@@ -21,7 +21,7 @@ protocol EventDataStore {
     var event: Event.EventObject? { get set }
 }
 
-class EventInteractor: EventBusinessLogic, EventDataStore {
+final class EventInteractor: EventBusinessLogic, EventDataStore {
     var presenter: EventPresentationLogic?
     var worker: EventWorker?
     var event: Event.EventObject?

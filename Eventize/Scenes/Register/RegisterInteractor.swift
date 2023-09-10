@@ -21,7 +21,7 @@ protocol RegisterDataStore {
     //var name: String { get set }
 }
 
-class RegisterInteractor: RegisterBusinessLogic, RegisterDataStore {
+final class RegisterInteractor: RegisterBusinessLogic, RegisterDataStore {
     var presenter: RegisterPresentationLogic?
     var worker: RegisterWorker?
     //var name: String = ""

@@ -21,7 +21,7 @@ protocol TicketsDataPassing {
     var dataStore: TicketsDataStore? { get }
 }
 
-class TicketsRouter: NSObject, TicketsRoutingLogic, TicketsDataPassing {
+final class TicketsRouter: NSObject, TicketsRoutingLogic, TicketsDataPassing {
     weak var viewController: TicketsViewController?
     var dataStore: TicketsDataStore?
 

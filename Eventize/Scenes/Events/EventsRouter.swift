@@ -21,7 +21,7 @@ protocol EventsDataPassing {
     var dataStore: EventsDataStore? { get }
 }
 
-class EventsRouter: NSObject, EventsRoutingLogic, EventsDataPassing {
+final class EventsRouter: NSObject, EventsRoutingLogic, EventsDataPassing {
     weak var viewController: EventsViewController?
     var dataStore: EventsDataStore?
 

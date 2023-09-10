@@ -16,7 +16,7 @@ protocol ProfilePresentationLogic {
     func presentSomething(response: Profile.Something.Response)
 }
 
-class ProfilePresenter: ProfilePresentationLogic {
+final class ProfilePresenter: ProfilePresentationLogic {
     weak var viewController: ProfileDisplayLogic?
 
     // MARK: Parse and calc respnse from ProfileInteractor and send simple view model to ProfileViewController to be displayed
