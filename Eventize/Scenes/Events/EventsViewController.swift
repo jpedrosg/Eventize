@@ -33,18 +33,26 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     
     private var isSearchBarHidden: Bool = false {
         didSet {
+            searchBar.text = nil
+            setupNavigationItem()
+            interactor?.filterEvents(request: .init())
+            
             if !isSearchBarHidden, let frame = searchBarFrame, frame.height > .zero {
                 searchBar.frame = searchBarFrame ?? .zero
-                searchBar.becomeFirstResponder()
                 searchBar.isHidden = false
+                
+                DispatchQueue.main.async {
+                    self.searchBar.becomeFirstResponder()
+                }
             } else {
                 searchBarFrame = searchBar.frame
                 searchBar.frame = .zero
-                searchBar.resignFirstResponder()
                 searchBar.isHidden = true
+                
+                DispatchQueue.main.async {
+                    self.searchBar.resignFirstResponder()
+                }
             }
-            setupNavigationItem()
-            interactor?.filterEvents(request: .init())
         }
     }
     
@@ -151,12 +159,12 @@ extension EventsViewController {
 
 extension EventsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchBar.text, !term.isEmpty else {
-            isSearchBarHidden.toggle()
-            return
-        }
-        
-        interactor?.filterEvents(request: .init(term: searchBar.text))
+        handleSearch()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        handleSearch()
     }
 }
 
@@ -182,9 +190,17 @@ private extension EventsViewController {
     }
     
     func setupSearchBar() {
-        searchBar.barTintColor = .systemBackground
         searchBar.delegate = self
         isSearchBarHidden = true
+    }
+    
+    func handleSearch() {
+        guard let term = searchBar.text, !term.isEmpty else {
+            isSearchBarHidden.toggle()
+            return
+        }
+        
+        interactor?.filterEvents(request: .init(term: searchBar.text))
     }
     
     @objc func refresh(sender: AnyObject) {
