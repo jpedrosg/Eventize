@@ -74,6 +74,8 @@ class EventsViewController: UITableViewController, EventsDisplayLogic {
         tableView.delegate = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
+        
+        setupNavigationItem()
         requestEvents()
     }
     
@@ -92,6 +94,8 @@ class EventsViewController: UITableViewController, EventsDisplayLogic {
         tableView.reloadData()
     }
 }
+
+// MARK: - UITableViewDelegate + UITableViewDataSource
 
 extension EventsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,5 +119,28 @@ extension EventsViewController {
         router?.routeToEvent()
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - Private API
+
+private extension EventsViewController {
+    func setupNavigationItem() {
+        self.navigationItem.title = "Eventos"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket"))
+        ticketsButton.target = self
+        ticketsButton.action = #selector(didTapTickets)
+        
+        let searchButton = UIBarButtonItem(systemItem: .search)
+        self.navigationItem.setRightBarButtonItems([ticketsButton, searchButton], animated: true)
+    }
+    
+    @objc func didTapTickets(sender: UIButton) {
+        router?.routeToTickets()
+    }
+    
+    @objc func didTapSearch(sender: UIButton) {
+        // router?.routeToSearch()
     }
 }

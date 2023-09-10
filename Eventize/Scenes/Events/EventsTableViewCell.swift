@@ -11,6 +11,8 @@ protocol EventsCellDisplayLogic: AnyObject {
 
 class EventsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var customBackgroundView: UIView!
+    
     // Top
     @IBOutlet weak var bannerImageStackView: UIImageView!
     
@@ -35,8 +37,8 @@ class EventsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
+        contentView.backgroundColor = .systemBackground
     }
 }
 
@@ -109,6 +111,10 @@ private extension EventsTableViewCell {
     }
     
     func setupViews() {
+        // Background
+        customBackgroundView.addRoundedCornersAndShadow()
+        bannerImageStackView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+        
         // Top
         bannerImageStackView.contentMode = .scaleAspectFill
     }

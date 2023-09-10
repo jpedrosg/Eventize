@@ -14,6 +14,7 @@ import UIKit
 
 @objc protocol EventsRoutingLogic {
     func routeToEvent()
+    func routeToTickets()
 }
 
 protocol EventsDataPassing {
@@ -24,23 +25,33 @@ class EventsRouter: NSObject, EventsRoutingLogic, EventsDataPassing {
     weak var viewController: EventsViewController?
     var dataStore: EventsDataStore?
 
-// MARK: Routing (navigating to other screens)
+    // MARK: Routing (navigating to other screens)
 
-func routeToEvent() {
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    let destinationVC = storyboard.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
-    var destinationDS = destinationVC.router!.dataStore!
-    passDataToEvent(source: dataStore!, destination: &destinationDS)
-    navigateToEvent(source: viewController!, destination: destinationVC)
-}
+    func routeToEvent() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToEvent(source: dataStore!, destination: &destinationDS)
+        navigateToEvent(source: viewController!, destination: destinationVC)
+    }
+        
+    func routeToTickets() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "TicketsViewController") as! TicketsViewController
+        navigateToTickets(source: viewController!, destination: destinationVC)
+    }
 
-// MARK: Navigation to other screen
+    // MARK: Navigation to other screen
 
-func navigateToEvent(source: EventsViewController, destination: EventViewController) {
-    source.show(destination, sender: nil)
-}
+    func navigateToEvent(source: EventsViewController, destination: EventViewController) {
+        source.show(destination, sender: nil)
+    }
+    
+    func navigateToTickets(source: EventsViewController, destination: TicketsViewController) {
+        source.show(destination, sender: nil)
+    }
 
-// MARK: Passing data to other screen
+    // MARK: Passing data to other screen
 
     func passDataToEvent(source: EventsDataStore, destination: inout EventDataStore) {
         destination.event = source.selectedEvent
