@@ -16,15 +16,15 @@ class NetworkImageView: UIImageView {
     /// Sets the image of the `NetworkImageView` from a given URL.
     ///
     /// - Parameter imageUrl: The URL of the image to be loaded.
-    /// - Parameter backingImage: The UIImage to be set as backing on failure.
-    func setImage(fromUrl imageUrl: String?, backingImage: UIImage? = nil, completion: (() -> Void)? = nil) {
+    /// - Parameter placeholderImage: The UIImage to be set as backing on failure.
+    func setImage(fromUrl imageUrl: String?, placeholderImage: UIImage? = nil, completion: (() -> Void)? = nil) {
         self.imageUrl = imageUrl
         
         // Clear the current image
         image = nil
         
         guard let imageUrl = imageUrl, let url = URL(string: imageUrl) else {
-            self.image = backingImage
+            self.image = placeholderImage
             completion?()
             return
         }
@@ -36,7 +36,7 @@ class NetworkImageView: UIImageView {
                 case .success(let image):
                     self?.image = image
                 case .failure:
-                    self?.image = backingImage
+                    self?.image = placeholderImage
                 }
             }
             

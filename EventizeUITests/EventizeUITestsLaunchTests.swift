@@ -5,7 +5,7 @@
 
 import XCTest
 
-final final class EventizeUITestsLaunchTests: XCTestCase {
+final class EventizeUITestsLaunchTests: XCTestCase {
 
     override final class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
