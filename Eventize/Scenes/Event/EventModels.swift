@@ -12,56 +12,35 @@
 
 import UIKit
 
-enum Event
-{
+enum Event {
     typealias EventObject = Events.EventObject
-    typealias CellViewModel = Events.EventList.CellViewModel
     
-    // MARK: Use cases
-
     enum EventDetails {
         struct Request {
             let eventUuid: Int
         }
 
         struct Response {
-            let event: EventObject?
+            let event: EventObject
+            let eventDetails: DetailsContent?
         }
         
         struct ViewModel {
             let event: EventObject
-        }
-        
-        struct CellViewModel {
-            struct Label {
-                let image: UIImage?
-                let text: String
-            }
-            
-            let image: UIImage?
-            let title: String
-            let address: String
-            let price: Double
-            let extraInfo: String?
-            let labels: [Label]?
+            let eventDetails: DetailsContent?
         }
     }
     
-//    enum SomethingElse
-//    {
-//        struct Request
-//        {
-//
-//        }
-//
-//        struct Response
-//        {
-//
-//        }
-//
-//        struct ViewModel
-//        {
-//
-//        }
-//    }
+    struct DetailsContent: Codable {
+        let description: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case description
+        }
+    }
+    
+    enum EventFetchError: Error {
+        case networkError
+        case dataParsingError
+    }
 }

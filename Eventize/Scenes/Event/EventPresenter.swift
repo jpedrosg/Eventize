@@ -22,12 +22,7 @@ final class EventPresenter: EventPresentationLogic {
     // MARK: Parse and calc respnse from EventInteractor and send simple view model to EventViewController to be displayed
 
     func presentEvent(response: Event.EventDetails.Response) {
-        let viewModel = Event.EventDetails.ViewModel(event: response.event!)
+        let viewModel = Event.EventDetails.ViewModel(event: response.event, eventDetails: response.eventDetails)
         viewController?.displayEvent(viewModel: viewModel)
     }
-//
-//    func presentSomethingElse(response: Event.SomethingElse.Response) {
-//        let viewModel = Event.SomethingElse.ViewModel()
-//        viewController?.displaySomethingElse(viewModel: viewModel)
-//    }
 }

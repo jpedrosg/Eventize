@@ -14,7 +14,7 @@ import UIKit
 
 protocol EventBusinessLogic {
     func fetchEvent()
-//    func doSomethingElse(request: Event.SomethingElse.Request)
+    func fetchDetails()
 }
 
 protocol EventDataStore {
@@ -25,22 +25,41 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
     var presenter: EventPresentationLogic?
     var worker: EventWorker?
     var event: Event.EventObject?
-
-    // MARK: Do something (and send response to EventPresenter)
+    
+    init(presenter: EventPresentationLogic? = nil,
+         worker: EventWorker = EventWorker(),
+         event: Event.EventObject? = nil) {
+        self.presenter = presenter
+        self.worker = worker
+        self.event = event
+    }
 
     func fetchEvent() {
-        worker = EventWorker()
-        worker?.doSomeWork()
-
-        let response = Event.EventDetails.Response(event: event!)
+        guard let event else {
+            // TODO: Error Handling!
+            return
+        }
+        
+        let response = Event.EventDetails.Response(event: event, eventDetails: nil)
         presenter?.presentEvent(response: response)
     }
-//
-//    func doSomethingElse(request: Event.SomethingElse.Request) {
-//        worker = EventWorker()
-//        worker?.doSomeOtherWork()
-//
-//        let response = Event.SomethingElse.Response()
-//        presenter?.presentSomethingElse(response: response)
-//    }
+    
+    func fetchDetails() {
+        worker?.fetchDetails(completion: { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let details):
+                guard let event else {
+                    // TODO: Error Handling!
+                    return
+                }
+                
+                self.presenter?.presentEvent(response: .init(event: event, eventDetails: details))
+            case .failure(_):
+                // TODO: Error Handling!
+                break
+            }
+        })
+    }
 }

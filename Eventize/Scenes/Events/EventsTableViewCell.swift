@@ -28,7 +28,7 @@ final class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var extraLabel: UILabel!
     
     // Bottom
-    @IBOutlet weak var bottomInfoStackView: UIStackView!
+    @IBOutlet weak var bottomInfosStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,12 +67,12 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
         extraLabel.text = viewModel.event.content.info
         
         // Bottom
-        bottomInfoStackView.arrangedSubviews.forEach { subview in
+        bottomInfosStackView.arrangedSubviews.forEach { subview in
             subview.removeFromSuperview()
         }
         
         if let bottomInfos = viewModel.event.content.extraBottomInfo, !bottomInfos.isEmpty {
-            bottomInfoStackView.isHidden = false
+            bottomInfosStackView.isHidden = false
             
             let spacerView = UILabel()
             for (index, bottomInfo) in bottomInfos.enumerated() {
@@ -82,11 +82,11 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
                 }
                 
                 let bottomInfoStackView = extraBottomInfoStackView(with: bottomInfo)
-                bottomInfoStackView.addArrangedSubview(bottomInfoStackView)
+                bottomInfosStackView.addArrangedSubview(bottomInfoStackView)
             }
-            bottomInfoStackView.addArrangedSubview(spacerView)
+            bottomInfosStackView.addArrangedSubview(spacerView)
         } else {
-            bottomInfoStackView.isHidden = true
+            bottomInfosStackView.isHidden = true
         }
         
         setNeedsLayout()
@@ -117,6 +117,7 @@ private extension EventsTableViewCell {
         
         let stackViewLabel = UILabel(frame: .zero)
         stackViewLabel.text = bottomInfo.text
+        stackViewLabel.font = .preferredFont(forTextStyle: .headline)
         bottomInfoStackView.addArrangedSubview(stackViewLabel)
         
         return bottomInfoStackView

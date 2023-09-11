@@ -15,10 +15,21 @@ import UIKit
 protocol EventDisplayLogic: AnyObject
 {
     func displayEvent(viewModel: Event.EventDetails.ViewModel)
-//    func displaySomethingElse(viewModel: Event.SomethingElse.ViewModel)
 }
 
 final class EventViewController: UIViewController, EventDisplayLogic {
+    
+    
+    @IBOutlet weak var imageBackground: UIView!
+    @IBOutlet weak var imageView: NetworkImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var extraLabel: UILabel!
+    @IBOutlet weak var aboutTitleLabel: UILabel!
+    @IBOutlet weak var aboutContentLabel: UILabel!
+    
+    var viewModel: Event.EventDetails.ViewModel?
     var interactor: EventBusinessLogic?
     var router: (NSObjectProtocol & EventRoutingLogic & EventDataPassing)?
 
@@ -28,7 +39,7 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
-    @IBOutlet weak var test: UILabel!
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -65,40 +76,111 @@ final class EventViewController: UIViewController, EventDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupView()
         fetchEvent()
-//        doSomethingElse()
     }
-    
-    //MARK: - receive events from UI
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-//
-//    @IBAction func someButtonTapped(_ sender: Any) {
-//
-//    }
-//
-//    @IBAction func otherButtonTapped(_ sender: Any) {
-//
-//    }
     
     // MARK: - request data from EventInteractor
 
     func fetchEvent() {
         interactor?.fetchEvent()
+        interactor?.fetchDetails()
     }
-//
-//    func doSomethingElse() {
-//        let request = Event.SomethingElse.Request()
-//        interactor?.doSomethingElse(request: request)
-//    }
 
     // MARK: - display view model from EventPresenter
 
     func displayEvent(viewModel: Event.EventDetails.ViewModel) {
-        test.text = viewModel.event.content.title
+        self.viewModel = viewModel
+        
+        // Top
+        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, backingImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)"))
+        
+        // Leading
+        titleLabel.text = viewModel.event.content.title
+        addressLabel.text = viewModel.event.content.subtitle
+        
+        // Trailing
+        priceLabel.text = viewModel.event.content.price?.asCurrency
+        extraLabel.text = viewModel.event.content.info
+        
+        // Bottom
+        aboutContentLabel.text = viewModel.eventDetails?.description
+        titleLabel.text = viewModel.event.content.title
     }
-//
-//    func displaySomethingElse(viewModel: Event.SomethingElse.ViewModel) {
-//        // do sometingElse with viewModel
-//    }
 }
+
+// MARK: - UIContextMenuInteractionDelegate
+
+extension EventViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+            return self.createContextMenu()
+        }
+    }
+}
+
+// MARK: - Private API
+
+private extension EventViewController {
+    func createContextMenu() -> UIMenu {
+        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+            guard let self = self else { return }
+            
+            // Check if the image exists
+            guard let image = self.imageView.image else {
+                return
+            }
+            
+            // Implement share functionality for the image here
+            let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+        
+        let copy = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+            guard let self = self else { return }
+            
+            // Check if the image exists
+            guard let image = self.imageView.image else {
+                return
+            }
+            
+            // Implement copy functionality for the image here
+            UIPasteboard.general.image = image
+        }
+        
+        let saveToPhotos = UIAction(title: "Save to Photos", image: UIImage(systemName: "photo")) { [weak self] _ in
+            guard let self = self else { return }
+            
+            // Check if the image exists
+            guard let image = self.imageView.image else {
+                return
+            }
+            
+            // Attempt to save the image to the device's photo library
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
+        
+        return UIMenu(title: "", children: [shareAction, copy, saveToPhotos])
+    }
+    
+    // Selector for image saving completion
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // Handle the error if saving fails
+            print("Error saving image to photos: \(error.localizedDescription)")
+        } else {
+            // Handle the success case
+            print("Image saved to photos successfully.")
+        }
+    }
+    
+    func setupView() {
+        imageBackground.addRoundedCornersAndShadow()
+        
+        imageView.addRoundedCorners(for: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner])
+        imageView.addInteraction(UIContextMenuInteraction(delegate: self))
+        imageView.isUserInteractionEnabled = true
+    }
+}
+

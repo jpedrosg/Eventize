@@ -1,5 +1,5 @@
 //
-//  EventWorker.swift
+//  EventsWorker.swift
 //  Eventize
 //
 //  Created by JP Giarrante on 09/09/23.
@@ -12,12 +12,42 @@
 
 import UIKit
 
-final class EventWorker {
-    func doSomeWork() {
+/// The worker responsible for fetching and filtering events.
+struct EventWorker {
+    
+    // MARK: - Public Methods
+    
+    /// Fetch event details from a data source.
+    ///
+    /// - Parameters:
+    ///   - completion: A closure to handle the result of the fetch operation.
+    ///
+    /// - Note: This method fetches event details from a mocked data source for demonstration purposes.
+    ///         In a real implementation, you should create a URL and use the NetworkManager for network requests.
+    func fetchDetails(completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
+        // TODO: - Mocked Network Call! Create url here in the future.
+        guard let jsonData = JsonMocks.Event_EventDetails else {
+            completion(.failure(.dataParsingError))
+            return
+        }
         
+        NetworkManager.fetchData(jsonData: jsonData, responseType: Event.DetailsContent.self, callerName: String(describing: self)) { result in
+            switch result {
+            case .success(let eventDetails):
+                completion(.success(eventDetails))
+                
+            case .failure(let networkError):
+                switch networkError {
+                case .invalidURL:
+                    completion(.failure(.networkError))
+                case .networkError(_):
+                    completion(.failure(.networkError))
+                case .invalidResponse:
+                    completion(.failure(.dataParsingError))
+                case .dataParsingError:
+                    completion(.failure(.dataParsingError))
+                }
+            }
+        }
     }
-//    
-//    func doSomeOtherWork() {
-//
-//    }
 }

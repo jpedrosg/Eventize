@@ -12,9 +12,9 @@ extension UIView {
     func addRoundedCornersAndShadow() {
         let cornerRadius: CGFloat = 10
         let shadowColor: UIColor = UIColor.black
-        let shadowOpacity: Float = 0.2
-        let shadowOffset: CGSize = CGSize(width: 0, height: 2)
-        let shadowRadius: CGFloat = 4
+        let shadowOpacity: Float = 0.3
+        let shadowOffset: CGSize = CGSize(width: 0, height: 4)
+        let shadowRadius: CGFloat = 6
         
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = false

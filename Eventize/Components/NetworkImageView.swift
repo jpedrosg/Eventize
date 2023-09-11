@@ -17,7 +17,7 @@ class NetworkImageView: UIImageView {
     ///
     /// - Parameter imageUrl: The URL of the image to be loaded.
     /// - Parameter backingImage: The UIImage to be set as backing on failure.
-    func setImage(fromUrl imageUrl: String?, backingImage: UIImage? = nil) {
+    func setImage(fromUrl imageUrl: String?, backingImage: UIImage? = nil, completion: (() -> Void)? = nil) {
         self.imageUrl = imageUrl
         
         // Clear the current image
@@ -25,6 +25,7 @@ class NetworkImageView: UIImageView {
         
         guard let imageUrl = imageUrl, let url = URL(string: imageUrl) else {
             self.image = backingImage
+            completion?()
             return
         }
         
@@ -38,6 +39,8 @@ class NetworkImageView: UIImageView {
                     self?.image = backingImage
                 }
             }
+            
+            completion?()
         }
     }
 }

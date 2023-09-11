@@ -6,6 +6,12 @@
 import Foundation
 
 final class JsonMocks {
+    static let Event_EventDetails: Data? = """
+    {
+        "description": "Venha se juntar a nós em uma noite de pura música e talento na grande festa da FIAP! Este evento espetacular trará alguns dos cantores mais talentosos do país para o palco, proporcionando uma experiência musical inigualável. Desfrute de performances incríveis, desde o pop mais atual até as clássicas baladas que aquecem o coração."
+    }
+    """.data(using: .utf8)
+    
     static let Events_EventObject_Array: Data? = """
     [
         {

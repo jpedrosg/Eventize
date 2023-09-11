@@ -12,9 +12,7 @@
 
 import UIKit
 
-@objc protocol EventRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-}
+@objc protocol EventRoutingLogic {}
 
 protocol EventDataPassing {
     var dataStore: EventDataStore? { get }
@@ -23,32 +21,4 @@ protocol EventDataPassing {
 final class EventRouter: NSObject, EventRoutingLogic, EventDataPassing {
     weak var viewController: EventViewController?
     var dataStore: EventDataStore?
-
-// MARK: Routing (navigating to other screens)
-
-//func routeToSomewhere(segue: UIStoryboardSegue?) {
-//    if let segue = segue {
-//        let destinationVC = segue.destination as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//    } else {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        navigateToSomewhere(source: viewController!, destination: destinationVC)
-//    }
-//}
-
-// MARK: Navigation to other screen
-
-//func navigateToSomewhere(source: EventViewController, destination: SomewhereViewController) {
-//    source.show(destination, sender: nil)
-//}
-
-// MARK: Passing data to other screen
-
-//    func passDataToSomewhere(source: EventDataStore, destination: inout SomewhereDataStore) {
-//        destination.name = source.name
-//    }
 }
