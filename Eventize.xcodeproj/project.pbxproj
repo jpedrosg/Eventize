@@ -21,6 +21,7 @@
 		BC3BE08C2AAED1EC00BA0006 /* EventsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */; };
 		BC3BE08E2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE08D2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift */; };
 		BC3BE0912AAEDF0800BA0006 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0902AAEDF0800BA0006 /* LocationManager.swift */; };
+		BC3BE0942AAF57E900BA0006 /* EventsMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0932AAF57E900BA0006 /* EventsMapTableViewCell.swift */; };
 		BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */; };
 		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
 		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
@@ -107,6 +108,7 @@
 		BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewHeader.swift; sourceTree = "<group>"; };
 		BC3BE08D2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addTopAndBottomSeparators.swift"; sourceTree = "<group>"; };
 		BC3BE0902AAEDF0800BA0006 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		BC3BE0932AAF57E900BA0006 /* EventsMapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsMapTableViewCell.swift; sourceTree = "<group>"; };
 		BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
 		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
@@ -229,6 +231,16 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		BC3BE0922AAF57CD00BA0006 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */,
+				BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */,
+				BC3BE0932AAF57E900BA0006 /* EventsMapTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
 		BC545EC12AACF65300634334 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,14 +342,13 @@
 		BCC91EC32AACD83C00DED263 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				BC3BE0922AAF57CD00BA0006 /* TableViewCells */,
 				BCC91F052AACD8AB00DED263 /* EventsInteractor.swift */,
 				BCC91F042AACD8AB00DED263 /* EventsModels.swift */,
 				BCC91F072AACD8AB00DED263 /* EventsPresenter.swift */,
 				BCC91F092AACD8AB00DED263 /* EventsRouter.swift */,
 				BCC91F062AACD8AB00DED263 /* EventsViewController.swift */,
 				BCC91F082AACD8AB00DED263 /* EventsWorker.swift */,
-				BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */,
-				BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -552,6 +563,7 @@
 				BCC91F302AACD8D000DED263 /* ProfilePresenter.swift in Sources */,
 				BCC91F262AACD8C300DED263 /* LoginModels.swift in Sources */,
 				BCC91F0A2AACD8AB00DED263 /* EventsModels.swift in Sources */,
+				BC3BE0942AAF57E900BA0006 /* EventsMapTableViewCell.swift in Sources */,
 				BCC91F502AACDD5200DED263 /* EventPresenter.swift in Sources */,
 				BC3BE0842AAE6A6100BA0006 /* LogError.swift in Sources */,
 				BCC91F3C2AACD8D400DED263 /* RegisterModels.swift in Sources */,

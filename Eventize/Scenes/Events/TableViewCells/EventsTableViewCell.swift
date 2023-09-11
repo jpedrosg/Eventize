@@ -21,6 +21,7 @@ final class EventsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         setupViews()
     }
 

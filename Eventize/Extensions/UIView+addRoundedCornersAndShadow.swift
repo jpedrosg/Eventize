@@ -27,9 +27,9 @@ extension UIView {
     /// Adds rounded corners to specified corners of the view.
     ///
     /// - Parameter corners: The corners to which rounded corners should be applied.
-    func addRoundedCorners(for corners: CACornerMask) {
+    func addRoundedCorners(for corners: CACornerMask, radius: CGFloat = 10) {
         clipsToBounds = true
-        layer.cornerRadius = 10
+        layer.cornerRadius = radius
         layer.maskedCorners = corners
     }
 }

@@ -13,16 +13,38 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    private enum ScreenMode {
+        case list
+        case map
+        
+        mutating func toggle() {
+            if self == .list {
+                self = .map
+            } else {
+                self = .list
+            }
+        }
+    }
+    
     private enum Segues: String {
         case detail = "eventDetails"
     }
     
     private static let headerReuseIdentifier = "EventsTableViewHeader"
     private static let cellReuseIdentifier = "EventsTableViewCell"
+    private static let mapReuseIdentifier = "EventsMapTableViewCell"
     
     private var addressName: String?
     private var viewModel: Events.EventList.ViewModel?
     private var searchBarFrame: CGRect?
+    private var currentScreenMode: ScreenMode = .list {
+        didSet {
+            setupNavigationItem()
+            
+            tableView.reloadData()
+            tableView.showsVerticalScrollIndicator = currentScreenMode == .list
+        }
+    }
     
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
@@ -41,6 +63,7 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
                 }
                 
                 DispatchQueue.main.async {
+                    self.tableView.setContentOffset(.zero, animated: true)
                     self.searchBar.becomeFirstResponder()
                 }
             } else {
@@ -170,19 +193,35 @@ extension EventsViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.events.count ?? .zero
+        if currentScreenMode == .list {
+            return viewModel?.events.count ?? .zero
+        } else {
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellReuseIdentifier, for: indexPath)
+        var cell: UITableViewCell!
+        let interaction = UIContextMenuInteraction(delegate: self)
         
-        if let eventsCell = cell as? EventsCellDisplayLogic,
-            let event = viewModel?.events[safe: indexPath.row] {
+        if currentScreenMode == .list {
+            cell = tableView.dequeueReusableCell(withIdentifier: Self.cellReuseIdentifier, for: indexPath)
             
-            let interaction = UIContextMenuInteraction(delegate: self)
-            eventsCell.setMenuInteraction(interaction)
+            if let eventsCell = cell as? EventsCellDisplayLogic,
+               let event = viewModel?.events[safe: indexPath.row] {
+                
+                eventsCell.displayEventCell(viewModel: .init(event: event))
+                eventsCell.setMenuInteraction(interaction)
+            }
             
-            eventsCell.displayEventCell(viewModel: .init(event: event))
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: Self.mapReuseIdentifier, for: indexPath)
+            
+            if let mapCell = cell as? EventsMapDisplayLogic, let viewModel {
+                
+                mapCell.displayEvents(viewModel: viewModel)
+                mapCell.setMenuInteraction(interaction)
+            }
         }
         
         return cell
@@ -235,7 +274,7 @@ extension EventsViewController: UIContextMenuInteractionDelegate {
 
 private extension EventsViewController {
     func setupNavigationItem() {
-        self.navigationItem.title = "Eventos"
+        self.navigationItem.title = currentScreenMode == .list ? "Eventos" : "Mapa"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket"))
@@ -245,7 +284,11 @@ private extension EventsViewController {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: isSearchBarHidden ? "magnifyingglass.circle" : "magnifyingglass.circle.fill"))
         searchButton.target = self
         searchButton.action = #selector(didTapSearch)
-        self.navigationItem.setRightBarButtonItems([ticketsButton, searchButton], animated: true)
+        
+        let screenModeButton = UIBarButtonItem(image: UIImage(systemName: currentScreenMode == .list ? "tablecells.fill" : "map.fill"))
+        screenModeButton.target = self
+        screenModeButton.action = #selector(didTapScreenMode)
+        self.navigationItem.setRightBarButtonItems([ticketsButton, searchButton, screenModeButton], animated: true)
     }
     
     func setupRefreshControl() {
@@ -276,5 +319,9 @@ private extension EventsViewController {
     
     @objc func didTapSearch(sender: UIButton) {
         isSearchBarHidden.toggle()
+    }
+    
+    @objc func didTapScreenMode(sender: UIButton) {
+        currentScreenMode.toggle()
     }
 }
