@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EventBusinessLogic {
-    func doSomething(request: Event.EventDetails.Request)
+    func fetchEvent()
 //    func doSomethingElse(request: Event.SomethingElse.Request)
 }
 
@@ -28,7 +28,7 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
 
     // MARK: Do something (and send response to EventPresenter)
 
-    func doSomething(request: Event.EventDetails.Request) {
+    func fetchEvent() {
         worker = EventWorker()
         worker?.doSomeWork()
 

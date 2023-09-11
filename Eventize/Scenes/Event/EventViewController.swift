@@ -65,7 +65,7 @@ final class EventViewController: UIViewController, EventDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        fetchEvent()
 //        doSomethingElse()
     }
     
@@ -83,9 +83,8 @@ final class EventViewController: UIViewController, EventDisplayLogic {
     
     // MARK: - request data from EventInteractor
 
-    func doSomething() {
-        let request = Event.EventDetails.Request()
-        interactor?.doSomething(request: request)
+    func fetchEvent() {
+        interactor?.fetchEvent()
     }
 //
 //    func doSomethingElse() {

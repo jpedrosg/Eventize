@@ -7,6 +7,7 @@ import UIKit
 
 protocol EventsCellDisplayLogic: AnyObject {
     func display(viewModel: Events.EventList.CellViewModel)
+    func setMenuInteraction(_ interaction: UIContextMenuInteraction)
 }
 
 final class EventsTableViewCell: UITableViewCell {
@@ -37,6 +38,12 @@ final class EventsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        
+        contentView.backgroundColor = .systemBackground
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
         
         contentView.backgroundColor = .systemBackground
     }
@@ -84,6 +91,10 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
         
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    func setMenuInteraction(_ interaction: UIContextMenuInteraction) {
+        customBackgroundView.addInteraction(interaction)
     }
 }
 

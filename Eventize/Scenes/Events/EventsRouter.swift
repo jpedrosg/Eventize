@@ -13,7 +13,9 @@
 import UIKit
 
 @objc protocol EventsRoutingLogic {
+    func previewEvent() -> EventViewController
     func routeToEvent()
+    func routeToEvent(_ destinationVC: EventViewController?)
     func routeToTickets()
 }
 
@@ -26,10 +28,22 @@ final class EventsRouter: NSObject, EventsRoutingLogic, EventsDataPassing {
     var dataStore: EventsDataStore?
 
     // MARK: Routing (navigating to other screens)
-
-    func routeToEvent() {
+    
+    func previewEvent() -> EventViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToEvent(source: dataStore!, destination: &destinationDS)
+        return destinationVC
+    }
+    
+    func routeToEvent() {
+        routeToEvent(nil)
+    }
+
+    func routeToEvent(_ destinationVC: EventViewController?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = destinationVC ?? storyboard.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
         var destinationDS = destinationVC.router!.dataStore!
         passDataToEvent(source: dataStore!, destination: &destinationDS)
         navigateToEvent(source: viewController!, destination: destinationVC)

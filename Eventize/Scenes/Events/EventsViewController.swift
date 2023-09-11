@@ -141,6 +141,9 @@ extension EventsViewController {
         if let eventsCell = cell as? EventsCellDisplayLogic,
             let event = viewModel?.events[safe: indexPath.row] {
             
+            let interaction = UIContextMenuInteraction(delegate: self)
+            eventsCell.setMenuInteraction(interaction)
+            
             eventsCell.display(viewModel: .init(event: event))
         }
         
@@ -165,6 +168,28 @@ extension EventsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         handleSearch()
+    }
+}
+
+// MARK: - UIContextMenuInteractionDelegate
+
+extension EventsViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(previewProvider: {
+            // Converts point from the view Y to tableView relative Y positions.
+            let point = self.tableView.convert(location, from: interaction.view)
+            guard let indexPath = self.tableView.indexPathForRow(at: point) else { return nil }
+            
+            self.interactor?.selectEvent(at: indexPath.row)
+            return self.router?.previewEvent()
+        })
+    }
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            // Route to Event when previewed context menu is tapped on.
+            self.router?.routeToEvent(animator.previewViewController as? EventViewController)
+        }
     }
 }
 

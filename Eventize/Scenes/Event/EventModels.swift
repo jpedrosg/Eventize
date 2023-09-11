@@ -21,7 +21,7 @@ enum Event
 
     enum EventDetails {
         struct Request {
-
+            let eventUuid: Int
         }
 
         struct Response {
