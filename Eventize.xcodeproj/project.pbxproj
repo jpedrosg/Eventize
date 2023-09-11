@@ -18,6 +18,7 @@
 		BC3BE0842AAE6A6100BA0006 /* LogError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0832AAE6A6100BA0006 /* LogError.swift */; };
 		BC3BE0872AAE6A9B00BA0006 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */; };
 		BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0892AAE729300BA0006 /* NetworkImageView.swift */; };
+		BC3BE08C2AAED1EC00BA0006 /* EventsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */; };
 		BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */; };
 		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
 		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
@@ -101,6 +102,7 @@
 		BC3BE0832AAE6A6100BA0006 /* LogError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogError.swift; sourceTree = "<group>"; };
 		BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		BC3BE0892AAE729300BA0006 /* NetworkImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageView.swift; sourceTree = "<group>"; };
+		BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewHeader.swift; sourceTree = "<group>"; };
 		BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
 		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				BCC91F062AACD8AB00DED263 /* EventsViewController.swift */,
 				BCC91F082AACD8AB00DED263 /* EventsWorker.swift */,
 				BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */,
+				BC3BE08B2AAED1EC00BA0006 /* EventsTableViewHeader.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				BCC91F222AACD8C300DED263 /* LoginInteractor.swift in Sources */,
 				BC3BE07C2AAD1F5E00BA0006 /* TicketsRouter.swift in Sources */,
 				BCC91F1B2AACD8BD00DED263 /* HomeRouter.swift in Sources */,
+				BC3BE08C2AAED1EC00BA0006 /* EventsTableViewHeader.swift in Sources */,
 				BCC91F3F2AACD8D400DED263 /* RegisterWorker.swift in Sources */,
 				BC3BE0872AAE6A9B00BA0006 /* NetworkManager.swift in Sources */,
 				BCC91F0C2AACD8AB00DED263 /* EventsViewController.swift in Sources */,

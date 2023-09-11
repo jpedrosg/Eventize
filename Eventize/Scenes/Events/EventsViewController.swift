@@ -16,7 +16,8 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
         case detail = "eventDetails"
     }
     
-    private static let reuseIdentifier = "EventsTableViewCell"
+    private static let headerReuseIdentifier = "EventsTableViewHeader"
+    private static let cellReuseIdentifier = "EventsTableViewCell"
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
     var viewModel: Events.EventList.ViewModel?
@@ -29,16 +30,22 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
             interactor?.filterEvents(request: .init())
             
             if !isSearchBarHidden, let frame = searchBarFrame, frame.height > .zero {
-                searchBar.frame = searchBarFrame ?? .zero
-                searchBar.isHidden = false
+                
+                UIView.animate(withDuration: 0.25) {
+                    self.searchBar.frame = self.searchBarFrame ?? .zero
+                    self.searchBar.isHidden = false
+                }
                 
                 DispatchQueue.main.async {
                     self.searchBar.becomeFirstResponder()
                 }
             } else {
                 searchBarFrame = searchBar.frame
-                searchBar.frame = .zero
-                searchBar.isHidden = true
+                
+                UIView.animate(withDuration: 0.25) {
+                    self.searchBar.frame = .zero
+                    self.searchBar.isHidden = true
+                }
                 
                 DispatchQueue.main.async {
                     self.searchBar.resignFirstResponder()
@@ -95,6 +102,7 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
         tableView.delegate = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderTopPadding = .zero
         
         setupSearchBar()
         setupNavigationItem()
@@ -119,15 +127,38 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     }
 }
 
+// MARK: - EventsCellListener
+
+extension EventsViewController: EventsCellListener {
+    func didTapHeader() {
+        didTapSearch(sender: .init())
+    }
+}
+
 // MARK: - UITableViewDelegate + UITableViewDataSource
 
 extension EventsViewController {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.headerReuseIdentifier, for: .init())
+        
+        if let headerCell = cell as? EventsHeaderDisplayLogic {
+            headerCell.displayEventHeader(viewModel: .init(address: "Av Marginal Tietê 94"))
+            headerCell.setListener(self)
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return EventsTableViewHeader.headerHeight
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.events.count ?? .zero
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellReuseIdentifier, for: indexPath)
         
         if let eventsCell = cell as? EventsCellDisplayLogic,
             let event = viewModel?.events[safe: indexPath.row] {

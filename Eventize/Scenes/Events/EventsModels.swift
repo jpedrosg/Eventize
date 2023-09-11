@@ -39,6 +39,12 @@ enum Events {
         struct CellViewModel {
             let event: EventObject
         }
+        
+        // MARK: - Header View Model
+        
+        struct HeaderViewModel {
+            let address: String
+        }
     }
     
     // MARK: - Event Object

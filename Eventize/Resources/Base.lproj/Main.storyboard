@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -80,8 +81,44 @@
                             </connections>
                         </searchBar>
                         <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="EventsTableViewHeader" textLabel="2MS-qo-oWz" detailTextLabel="Vks-iU-snD" imageView="PnU-9l-2og" style="IBUITableViewCellStyleSubtitle" id="zhE-G4-XD1" customClass="EventsTableViewHeader" customModule="Eventize" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="94" width="393" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zhE-G4-XD1" id="5mM-XT-XRB">
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="46"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Procurando eventos perto de:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2MS-qo-oWz">
+                                            <rect key="frame" x="56.833333333333329" y="6.0000000000000009" width="168.33333333333334" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Av Marginal Tiete 78" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vks-iU-snD">
+                                            <rect key="frame" x="56.833333333333329" y="22.333333333333336" width="140.33333333333334" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PnU-9l-2og">
+                                            <rect key="frame" x="22.166666666666668" y="13.666666666666664" width="19.666666666666664" height="19"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <imageReference key="image" image="paperplane.circle" catalog="system" symbolScale="default" variableValue="1"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <inset key="separatorInset" minX="44" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="addressLabel" destination="Vks-iU-snD" id="e3a-fh-01P"/>
+                                    <outlet property="titleLabel" destination="2MS-qo-oWz" id="vpV-UG-Rn5"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventsTableViewCell" rowHeight="406" id="Ng7-KQ-uro" customClass="EventsTableViewCell" customModule="Eventize" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="393" height="406"/>
+                                <rect key="frame" x="0.0" y="140" width="393" height="406"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ng7-KQ-uro" id="hHp-nJ-UbM">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="406"/>
@@ -135,6 +172,7 @@
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YrZ-sl-OIc">
                                                                             <rect key="frame" x="0.0" y="0.99999999999999822" width="22" height="14.666666666666668"/>
+                                                                            <color key="tintColor" name="AccentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="22" id="IB3-E0-Bq6"/>
                                                                                 <constraint firstAttribute="height" constant="16" id="jSN-aG-Wwe"/>
@@ -164,6 +202,7 @@
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Xnx-p0-yyN">
                                                                             <rect key="frame" x="0.0" y="0.99999999999999822" width="22" height="14.666666666666668"/>
+                                                                            <color key="tintColor" name="AccentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="22" id="6pK-uW-A4w"/>
                                                                                 <constraint firstAttribute="height" constant="16" id="q6f-oi-8a0"/>
@@ -193,6 +232,7 @@
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="j4w-2S-Cya">
                                                                             <rect key="frame" x="0.0" y="0.99999999999999822" width="22" height="14.666666666666668"/>
+                                                                            <color key="tintColor" name="AccentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="7sv-Ct-l3C"/>
                                                                                 <constraint firstAttribute="width" constant="22" id="kG0-sh-Rar"/>
@@ -500,6 +540,7 @@
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="map" catalog="system" width="128" height="112"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="paperplane.circle" catalog="system" width="128" height="123"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <namedColor name="AccentColor">
