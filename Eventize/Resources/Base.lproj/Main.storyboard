@@ -22,7 +22,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="nbq-7I-LF6" kind="relationship" relationship="viewControllers" id="BD2-uh-Szb"/>
-                        <segue destination="TXb-fI-FnO" kind="relationship" relationship="viewControllers" id="MXD-pQ-p1M"/>
                         <segue destination="7vL-jg-TbH" kind="relationship" relationship="viewControllers" id="2n2-2n-ZNo"/>
                     </connections>
                 </tabBarController>
@@ -45,22 +44,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zD1-jX-27T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="378" y="245"/>
-        </scene>
-        <!--Home View Controller-->
-        <scene sceneID="lcA-M0-AwY">
-            <objects>
-                <viewController id="TXb-fI-FnO" customClass="HomeViewController" customModule="Eventize" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="An3-5W-LhA">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="B3G-0Q-g6q"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" selectedImage="house.fill" id="YwO-go-pPb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YKb-gF-NXP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="378" y="-1133"/>
         </scene>
         <!--Events-->
         <scene sceneID="nBu-Fh-CPR">
@@ -262,7 +245,7 @@
                                                         </view>
                                                     </subviews>
                                                 </stackView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="events_banner_1" highlightedImage="benchmark-1.png" translatesAutoresizingMaskIntoConstraints="NO" id="sF9-Qa-exj" customClass="NetworkImageView" customModule="Eventize" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="events_banner_1" translatesAutoresizingMaskIntoConstraints="NO" id="sF9-Qa-exj" customClass="NetworkImageView" customModule="Eventize" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="244.33333333333334"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="3oK-PP-euy"/>
@@ -280,7 +263,6 @@
                                                 <constraint firstItem="6YW-s6-ChL" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" constant="12" id="MJ2-YR-SrW"/>
                                                 <constraint firstItem="6YW-s6-ChL" firstAttribute="top" secondItem="sF9-Qa-exj" secondAttribute="bottom" constant="12" id="Njg-gb-30L"/>
                                                 <constraint firstAttribute="trailing" secondItem="WSo-LT-QsA" secondAttribute="trailing" constant="12" id="R4u-dF-4JT"/>
-                                                <constraint firstItem="WSo-LT-QsA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="q8k-BC-Gou" secondAttribute="bottom" constant="28" id="Rdw-xg-Kgn"/>
                                                 <constraint firstAttribute="trailing" secondItem="q8k-BC-Gou" secondAttribute="trailing" constant="12" id="Zdn-fP-9ee"/>
                                                 <constraint firstItem="sF9-Qa-exj" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" id="ctB-rF-Uoi"/>
                                                 <constraint firstItem="WSo-LT-QsA" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" constant="12" id="gnK-A5-3Wo"/>
@@ -482,7 +464,7 @@
         <scene sceneID="BXP-oa-0xE">
             <objects>
                 <navigationController title="Events" automaticallyAdjustsScrollViewInsets="NO" id="nbq-7I-LF6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="map" catalog="system" selectedImage="map.fill" id="Wke-ft-qcX"/>
+                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" selectedImage="house.fill" id="Wke-ft-qcX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="rXc-Mh-zIr">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
@@ -533,13 +515,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="benchmark-1.png" width="568" height="292"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="events_banner_1" width="360" height="450"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
-        <image name="map" catalog="system" width="128" height="112"/>
-        <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="paperplane.circle" catalog="system" width="128" height="123"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>

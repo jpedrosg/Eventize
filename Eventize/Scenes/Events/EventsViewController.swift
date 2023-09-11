@@ -6,6 +6,7 @@ import UIKit
 
 protocol EventsDisplayLogic: AnyObject {
     func displayEvents(viewModel: Events.EventList.ViewModel)
+    func displayAddress(viewModel: Events.Address.ViewModel)
 }
 
 final class EventsViewController: UITableViewController, EventsDisplayLogic {
@@ -18,10 +19,13 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     
     private static let headerReuseIdentifier = "EventsTableViewHeader"
     private static let cellReuseIdentifier = "EventsTableViewCell"
+    
+    private var addressName: String?
+    private var viewModel: Events.EventList.ViewModel?
+    private var searchBarFrame: CGRect?
+    
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
-    var viewModel: Events.EventList.ViewModel?
-    var searchBarFrame: CGRect?
     
     private var isSearchBarHidden: Bool = false {
         didSet {
@@ -107,15 +111,18 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
         setupSearchBar()
         setupNavigationItem()
         setupRefreshControl()
-        requestEvents()
+        requestLocation()
     }
     
     // MARK: - Request data from EventsInteractor
     
     func requestEvents() {
-        // TODO: Add Address Filter!
         searchBar.text = nil
-        interactor?.fetchEvents(request: .init())
+        interactor?.fetchEvents(request: .init(address: addressName))
+    }
+    
+    func requestLocation() {
+        interactor?.fetchLocation()
     }
     
     // MARK: - Display view model from EventsPresenter
@@ -125,13 +132,20 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
         
         tableView.reloadData()
     }
+    
+    func displayAddress(viewModel: Events.Address.ViewModel) {
+        self.addressName = viewModel.name
+        
+        requestEvents()
+        tableView.reloadData()
+    }
 }
 
 // MARK: - EventsCellListener
 
 extension EventsViewController: EventsCellListener {
     func didTapHeader() {
-        didTapSearch(sender: .init())
+        // TODO: Allow entering address in future.
     }
 }
 
@@ -141,12 +155,14 @@ extension EventsViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: Self.headerReuseIdentifier, for: .init())
         
-        if let headerCell = cell as? EventsHeaderDisplayLogic {
-            headerCell.displayEventHeader(viewModel: .init(address: "Av Marginal Tietê 94"))
+        if let headerCell = cell as? EventsHeaderDisplayLogic, let addressName {
+            headerCell.displayEventHeader(viewModel: .init(address: addressName))
             headerCell.setListener(self)
+            
+            return cell
         }
         
-        return cell
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

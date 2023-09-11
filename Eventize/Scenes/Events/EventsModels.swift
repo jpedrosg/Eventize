@@ -6,6 +6,18 @@ import UIKit
 
 enum Events {
     
+    // MARK: - Address
+    
+    enum Address {
+        struct Response {
+            let name: String
+        }
+        
+        struct ViewModel {
+            let name: String
+        }
+    }
+    
     // MARK: - Event List
     
     enum EventList {
@@ -43,7 +55,7 @@ enum Events {
         // MARK: - Header View Model
         
         struct HeaderViewModel {
-            let address: String
+            let address: String?
         }
     }
     

@@ -32,7 +32,10 @@ final class EventsTableViewHeader: UITableViewCell {
 
 extension EventsTableViewHeader: EventsHeaderDisplayLogic {
     func displayEventHeader(viewModel: Events.EventList.HeaderViewModel) {
-        addressLabel.text = viewModel.address
+        guard let address = viewModel.address else { return }
+        
+        titleLabel.text = "Procurando eventos perto de:"
+        addressLabel.text = address
     }
     
     func setListener(_ listener: EventsCellListener) {
@@ -45,20 +48,12 @@ extension EventsTableViewHeader: EventsHeaderDisplayLogic {
 
 private extension EventsTableViewHeader {
     func setupViews() {
-        titleLabel.text = "Procurando eventos perto de:"
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         addGestureRecognizer(tapGesture)
         isUserInteractionEnabled = true
         
-        let scale = UIScreen.main.scale // Get the screen scale factor
-        let lineHeight: CGFloat = 1.0 / scale // Adjust the line height based on scale
-        let bottomLineView = UIView(frame: CGRect(x: 0, y: Self.headerHeight - lineHeight, width: UIScreen.main.bounds.width, height: lineHeight))
-        let topLineView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: lineHeight))
-        bottomLineView.backgroundColor = .separator
-        topLineView.backgroundColor = .separator
-        self.contentView.superview!.addSubview(topLineView)
-        self.contentView.superview!.addSubview(bottomLineView)
+        self.contentView.superview?.addTopAndBottomSeparators()
     }
     
     @objc func didTapView() {

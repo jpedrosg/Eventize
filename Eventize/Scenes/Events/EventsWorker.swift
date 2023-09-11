@@ -17,7 +17,7 @@ struct EventsWorker {
     ///
     /// - Note: This method fetches events from a mocked data source for demonstration purposes.
     ///         In a real implementation, you should create a URL and use the NetworkManager for network requests.
-    func fetchEvents(searchTerm: String? = nil, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
+    func fetchEvents(address: String? = nil, searchTerm: String? = nil, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
         // TODO: - Mocked Network Call! Create a URL here in the future.
         guard let jsonData = JsonMocks.Events_EventObject_Array else {
             completion(.failure(.dataParsingError))
@@ -32,7 +32,9 @@ struct EventsWorker {
                     events = filterEvents(events: events, searchTerm: searchTerm)
                 }
                 
-                completion(.success(events))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                    completion(.success(events))
+                })
                 
             case .failure(let networkError):
                 switch networkError {

@@ -8,6 +8,7 @@ protocol EventsBusinessLogic {
     func fetchEvents(request: Events.EventList.Request)
     func filterEvents(request: Events.EventList.Request)
     func selectEvent(at index: Int)
+    func fetchLocation()
 }
 
 protocol EventsDataStore {
@@ -22,6 +23,8 @@ final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
     var selectedEvent: Events.EventObject?
     var events: [Events.EventObject]
     
+    let locationManager = LocationManager()
+    
     init(presenter: EventsPresentationLogic? = nil,
          worker: EventsWorker = EventsWorker(),
          selectedEvent: Events.EventObject? = nil,
@@ -34,8 +37,13 @@ final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
 
     // MARK: - Fetch Events
     
+    func fetchLocation() {
+        locationManager.delegate = self
+        locationManager.requestLocation()
+    }
+    
     func fetchEvents(request: Events.EventList.Request) {
-        worker.fetchEvents(completion: { [weak self] result in
+        worker.fetchEvents(address: request.address, completion: { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -60,5 +68,13 @@ final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
     
     func selectEvent(at index: Int) {
         selectedEvent = events[safe: index]
+    }
+}
+
+// MARK: LocationManagerDelegate
+
+extension EventsInteractor: LocationManagerDelegate {
+    func didUpdateLocation(name: String) {
+        presenter?.presentAddress(response: .init(name: name))
     }
 }

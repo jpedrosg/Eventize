@@ -6,6 +6,7 @@ import UIKit
 
 protocol EventsPresentationLogic {
     func presentEvents(response: Events.EventList.Response)
+    func presentAddress(response: Events.Address.Response)
 }
 
 final class EventsPresenter: EventsPresentationLogic {
@@ -18,5 +19,12 @@ final class EventsPresenter: EventsPresentationLogic {
     /// - Parameter response: The response containing events to be presented.
     func presentEvents(response: Events.EventList.Response) {
         viewController?.displayEvents(viewModel: .init(events: response.events))
+    }
+    
+    /// Present address to the view controller.
+    ///
+    /// - Parameter response: The response containing address name to be presented.
+    func presentAddress(response: Events.Address.Response) {
+        viewController?.displayAddress(viewModel: .init(name: response.name))
     }
 }
