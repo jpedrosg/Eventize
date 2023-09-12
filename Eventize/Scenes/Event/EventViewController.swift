@@ -12,6 +12,7 @@ protocol EventDisplayLogic: AnyObject
 final class EventViewController: UIViewController, EventDisplayLogic {
     
     
+    @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var imageBackground: UIView!
     @IBOutlet weak var imageView: NetworkImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -86,7 +87,9 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         self.viewModel = viewModel
         
         // Top
-        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)"))
+        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) {
+            self.imageContainerView.isHidden = self.imageView.image == nil
+        }
         
         // Leading
         titleLabel.text = viewModel.event.content.title

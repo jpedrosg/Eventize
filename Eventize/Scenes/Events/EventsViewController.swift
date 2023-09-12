@@ -306,6 +306,11 @@ extension EventsViewController: EventsMapInteractions {
     func selectEvent(_ event: Events.EventObject) {
         interactor?.selectEvent(event)
         tableView.reloadData()
+        tableView.scrollToRow(at: .init(row: .zero, section: .zero), at: .bottom, animated: true)
+    }
+    
+    func deselectEvent() {
+        tableView.scrollToRow(at: .init(row: .zero, section: .zero), at: .top, animated: true)
     }
     
     func routeToEvent(_ event: Events.EventObject) {

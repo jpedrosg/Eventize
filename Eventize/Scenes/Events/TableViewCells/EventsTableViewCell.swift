@@ -76,8 +76,7 @@ private extension EventsTableViewCell {
             let bottomInfoStackView = createBottomInfoStackView(with: bottomInfo)
             bottomInfosStackView.addArrangedSubview(bottomInfoStackView)
             
-            if index == 2 {
-                spacerView.text = "..."
+            if index == bottomInfos.prefix(3).count - 1 {
                 bottomInfosStackView.addArrangedSubview(spacerView)
             }
         }
