@@ -1,20 +1,16 @@
-//
-//  Copyright © Uber Technologies, Inc. All rights reserved.
-//
-
 import Foundation
 import CoreLocation
-import MapKit
 
-// MARK: - LocationManagerDelegate
-
+/// A protocol to handle location updates.
 protocol LocationManagerDelegate: AnyObject {
     /// Called when the location is updated.
+    /// - Parameters:
+    ///   - geolocation: The reverse-geocoded location information.
+    ///   - coordinate: The coordinates of the location.
     func didUpdateLocation(geolocation: GeoLocation?, coordinate: CLLocationCoordinate2D?)
 }
 
-// MARK: - LocationManager
-
+/// A manager class for handling location services and caching the last known location.
 class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: Properties
 
@@ -24,11 +20,14 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     /// The location manager responsible for handling location services.
     let manager = CLLocationManager()
 
+    /// The current coordinates.
     var currentCoordinate: CLLocationCoordinate2D?
+
+    /// The current reverse-geocoded location.
     var currentGeolocation: GeoLocation?
 
-    // Cache location using UserDefaults
-    private let locationCacheKey = "CachedLocation"
+    /// The cache manager for location data.
+    private let cache = UserDefaultsManager.shared
 
     // MARK: Initialization
 
@@ -42,80 +41,45 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     /// Requests the current location.
     func requestLocation() {
         manager.requestWhenInUseAuthorization()
-        
-        // Try to load cached location
-        if let cachedLocationDict = UserDefaults.standard.dictionary(forKey: self.locationCacheKey),
-           let latitude = cachedLocationDict["latitude"] as? CLLocationDegrees,
-           let longitude = cachedLocationDict["longitude"] as? CLLocationDegrees {
-            let cachedLocation = CLLocation(latitude: latitude, longitude: longitude)
-            // Now you have the CLLocation object back
+
+        if let cachedLocation: CLLocation = cache.getCachedLocation() {
             handleLocation(cachedLocation)
         }
-        
+
         manager.requestLocation()
-    }
-    
-    func generateRandomCoordinateNearUser() -> CLLocationCoordinate2D? {
-        guard let userCoordinate = currentCoordinate else {
-            return nil
-        }
-        
-        let metersPerDegreeLatitude: CLLocationDistance = 111319.9 // Approximate meters per degree of latitude
-        let metersPerDegreeLongitude: CLLocationDistance = 111412.84 // Approximate meters per degree of longitude at equator
-        
-        // Generate random offsets in meters (adjust these values based on how close you want the generated coordinate to be)
-        let latitudeOffsetMeters = Double.random(in: -5000.0...5000.0)
-        let longitudeOffsetMeters = Double.random(in: -5000.0...5000.0)
-        
-        // Calculate the new coordinates
-        let latitude = userCoordinate.latitude + (latitudeOffsetMeters / metersPerDegreeLatitude)
-        let longitude = userCoordinate.longitude + (longitudeOffsetMeters / metersPerDegreeLongitude)
-        
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 
     // MARK: CLLocationManagerDelegate
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
-        
-        // Cache the location
-        // Convert CLLocation to a dictionary
-        let locationDict: [String: Any] = [
-            "latitude": location.coordinate.latitude,
-            "longitude": location.coordinate.longitude
-        ]
 
-        // Save the dictionary to UserDefaults
-        UserDefaults.standard.set(locationDict, forKey: self.locationCacheKey)
-        
+        cache.setCachedLocation(location)
+
         handleLocation(location)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // Handle the error here
         print("Location manager failed with error: \(error.localizedDescription)")
     }
-}
 
-// MARK: - Private API
+    // MARK: Private Methods
 
-private extension LocationManager {
-    func handleLocation(_ location: CLLocation) {
+    private func handleLocation(_ location: CLLocation) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
-            guard let self else { return }
-            
-            if let error {
+            guard let self = self else { return }
+
+            if let error = error {
                 print("Error reverse geocoding: \(error.localizedDescription)")
                 return
             }
-            
+
             if let placemark = placemarks?.first {
                 let geoLocation = GeoLocation(with: placemark)
                 self.currentGeolocation = geoLocation
                 self.currentCoordinate = location.coordinate
-                
+
                 self.delegate?.didUpdateLocation(geolocation: self.currentGeolocation, coordinate: self.currentCoordinate)
             }
         }
@@ -124,6 +88,7 @@ private extension LocationManager {
 
 // MARK: - GeoLocation
 
+/// A struct to handle the location information.
 struct GeoLocation {
     let name: String
     let streetName: String

@@ -26,6 +26,7 @@
 		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
 		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
 		BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC72AAD064500634334 /* Collection+safe.swift */; };
+		BCA8C9712AB0BED100B9CFFD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */; };
 		BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */; };
 		BCC91E912AACD77B00DED263 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E902AACD77B00DED263 /* SceneDelegate.swift */; };
 		BCC91E962AACD77B00DED263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E942AACD77B00DED263 /* Main.storyboard */; };
@@ -113,6 +114,7 @@
 		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
 		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
 		BC545EC72AAD064500634334 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
+		BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		BCC91E8B2AACD77B00DED263 /* Eventize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCC91E902AACD77B00DED263 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				BC3BE0902AAEDF0800BA0006 /* LocationManager.swift */,
+				BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				BCC91F512AACDD5200DED263 /* EventWorker.swift in Sources */,
 				BCC91F252AACD8C300DED263 /* LoginWorker.swift in Sources */,
 				BCC91F552AACDD5200DED263 /* EventInteractor.swift in Sources */,
+				BCA8C9712AB0BED100B9CFFD /* UserDefaultsManager.swift in Sources */,
 				BCC91F182AACD8BD00DED263 /* HomeViewController.swift in Sources */,
 				BC3BE0912AAEDF0800BA0006 /* LocationManager.swift in Sources */,
 				BC3BE07B2AAD1F5E00BA0006 /* TicketsWorker.swift in Sources */,

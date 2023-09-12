@@ -4,9 +4,9 @@
 
 import UIKit
 
-protocol EventDisplayLogic: AnyObject
-{
+protocol EventDisplayLogic: AnyObject {
     func displayEvent(viewModel: Event.EventDetails.ViewModel)
+    func displayFavoriteButton()
 }
 
 final class EventViewController: UIViewController, EventDisplayLogic {
@@ -102,6 +102,14 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         // Bottom
         aboutContentLabel.text = viewModel.eventDetails?.description
         titleLabel.text = viewModel.event.content.title
+        
+        displayFavoriteButton()
+    }
+    
+    func displayFavoriteButton() {
+        guard let viewModel else { return }
+        
+        setupNavigationItem(viewModel.event.isFavorite)
     }
 }
 
@@ -118,6 +126,21 @@ extension EventViewController: UIContextMenuInteractionDelegate {
 // MARK: - Private API
 
 private extension EventViewController {
+    func setupView() {
+        imageBackground.addRoundedCornersAndShadow()
+        
+        imageView.addRoundedCorners(for: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner])
+        imageView.addInteraction(UIContextMenuInteraction(delegate: self))
+        imageView.isUserInteractionEnabled = true
+    }
+    
+    func setupNavigationItem(_ isFavoriteEvent: Bool) {
+        let favoriteButton = UIBarButtonItem(image: isFavoriteEvent ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
+        favoriteButton.target = self
+        favoriteButton.action = #selector(didTapFavorite)
+        self.navigationItem.setRightBarButton(favoriteButton, animated: true)
+    }
+    
     func createContextMenu() -> UIMenu {
         let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
             guard let self = self else { return }
@@ -170,11 +193,8 @@ private extension EventViewController {
         }
     }
     
-    func setupView() {
-        imageBackground.addRoundedCornersAndShadow()
-        
-        imageView.addRoundedCorners(for: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner])
-        imageView.addInteraction(UIContextMenuInteraction(delegate: self))
-        imageView.isUserInteractionEnabled = true
+    @objc func didTapFavorite() {
+        guard let isFavorite = viewModel?.event.isFavorite else { return }
+        isFavorite ? interactor?.removeFavorite() : interactor?.setFavorite()
     }
 }

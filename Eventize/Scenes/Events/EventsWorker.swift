@@ -12,12 +12,12 @@ struct EventsWorker {
     /// Fetch events from a data source and optionally filter them based on a search term.
     ///
     /// - Parameters:
-    ///   - searchTerm: An optional search term to filter events. Pass `nil` to fetch all events.
+    ///   - request: The request to fetch the events.
     ///   - completion: A closure to handle the result of the fetch operation.
     ///
     /// - Note: This method fetches events from a mocked data source for demonstration purposes.
     ///         In a real implementation, you should create a URL and use the NetworkManager for network requests.
-    func fetchEvents(address: String? = nil, searchTerm: String? = nil, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
+    func fetchEvents(request: Events.EventList.Request, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
         // TODO: - Mocked Network Call! Create a URL here in the future.
         guard let jsonData = JsonMocks.Events_EventObject_Array else {
             completion(.failure(.dataParsingError))
@@ -28,8 +28,8 @@ struct EventsWorker {
             switch result {
             case .success(var events):
                 // Filter events based on the search term if provided.
-                if let searchTerm = searchTerm, !searchTerm.isEmpty {
-                    events = filterEvents(events: events, searchTerm: searchTerm)
+                if let searchTerm = request.searchTerm, !searchTerm.isEmpty {
+                    events = filterEvents(events: events, filters: .init(searchTerm: searchTerm, isFavorite: request.isFavorite))
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
@@ -57,17 +57,31 @@ struct EventsWorker {
     ///
     /// - Parameters:
     ///   - events: The array of events to be filtered.
-    ///   - searchTerm: The search term to filter events.
+    ///   - filters: The filters.
     ///
     /// - Returns: An array of filtered events matching the search term.
-    func filterEvents(events: [Events.EventObject], searchTerm: String?) -> [Events.EventObject] {
-        guard let searchTerm = searchTerm?.lowercased() else { return events }
-        return events.filter { event in
-            // Check if any of the event's fields contain the search term.
-            return event.content.title.lowercased().contains(searchTerm) ||
+    func filterEvents(events: [Events.EventObject], filters: Events.EventList.Request) -> [Events.EventObject] {
+        var filteredEvents = events
+        
+        // Filter by searchTerm
+        if let searchTerm = filters.searchTerm?.lowercased(), !searchTerm.isEmpty {
+            filteredEvents = events.filter { event in
+                // Check if any of the event's fields contain the search term.
+                return event.content.title.lowercased().contains(searchTerm) ||
                 event.content.subtitle?.lowercased().contains(searchTerm) == true ||
                 event.content.info?.lowercased().contains(searchTerm) == true ||
                 (event.content.extraBottomInfo?.contains { $0.text.lowercased().contains(searchTerm) } ?? false)
+            }
         }
+        
+        // Filter by favorite
+        if filters.isFavorite {
+            filteredEvents = events.filter { event in
+                // Check if any of the event's fields contain the search term.
+                return event.isFavorite
+            }
+        }
+        
+        return filteredEvents
     }
 }

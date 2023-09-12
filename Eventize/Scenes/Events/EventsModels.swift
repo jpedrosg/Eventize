@@ -30,10 +30,12 @@ enum Events {
         struct Request {
             let address: String?
             let searchTerm: String?
+            let isFavorite: Bool
             
-            init(address: String? = nil, searchTerm: String? = nil) {
+            init(address: String? = nil, searchTerm: String? = nil, isFavorite: Bool) {
                 self.address = address
                 self.searchTerm = searchTerm
+                self.isFavorite = isFavorite
             }
         }
         
@@ -122,6 +124,10 @@ enum Events {
         static func ==(lhs: EventObject, rhs: EventObject) -> Bool {
             return lhs.eventUuid == rhs.eventUuid &&
             lhs.content == rhs.content
+        }
+        
+        var isFavorite: Bool {
+            UserDefaultsManager.shared.getUserPreferences()?.favoriteEventsUuids.contains(eventUuid) ?? false
         }
     }
     

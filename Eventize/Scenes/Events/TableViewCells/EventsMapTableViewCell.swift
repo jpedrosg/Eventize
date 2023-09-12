@@ -44,7 +44,27 @@ final class EventsMapTableViewCell: UITableViewCell {
     private var userCoordinate: CLLocationCoordinate2D?
     private var selectedEvent: Events.EventObject? {
         didSet {
-            guard let event = selectedEvent else { return }
+            guard let event = selectedEvent else {
+                customBackgroundView.isUserInteractionEnabled = false
+                selectedEventLabel.text = Constants.selectedEventEmptyLabelText
+                bannerImageView.image = nil
+                bannerImageView.backgroundColor = .secondarySystemBackground
+                titleLabel.text = nil
+                addressLabel.text = nil
+                priceLabel.text = nil
+                extraInfoLabel.text = nil
+                bottomInfosStackView.arrangedSubviews.forEach { subview in
+                    subview.removeFromSuperview()
+                }
+                
+                setNeedsLayout()
+                layoutIfNeeded()
+                
+                return
+            }
+            bannerImageView.backgroundColor = .clear
+            customBackgroundView.isUserInteractionEnabled = true
+            selectedEventLabel.text = Constants.selectedEventLabelText
             bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Constants.eventBannerImageName(event.eventUuid)))
             titleLabel.text = event.content.title
             addressLabel.text = event.content.subtitle
@@ -151,6 +171,7 @@ private extension EventsMapTableViewCell {
         static let extraLatitudeToCenterPin: CGFloat = 0.005
         static let annotationViewIdentifier: String = "annotationViewIdentifier"
         static let selectedEventLabelText = "Evento selecionado:"
+        static let selectedEventEmptyLabelText = "Nenhum evento selecionado."
         static let mapHeight: CGFloat = 450
         static let fakeExpandabilityIndicatorRadius: CGFloat = 1.5
         static let customSheetBackgroundRadius: CGFloat = 20
@@ -233,10 +254,8 @@ private extension EventsMapTableViewCell {
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEvent))
         customBackgroundView.addGestureRecognizer(gestureRecognizer)
-        customBackgroundView.isUserInteractionEnabled = true
         
         mapHeightConstraint.constant = Constants.mapHeight
-        selectedEventLabel.text = Constants.selectedEventLabelText
         customBackgroundView.addRoundedCornersAndShadow()
         bannerImageView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
         bannerImageView.contentMode = .scaleAspectFill

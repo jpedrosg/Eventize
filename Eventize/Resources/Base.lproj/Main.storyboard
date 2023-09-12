@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="BQA-4K-Hhl">
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" text="" id="BQA-4K-Hhl">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <edgeInsets key="layoutMargins" top="8" left="18" bottom="8" right="18"/>
@@ -913,7 +913,7 @@
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="paperplane.circle" catalog="system" width="128" height="123"/>
         <namedColor name="AccentColor">
-            <color red="0.17673120240000001" green="0.55664104960000005" blue="0.52251683950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.17599999904632568" green="0.55699998140335083" blue="0.5220000147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

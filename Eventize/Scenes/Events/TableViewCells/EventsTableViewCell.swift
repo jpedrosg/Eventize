@@ -4,9 +4,15 @@
 
 import UIKit
 
+protocol EventsCellInteractions: AnyObject {
+    func setFavorite(_ event: Events.EventObject)
+    func removeFavorite(_ event: Events.EventObject)
+}
+
 protocol EventsCellDisplayLogic: AnyObject {
     func displayEventCell(viewModel: Events.EventList.CellViewModel)
     func setMenuInteraction(_ interaction: UIContextMenuInteraction)
+    func setListener(_ listener: EventsCellInteractions)
 }
 
 final class EventsTableViewCell: UITableViewCell {
@@ -18,6 +24,8 @@ final class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var bottomInfosStackView: UIStackView!
+    
+    weak var listener: EventsCellInteractions?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,6 +63,10 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
     
     func setMenuInteraction(_ interaction: UIContextMenuInteraction) {
         customBackgroundView.addInteraction(interaction)
+    }
+    
+    func setListener(_ listener: EventsCellInteractions) {
+        self.listener = listener
     }
 }
 

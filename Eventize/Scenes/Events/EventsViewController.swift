@@ -57,11 +57,17 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     var interactor: EventsBusinessLogic?
     var router: (NSObjectProtocol & EventsRoutingLogic & EventsDataPassing)?
     
+    private var isFilteredByFavorites: Bool = false {
+        didSet {
+            setupNavigationItem()
+        }
+    }
+    
     private var isSearchBarHidden: Bool = false {
         didSet {
             searchBar.text = nil
             setupNavigationItem()
-            interactor?.filterEvents(request: .init())
+            interactor?.filterEvents(request: .init(isFavorite: isFilteredByFavorites))
             
             if !isSearchBarHidden, let frame = searchBarFrame, frame.height > .zero {
                 
@@ -145,11 +151,17 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
         requestLocation()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
+    }
+    
     // MARK: - Request Data from EventsInteractor
     
     func requestEvents() {
         searchBar.text = nil
-        interactor?.fetchEvents(request: .init(address: currentGeolocation?.name))
+        interactor?.fetchEvents(request: .init(address: currentGeolocation?.name, isFavorite: false))
     }
     
     func requestLocation() {
@@ -159,24 +171,14 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     // MARK: - Display ViewModel from EventsPresenter
     
     func displayEvents(viewModel: Events.EventList.ViewModel) {
-        if self.viewModel != viewModel {
-            // TODO: Remove this mock when in production
-            // We just did it because otherwise you wouldn't be able to test and see items next to your location.
-            let events = viewModel.events.map { event in
-                let generatedCoordinate = generateRandomCoordinateNearUser()
-                return Events.EventObject(eventUuid: event.eventUuid, content: .init(imageUrl: event.content.imageUrl,
-                                                                                     title: event.content.title,
-                                                                                     subtitle: event.content.subtitle,
-                                                                                     price: event.content.price,
-                                                                                     info: event.content.info,
-                                                                                     extraBottomInfo: event.content.extraBottomInfo,
-                                                                                     latitude: generatedCoordinate?.latitude,
-                                                                                     longitude: generatedCoordinate?.longitude))
-            }
-            
-            self.viewModel = .init(events: events)
+        self.viewModel = viewModel
+        
+        if viewModel.events.count == .zero {
+            // Switches back to list when the result is empty.
+            currentScreenMode = .list
         }
         
+        setupNavigationItem()
         tableView.reloadData()
     }
     
@@ -218,8 +220,10 @@ extension EventsViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let numberOfEvents = viewModel?.events.count ?? .zero
+        
         if currentScreenMode == .list {
-            return viewModel?.events.count ?? .zero
+            return numberOfEvents
         } else {
             return 1
         }
@@ -234,7 +238,7 @@ extension EventsViewController {
             
             if let eventsCell = cell as? EventsCellDisplayLogic,
                let event = viewModel?.events[safe: indexPath.row] {
-                
+                eventsCell.setListener(self)
                 eventsCell.displayEventCell(viewModel: .init(event: event))
                 eventsCell.setMenuInteraction(interaction)
             }
@@ -300,6 +304,18 @@ extension EventsViewController: UIContextMenuInteractionDelegate {
     }
 }
 
+// MARK: - EventsCellInteractions
+
+extension EventsViewController: EventsCellInteractions {
+    func setFavorite(_ event: Events.EventObject) {
+        interactor?.setFavorite(event)
+    }
+    
+    func removeFavorite(_ event: Events.EventObject) {
+        interactor?.removeFavorite(event)
+    }
+}
+
 // MARK: - EventsMapInteractions
 
 extension EventsViewController: EventsMapInteractions {
@@ -329,6 +345,10 @@ private extension EventsViewController {
         ticketsButton.target = self
         ticketsButton.action = #selector(didTapTickets)
         
+        let favoriteButton = UIBarButtonItem(image: isFilteredByFavorites ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
+        favoriteButton.target = self
+        favoriteButton.action = #selector(didTapFavorite)
+        
         let searchButton = UIBarButtonItem(image: UIImage(systemName: isSearchBarHidden ? "magnifyingglass.circle" : "magnifyingglass.circle.fill"))
         searchButton.target = self
         searchButton.action = #selector(didTapSearch)
@@ -336,7 +356,16 @@ private extension EventsViewController {
         let screenModeButton = UIBarButtonItem(image: UIImage(systemName: currentScreenMode == .list ? "tablecells.fill" : "map.fill"))
         screenModeButton.target = self
         screenModeButton.action = #selector(didTapScreenMode)
-        self.navigationItem.setRightBarButtonItems([ticketsButton, searchButton, screenModeButton], animated: true)
+        
+        var buttons: [UIBarButtonItem] = [ticketsButton, searchButton, screenModeButton]
+        
+        if currentScreenMode == .list {
+            buttons.append(favoriteButton)
+        } else {
+            buttons = [ticketsButton, searchButton, screenModeButton]
+        }
+        
+        self.navigationItem.setRightBarButtonItems(buttons, animated: true)
     }
     
     func setupRefreshControl() {
@@ -354,7 +383,7 @@ private extension EventsViewController {
             return
         }
         
-        interactor?.filterEvents(request: .init(searchTerm: searchBar.text))
+        interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
     }
     
     @objc func refresh(sender: AnyObject) {
@@ -373,24 +402,8 @@ private extension EventsViewController {
         currentScreenMode.toggle()
     }
     
-    // TODO: Remove this mock when in production
-    // We just did it because otherwise you wouldn't be able to test and see items next to your location.
-    func generateRandomCoordinateNearUser() -> CLLocationCoordinate2D? {
-        guard let userCoordinate = currentCoordinate else {
-            return nil
-        }
-        
-        let metersPerDegreeLatitude: CLLocationDistance = 111319.9 // Approximate meters per degree of latitude
-        let metersPerDegreeLongitude: CLLocationDistance = 111412.84 // Approximate meters per degree of longitude at equator
-        
-        // Generate random offsets in meters (adjust these values based on how close you want the generated coordinate to be)
-        let latitudeOffsetMeters = Double.random(in: -5000.0...5000.0)
-        let longitudeOffsetMeters = Double.random(in: -5000.0...5000.0)
-        
-        // Calculate the new coordinates
-        let latitude = userCoordinate.latitude + (latitudeOffsetMeters / metersPerDegreeLatitude)
-        let longitude = userCoordinate.longitude + (longitudeOffsetMeters / metersPerDegreeLongitude)
-        
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    @objc func didTapFavorite() {
+        isFilteredByFavorites.toggle()
+        interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
     }
 }

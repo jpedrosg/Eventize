@@ -6,6 +6,7 @@ import UIKit
 
 protocol EventPresentationLogic {
     func presentEvent(response: Event.EventDetails.Response)
+    func presentFavoriteButton()
 }
 
 final class EventPresenter: EventPresentationLogic {
@@ -19,5 +20,9 @@ final class EventPresenter: EventPresentationLogic {
     func presentEvent(response: Event.EventDetails.Response) {
         let viewModel = Event.EventDetails.ViewModel(event: response.event, eventDetails: response.eventDetails)
         viewController?.displayEvent(viewModel: viewModel)
+    }
+    
+    func presentFavoriteButton() {
+        viewController?.displayFavoriteButton()
     }
 }
