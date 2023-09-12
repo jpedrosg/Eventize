@@ -61,13 +61,13 @@ struct EventsWorker {
     ///
     /// - Returns: An array of filtered events matching the search term.
     func filterEvents(events: [Events.EventObject], searchTerm: String?) -> [Events.EventObject] {
-        guard let searchTerm = searchTerm else { return events }
+        guard let searchTerm = searchTerm?.lowercased() else { return events }
         return events.filter { event in
             // Check if any of the event's fields contain the search term.
-            return event.content.title.contains(searchTerm) ||
-                event.content.subtitle?.contains(searchTerm) == true ||
-                event.content.info?.contains(searchTerm) == true ||
-                (event.content.extraBottomInfo?.contains { $0.text.contains(searchTerm) } ?? false)
+            return event.content.title.lowercased().contains(searchTerm) ||
+                event.content.subtitle?.lowercased().contains(searchTerm) == true ||
+                event.content.info?.lowercased().contains(searchTerm) == true ||
+                (event.content.extraBottomInfo?.contains { $0.text.lowercased().contains(searchTerm) } ?? false)
         }
     }
 }

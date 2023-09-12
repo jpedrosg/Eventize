@@ -3,11 +3,13 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol EventsBusinessLogic {
     func fetchEvents(request: Events.EventList.Request)
     func filterEvents(request: Events.EventList.Request)
     func selectEvent(at index: Int)
+    func selectEvent(_ event: Events.EventObject)
     func fetchLocation()
 }
 
@@ -69,12 +71,16 @@ final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
     func selectEvent(at index: Int) {
         selectedEvent = events[safe: index]
     }
+    
+    func selectEvent(_ event: Events.EventObject) {
+        selectedEvent = event
+    }
 }
 
 // MARK: LocationManagerDelegate
 
 extension EventsInteractor: LocationManagerDelegate {
-    func didUpdateLocation(name: String) {
-        presenter?.presentAddress(response: .init(name: name))
+    func didUpdateLocation(geolocation: GeoLocation?, coordinate: CLLocationCoordinate2D?) {
+        presenter?.presentAddress(response: .init(geolocation: geolocation, coordinate: coordinate))
     }
 }

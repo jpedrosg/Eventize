@@ -25,6 +25,6 @@ final class EventsPresenter: EventsPresentationLogic {
     ///
     /// - Parameter response: The response containing address name to be presented.
     func presentAddress(response: Events.Address.Response) {
-        viewController?.displayAddress(viewModel: .init(name: response.name))
+        viewController?.displayAddress(viewModel: .init(geolocation: response.geolocation, coordinate: response.coordinate))
     }
 }
