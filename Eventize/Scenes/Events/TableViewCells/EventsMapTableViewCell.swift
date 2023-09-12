@@ -278,6 +278,8 @@ private extension EventsMapTableViewCell {
     }
     
     @objc func didTapEvent() {
+        HapticFeedbackHelper.shared.selectionFeedback()
+        
         guard let selectedEvent = selectedEvent else { return }
         listener?.routeToEvent(selectedEvent)
     }

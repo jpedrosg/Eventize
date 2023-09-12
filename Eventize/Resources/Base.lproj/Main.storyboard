@@ -455,6 +455,20 @@
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="3oK-PP-euy"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2U-QI-yiI">
+                                                    <rect key="frame" x="305" y="12.000000000000004" width="42" height="40.333333333333343"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="42" id="ktu-8X-t26"/>
+                                                    </constraints>
+                                                    <color key="tintColor" name="AccentColor"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="heart.fill" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22" scale="large"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="didTapFavoriteButton:" destination="Ng7-KQ-uro" eventType="touchUpInside" id="BTf-ev-4xZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
@@ -467,10 +481,13 @@
                                                 <constraint firstItem="6YW-s6-ChL" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" constant="12" id="MJ2-YR-SrW"/>
                                                 <constraint firstItem="6YW-s6-ChL" firstAttribute="top" secondItem="sF9-Qa-exj" secondAttribute="bottom" constant="12" id="Njg-gb-30L"/>
                                                 <constraint firstAttribute="trailing" secondItem="WSo-LT-QsA" secondAttribute="trailing" constant="12" id="R4u-dF-4JT"/>
+                                                <constraint firstItem="6YW-s6-ChL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="j2U-QI-yiI" secondAttribute="bottom" constant="12" id="WxT-ba-sCX"/>
                                                 <constraint firstAttribute="trailing" secondItem="q8k-BC-Gou" secondAttribute="trailing" constant="12" id="Zdn-fP-9ee"/>
                                                 <constraint firstItem="sF9-Qa-exj" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" id="ctB-rF-Uoi"/>
+                                                <constraint firstAttribute="trailing" secondItem="j2U-QI-yiI" secondAttribute="trailing" constant="6" id="ffX-2h-FSJ"/>
                                                 <constraint firstItem="WSo-LT-QsA" firstAttribute="leading" secondItem="LEP-V8-r7D" secondAttribute="leading" constant="12" id="gnK-A5-3Wo"/>
                                                 <constraint firstItem="WSo-LT-QsA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6YW-s6-ChL" secondAttribute="bottom" constant="28" id="n7O-PW-8MJ"/>
+                                                <constraint firstItem="j2U-QI-yiI" firstAttribute="top" secondItem="LEP-V8-r7D" secondAttribute="top" constant="12" id="ow7-QU-QgN"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -485,6 +502,7 @@
                                     <outlet property="bannerImageView" destination="sF9-Qa-exj" id="GlD-sb-1DE"/>
                                     <outlet property="bottomInfosStackView" destination="WSo-LT-QsA" id="6j8-xL-YC7"/>
                                     <outlet property="customBackgroundView" destination="LEP-V8-r7D" id="Ex3-ZE-bBY"/>
+                                    <outlet property="favoriteButton" destination="j2U-QI-yiI" id="mIm-8f-vvu"/>
                                     <outlet property="infoLabel" destination="bHN-Gd-sC1" id="3q2-57-spJ"/>
                                     <outlet property="locationLabel" destination="vRh-Or-Bkh" id="Gjx-8d-Gub"/>
                                     <outlet property="priceLabel" destination="r45-N0-4XT" id="c1z-jh-FnC"/>
@@ -909,6 +927,7 @@
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="events_banner_1" width="360" height="450"/>
+        <image name="heart.fill" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="paperplane.circle" catalog="system" width="128" height="123"/>

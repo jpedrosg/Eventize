@@ -239,7 +239,7 @@ extension EventsViewController {
             if let eventsCell = cell as? EventsCellDisplayLogic,
                let event = viewModel?.events[safe: indexPath.row] {
                 eventsCell.setListener(self)
-                eventsCell.displayEventCell(viewModel: .init(event: event))
+                eventsCell.displayEventCell(viewModel: .init(event: event), isFilteredByFavorites: isFilteredByFavorites, isSearching: !isSearchBarHidden)
                 eventsCell.setMenuInteraction(interaction)
             }
             
@@ -259,6 +259,7 @@ extension EventsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if currentScreenMode == .list {
+            HapticFeedbackHelper.shared.impactFeedback(.light)
             interactor?.selectEvent(at: indexPath.row)
             router?.routeToEvent()
         }
@@ -299,6 +300,7 @@ extension EventsViewController: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         animator.addCompletion {
             // Route to Event when previewed context menu is tapped on.
+            HapticFeedbackHelper.shared.impactFeedback(.light)
             self.router?.routeToEvent(animator.previewViewController as? EventViewController)
         }
     }
@@ -330,6 +332,7 @@ extension EventsViewController: EventsMapInteractions {
     }
     
     func routeToEvent(_ event: Events.EventObject) {
+        HapticFeedbackHelper.shared.impactFeedback(.light)
         router?.routeToEvent()
     }
 }
@@ -391,18 +394,26 @@ private extension EventsViewController {
     }
     
     @objc func didTapTickets(sender: UIButton) {
+        HapticFeedbackHelper.shared.impactFeedback(.medium)
+        
         router?.routeToTickets()
     }
     
     @objc func didTapSearch(sender: UIButton) {
+        HapticFeedbackHelper.shared.impactFeedback(.light)
+        
         isSearchBarHidden.toggle()
     }
     
     @objc func didTapScreenMode(sender: UIButton) {
+        HapticFeedbackHelper.shared.impactFeedback(.medium)
+        
         currentScreenMode.toggle()
     }
     
     @objc func didTapFavorite() {
+        HapticFeedbackHelper.shared.impactFeedback(.light)
+        
         isFilteredByFavorites.toggle()
         interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
     }

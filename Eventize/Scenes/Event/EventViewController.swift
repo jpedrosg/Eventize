@@ -194,6 +194,8 @@ private extension EventViewController {
     }
     
     @objc func didTapFavorite() {
+        HapticFeedbackHelper.shared.selectionFeedback()
+        
         guard let isFavorite = viewModel?.event.isFavorite else { return }
         isFavorite ? interactor?.removeFavorite() : interactor?.setFavorite()
     }

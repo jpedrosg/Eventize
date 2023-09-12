@@ -119,6 +119,8 @@ private extension TicketsViewController {
     }
     
     @objc func didTapTickets(sender: UIButton) {
+        HapticFeedbackHelper.shared.selectionFeedback()
+        
         router?.routeFromTickets()
     }
 }

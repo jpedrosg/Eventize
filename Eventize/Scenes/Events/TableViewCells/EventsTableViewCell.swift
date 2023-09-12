@@ -10,13 +10,14 @@ protocol EventsCellInteractions: AnyObject {
 }
 
 protocol EventsCellDisplayLogic: AnyObject {
-    func displayEventCell(viewModel: Events.EventList.CellViewModel)
+    func displayEventCell(viewModel: Events.EventList.CellViewModel, isFilteredByFavorites: Bool, isSearching: Bool)
     func setMenuInteraction(_ interaction: UIContextMenuInteraction)
     func setListener(_ listener: EventsCellInteractions)
 }
 
 final class EventsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var customBackgroundView: UIView!
     @IBOutlet weak var bannerImageView: NetworkImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -25,6 +26,7 @@ final class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var bottomInfosStackView: UIStackView!
     
+    private var viewModel: Events.EventList.CellViewModel?
     weak var listener: EventsCellInteractions?
     
     override func awakeFromNib() {
@@ -42,12 +44,26 @@ final class EventsTableViewCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         contentView.backgroundColor = .systemBackground
     }
+    
+    @IBAction func didTapFavoriteButton(_ sender: Any) {
+        HapticFeedbackHelper.shared.impactFeedback(.rigid)
+        
+        guard let event = viewModel?.event else { return }
+        
+        if event.isFavorite {
+            listener?.removeFavorite(event)
+        } else {
+            listener?.setFavorite(event)
+        }
+    }
 }
 
 // MARK: - EventsCellDisplayLogic
 
 extension EventsTableViewCell: EventsCellDisplayLogic {
-    func displayEventCell(viewModel: Events.EventList.CellViewModel) {
+    func displayEventCell(viewModel: Events.EventList.CellViewModel, isFilteredByFavorites: Bool, isSearching: Bool) {
+        self.viewModel = viewModel
+        
         bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)"))
         bannerImageView.highlightedImage = bannerImageView.image?.convertToBlackAndWhite()
         
@@ -55,6 +71,10 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
         locationLabel.text = viewModel.event.content.subtitle
         priceLabel.text = viewModel.event.content.price?.asCurrency
         infoLabel.text = viewModel.event.content.info
+        favoriteButton.setImage(UIImage(systemName: viewModel.event.isFavorite ? "heart.fill" : "heart"), for: .normal)
+        
+        favoriteButton.tintColor = isFilteredByFavorites ? UIColor(named: "AccentColor") : .secondarySystemBackground
+        titleLabel.textColor = isSearching ? UIColor(named: "AccentColor") : .label
         
         updateBottomInfoStackView(with: viewModel.event.content.extraBottomInfo)
         setNeedsLayout()
