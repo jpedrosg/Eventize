@@ -360,12 +360,10 @@ private extension EventsViewController {
         screenModeButton.target = self
         screenModeButton.action = #selector(didTapScreenMode)
         
-        var buttons: [UIBarButtonItem] = [ticketsButton, searchButton, screenModeButton]
+        var buttons: [UIBarButtonItem] = [ticketsButton, screenModeButton, searchButton]
         
         if currentScreenMode == .list {
             buttons.append(favoriteButton)
-        } else {
-            buttons = [ticketsButton, searchButton, screenModeButton]
         }
         
         self.navigationItem.setRightBarButtonItems(buttons, animated: true)
