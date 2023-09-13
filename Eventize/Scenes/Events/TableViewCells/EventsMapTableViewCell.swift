@@ -261,7 +261,7 @@ private extension EventsMapTableViewCell {
         bannerImageView.contentMode = .scaleAspectFill
         
         customSheetBackgroundView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner], radius: Constants.customSheetBackgroundRadius)
-        fakeExpandabilityIndicator.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner], radius: Constants.fakeExpandabilityIndicatorRadius)
+        fakeExpandabilityIndicator.addRoundedCorners(for: .all, radius: Constants.fakeExpandabilityIndicatorRadius)
     }
     
     func setRegionToSelectedEvent() {

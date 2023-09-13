@@ -13,7 +13,6 @@
 import UIKit
 
 @objc protocol TicketsRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
     func routeFromTickets()
 }
 
@@ -24,36 +23,8 @@ protocol TicketsDataPassing {
 final class TicketsRouter: NSObject, TicketsRoutingLogic, TicketsDataPassing {
     weak var viewController: TicketsViewController?
     var dataStore: TicketsDataStore?
-
-// MARK: Routing (navigating to other screens)
     
     func routeFromTickets() {
         viewController?.navigationController?.popViewController(animated: true)
     }
-
-//func routeToSomewhere(segue: UIStoryboardSegue?) {
-//    if let segue = segue {
-//        let destinationVC = segue.destination as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//    } else {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        navigateToSomewhere(source: viewController!, destination: destinationVC)
-//    }
-//}
-
-// MARK: Navigation to other screen
-
-//func navigateToSomewhere(source: TicketsViewController, destination: SomewhereViewController) {
-//    source.show(destination, sender: nil)
-//}
-
-// MARK: Passing data to other screen
-
-//    func passDataToSomewhere(source: TicketsDataStore, destination: inout SomewhereDataStore) {
-//        destination.name = source.name
-//    }
 }

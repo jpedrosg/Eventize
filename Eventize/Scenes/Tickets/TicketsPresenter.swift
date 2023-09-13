@@ -13,21 +13,13 @@
 import UIKit
 
 protocol TicketsPresentationLogic {
-    func presentSomething(response: Tickets.Something.Response)
+    func presentTickets(response: Tickets.TicketList.Response)
 }
 
 final class TicketsPresenter: TicketsPresentationLogic {
     weak var viewController: TicketsDisplayLogic?
 
-    // MARK: Parse and calc respnse from TicketsInteractor and send simple view model to TicketsViewController to be displayed
-
-    func presentSomething(response: Tickets.Something.Response) {
-        let viewModel = Tickets.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentTickets(response: Tickets.TicketList.Response) {
+        viewController?.displayTickets(viewModel: .init(tickets: response.tickets))
     }
-//
-//    func presentSomethingElse(response: Tickets.SomethingElse.Response) {
-//        let viewModel = Tickets.SomethingElse.ViewModel()
-//        viewController?.displaySomethingElse(viewModel: viewModel)
-//    }
 }

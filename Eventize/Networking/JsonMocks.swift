@@ -738,4 +738,99 @@ final class JsonMocks {
       }
     ]
     """.data(using: .utf8)
+    
+    static let Tickets_TicketObject_Array: Data? = """
+    [
+        {
+            "date": "2023-08-25T19:30:00Z",
+            "is_valid": true,
+            "event_uuid": "1",
+            "quantity": 4,
+            "title": "Jazz de Verão",
+            "description": "Viva a magia do jazz em um festival de verão.",
+            "image_url": "https://example.com/image1.jpg"
+        },
+        {
+            "date": "2023-08-20T15:00:00Z",
+            "is_valid": false,
+            "event_uuid": "2",
+            "quantity": 1,
+            "title": "Arte: Mestres Modernos",
+            "description": "Explore o mundo da arte moderna de artistas renomados.",
+            "image_url": "https://example.com/image2.jpg"
+        },
+        {
+            "date": "2023-08-18T20:00:00Z",
+            "is_valid": true,
+            "event_uuid": "3",
+            "quantity": 1,
+            "title": "Cinema ao Ar Livre",
+            "description": "Assista a um filme sob as estrelas com amigos e família.",
+            "image_url": "https://example.com/image3.jpg"
+        },
+        {
+            "date": "2023-09-05T14:30:00Z",
+            "is_valid": true,
+            "event_uuid": "4",
+            "quantity": 2,
+            "title": "Fotografia: Capturando a Vida",
+            "description": "Descubra a arte de capturar a vida por meio da fotografia.",
+            "image_url": "https://example.com/image4.jpg"
+        },
+        {
+            "date": "2023-09-10T19:00:00Z",
+            "is_valid": true,
+            "event_uuid": "5",
+            "quantity": 1,
+            "title": "Teatro Uma História de Amor",
+            "description": "Viva uma jornada emocional por meio do amor e do drama.",
+            "image_url": "https://example.com/image5.jpg"
+        },
+        {
+            "date": "2023-09-12T21:30:00Z",
+            "is_valid": true,
+            "event_uuid": "6",
+            "quantity": 1,
+            "title": "Mostra Explorando o Mundo",
+            "description": "Explore documentários fascinantes de todo o mundo.",
+            "image_url": "https://example.com/image6.jpg"
+        },
+        {
+            "date": "2023-09-14T18:30:00Z",
+            "is_valid": true,
+            "event_uuid": "7",
+            "quantity": 1,
+            "title": "Show Bandas Lendárias",
+            "description": "Fique eletrizado com as lendárias bandas de rock.",
+            "image_url": "https://example.com/image7.jpg"
+        },
+        {
+            "date": "2023-09-16T20:15:00Z",
+            "is_valid": true,
+            "event_uuid": "8",
+            "quantity": 1,
+            "title": "Performance Expressões Rítmicas",
+            "description": "Testemunhe a beleza das expressões rítmicas por meio da dança.",
+            "image_url": "https://example.com/image8.jpg"
+        },
+        {
+            "date": "2023-09-18T22:30:00Z",
+            "is_valid": false,
+            "event_uuid": "9",
+            "quantity": 8,
+            "title": "Feira Delícias Culinárias",
+            "description": "Saboreie delícias culinárias de chefs e artesãos locais.",
+            "image_url": "https://example.com/image9.jpg"
+        },
+        {
+            "date": "2023-09-20T17:45:00Z",
+            "is_valid": true,
+            "event_uuid": "10",
+            "quantity": 1,
+            "title": "Exposição Arte em 3D",
+            "description": "Descubra o mundo da arte em 3D por meio de esculturas deslumbrantes.",
+            "image_url": "https://example.com/image10.jpg"
+        }
+    ]
+    """.data(using: .utf8)
 }

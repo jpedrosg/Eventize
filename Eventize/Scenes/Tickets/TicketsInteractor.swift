@@ -13,34 +13,63 @@
 import UIKit
 
 protocol TicketsBusinessLogic {
-    func doSomething(request: Tickets.Something.Request)
-//    func doSomethingElse(request: Tickets.SomethingElse.Request)
+    func fetchTickets(request: Tickets.TicketList.Request)
 }
 
 protocol TicketsDataStore {
-    //var name: String { get set }
+    var tickets: [Tickets.TicketObject] { get set }
 }
 
 final class TicketsInteractor: TicketsBusinessLogic, TicketsDataStore {
     var presenter: TicketsPresentationLogic?
-    var worker: TicketsWorker?
-    //var name: String = ""
-
-    // MARK: Do something (and send response to TicketsPresenter)
-
-    func doSomething(request: Tickets.Something.Request) {
-        worker = TicketsWorker()
-        worker?.doSomeWork()
-
-        let response = Tickets.Something.Response()
-        presenter?.presentSomething(response: response)
+    var worker: TicketsWorker
+    var tickets: [Tickets.TicketObject]
+    
+    init(presenter: TicketsPresentationLogic? = nil,
+         worker: TicketsWorker = TicketsWorker(),
+         tickets: [Tickets.TicketObject] = []) {
+        self.presenter = presenter
+        self.worker = worker
+        self.tickets = tickets
     }
-//
-//    func doSomethingElse(request: Tickets.SomethingElse.Request) {
-//        worker = TicketsWorker()
-//        worker?.doSomeOtherWork()
-//
-//        let response = Tickets.SomethingElse.Response()
-//        presenter?.presentSomethingElse(response: response)
-//    }
+
+    func fetchTickets(request: Tickets.TicketList.Request) {
+        worker.fetchTickets(request: request) { result in
+            switch result {
+            case .success(let tickets):
+                self.tickets = tickets
+                self.presenter?.presentTickets(response: .init(tickets: tickets))
+            case .failure(_):
+                // TODO: Handle Error
+                break
+            }
+        }
+    }
+}
+
+// MARK: - TicketsViewCellInteractions
+
+extension TicketsInteractor: TicketsViewCellInteractions {
+    func validateTicket(_ ticket: Tickets.TicketObject) {
+        
+        worker.validateTicket(request: ticket) { result in
+            switch result {
+            case .success(let resultTicket):
+                let newTickets = self.tickets.map { ticket in
+                    if ticket.eventUuid == resultTicket.eventUuid {
+                        return resultTicket
+                    } else {
+                        return ticket
+                    }
+                }
+                
+                self.tickets = newTickets
+                self.presenter?.presentTickets(response: .init(tickets: newTickets))
+            case .failure(_):
+                // TODO: Handle Error
+                break
+            }
+        }
+        presenter?.presentTickets(response: .init(tickets: tickets))
+    }
 }

@@ -11,20 +11,24 @@ class NetworkImageView: UIImageView {
     /// The URL of the image to be loaded.
     private var imageUrl: String?
     
+    /// The UIImage without converting to B&W.
+    private var rawImage: UIImage?
+    
     // MARK: - Public Methods
     
     /// Sets the image of the `NetworkImageView` from a given URL.
     ///
     /// - Parameter imageUrl: The URL of the image to be loaded.
     /// - Parameter placeholderImage: The UIImage to be set as backing on failure.
-    func setImage(fromUrl imageUrl: String?, placeholderImage: UIImage? = nil, completion: (() -> Void)? = nil) {
+    func setImage(fromUrl imageUrl: String?, placeholderImage: UIImage? = nil, asBlackAndWhite: Bool = false, completion: (() -> Void)? = nil) {
         self.imageUrl = imageUrl
         
         // Clear the current image
-        image = nil
+        image = asBlackAndWhite ? placeholderImage?.convertToBlackAndWhite() : placeholderImage
         
         guard let imageUrl = imageUrl, let url = URL(string: imageUrl) else {
-            self.image = placeholderImage
+            rawImage = image
+            self.image = asBlackAndWhite ? placeholderImage?.convertToBlackAndWhite() : placeholderImage
             completion?()
             return
         }
@@ -34,9 +38,11 @@ class NetworkImageView: UIImageView {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let image):
-                    self?.image = image
+                    self?.rawImage = image
+                    self?.image = asBlackAndWhite ? image.convertToBlackAndWhite() : image
                 case .failure:
-                    self?.image = placeholderImage
+                    self?.rawImage = placeholderImage
+                    self?.image = asBlackAndWhite ? placeholderImage?.convertToBlackAndWhite() : placeholderImage
                 }
             }
             

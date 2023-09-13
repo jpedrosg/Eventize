@@ -113,6 +113,7 @@ struct NetworkManager {
     
     private static func decodeResponse<T: Decodable>(_ type: T.Type, from data: Data, callerName: String) throws -> T {
         let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .iso8601
         jsonDecoder.dataDecodingStrategy = .deferredToData
         return try jsonDecoder.decode(type, from: data)
     }

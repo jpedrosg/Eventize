@@ -12,13 +12,14 @@
 
 import UIKit
 
-protocol TicketsDisplayLogic: AnyObject
-{
-    func displaySomething(viewModel: Tickets.Something.ViewModel)
-//    func displaySomethingElse(viewModel: Tickets.SomethingElse.ViewModel)
+protocol TicketsDisplayLogic: AnyObject {
+    func displayTickets(viewModel: Tickets.TicketList.ViewModel)
 }
 
 final class TicketsViewController: UITableViewController, TicketsDisplayLogic {
+    static let reuseIdentifier: String = "TicketsViewCell"
+    
+    private var viewModel: Tickets.TicketList.ViewModel?
     var interactor: TicketsBusinessLogic?
     var router: (NSObjectProtocol & TicketsRoutingLogic & TicketsDataPassing)?
 
@@ -64,44 +65,25 @@ final class TicketsViewController: UITableViewController, TicketsDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
-//        doSomethingElse()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        
+        requestTickets()
         setupNavigationItem()
     }
-    
-    //MARK: - receive events from UI
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-//
-//    @IBAction func someButtonTapped(_ sender: Any) {
-//
-//    }
-//
-//    @IBAction func otherButtonTapped(_ sender: Any) {
-//
-//    }
-    
-    // MARK: - request data from TicketsInteractor
 
-    func doSomething() {
-        let request = Tickets.Something.Request()
-        interactor?.doSomething(request: request)
+    func requestTickets() {
+        let request = Tickets.TicketList.Request()
+        interactor?.fetchTickets(request: request)
     }
-//
-//    func doSomethingElse() {
-//        let request = Tickets.SomethingElse.Request()
-//        interactor?.doSomethingElse(request: request)
-//    }
 
-    // MARK: - display view model from TicketsPresenter
-
-    func displaySomething(viewModel: Tickets.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displayTickets(viewModel: Tickets.TicketList.ViewModel) {
+        self.viewModel = viewModel
+        
+        tableView.reloadData()
     }
-//
-//    func displaySomethingElse(viewModel: Tickets.SomethingElse.ViewModel) {
-//        // do sometingElse with viewModel
-//    }
 }
 
 // MARK: - Private API
@@ -122,5 +104,28 @@ private extension TicketsViewController {
         HapticFeedbackHelper.shared.selectionFeedback()
         
         router?.routeFromTickets()
+    }
+}
+
+
+// MARK: UITableViewDataSouce + UITableViewDelegate
+
+extension TicketsViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.tickets.count ?? .zero
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
+        
+        if let ticketCell = cell as? TicketsViewCellDisplayLogic, let ticket = viewModel?.tickets[safe: indexPath.row] {
+            ticketCell.displayTicket(viewModel: .init(ticket: ticket))
+            
+            if let listener = interactor as? TicketsViewCellInteractions {
+                ticketCell.setListener(listener)
+            }
+        }
+        
+        return cell
     }
 }

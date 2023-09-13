@@ -129,7 +129,7 @@ private extension EventViewController {
     func setupView() {
         imageBackground.addRoundedCornersAndShadow()
         
-        imageView.addRoundedCorners(for: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner])
+        imageView.addRoundedCorners(for: .all)
         imageView.addInteraction(UIContextMenuInteraction(delegate: self))
         imageView.isUserInteractionEnabled = true
     }

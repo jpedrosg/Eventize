@@ -28,6 +28,7 @@
 		BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC72AAD064500634334 /* Collection+safe.swift */; };
 		BCA8C9712AB0BED100B9CFFD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */; };
 		BCA8C9732AB10D9900B9CFFD /* HapticFeedbackHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA8C9722AB10D9900B9CFFD /* HapticFeedbackHelper.swift */; };
+		BCA8C9752AB1287500B9CFFD /* TicketsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA8C9742AB1287500B9CFFD /* TicketsTableViewCell.swift */; };
 		BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */; };
 		BCC91E912AACD77B00DED263 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91E902AACD77B00DED263 /* SceneDelegate.swift */; };
 		BCC91E962AACD77B00DED263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCC91E942AACD77B00DED263 /* Main.storyboard */; };
@@ -117,6 +118,7 @@
 		BC545EC72AAD064500634334 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		BCA8C9722AB10D9900B9CFFD /* HapticFeedbackHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackHelper.swift; sourceTree = "<group>"; };
+		BCA8C9742AB1287500B9CFFD /* TicketsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsTableViewCell.swift; sourceTree = "<group>"; };
 		BCC91E8B2AACD77B00DED263 /* Eventize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC91E8E2AACD77B00DED263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCC91E902AACD77B00DED263 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				BC3BE0772AAD1F5E00BA0006 /* TicketsModels.swift */,
 				BC3BE0782AAD1F5E00BA0006 /* TicketsViewController.swift */,
 				BC3BE0792AAD1F5E00BA0006 /* TicketsInteractor.swift */,
+				BCA8C9742AB1287500B9CFFD /* TicketsTableViewCell.swift */,
 			);
 			path = Tickets;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */,
 				BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */,
 				BC3BE07E2AAD1F5E00BA0006 /* TicketsViewController.swift in Sources */,
+				BCA8C9752AB1287500B9CFFD /* TicketsTableViewCell.swift in Sources */,
 				BCC91F192AACD8BD00DED263 /* HomeInteractor.swift in Sources */,
 				BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */,
 				BCC91F0B2AACD8AB00DED263 /* EventsInteractor.swift in Sources */,

@@ -12,43 +12,45 @@
 
 import UIKit
 
-enum Tickets
-{
-    // MARK: Use cases
-
-    enum Something
-    {
-        struct Request
-        {
-
+enum Tickets {
+    enum TicketList {
+        struct Request {}
+        
+        struct Response {
+            let tickets: [TicketObject]
         }
-
-        struct Response
-        {
-
+        
+        struct ViewModel {
+            let tickets: [TicketObject]
         }
-
-        struct ViewModel
-        {
-
+        
+        struct CellViewModel {
+            let ticket: TicketObject
         }
     }
     
-//    enum SomethingElse
-//    {
-//        struct Request
-//        {
-//
-//        }
-//
-//        struct Response
-//        {
-//
-//        }
-//
-//        struct ViewModel
-//        {
-//
-//        }
-//    }
+    struct TicketObject: Codable {
+        let date: String
+        let isValid: Bool
+        let eventUuid: String
+        let title: String
+        let description: String?
+        let imageUrl: String?
+        var quantity: Int?
+        
+        enum CodingKeys: String, CodingKey {
+            case date
+            case isValid = "is_valid"
+            case eventUuid = "event_uuid"
+            case title
+            case description
+            case imageUrl = "image_url"
+            case quantity
+        }
+    }
+    
+    enum TicketFetchError: Error {
+        case networkError
+        case dataParsingError
+    }
 }

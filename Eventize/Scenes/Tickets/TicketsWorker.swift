@@ -13,11 +13,44 @@
 import UIKit
 
 final class TicketsWorker {
-    func doSomeWork() {
+    func fetchTickets(request: Tickets.TicketList.Request, completion: @escaping (Result<[Tickets.TicketObject], Tickets.TicketFetchError>) -> Void) {
+        // TODO: - Mocked Network Call! Create URL here in the future.
+        guard let jsonData = JsonMocks.Tickets_TicketObject_Array else {
+            completion(.failure(.dataParsingError))
+            return
+        }
         
+        NetworkManager.fetchData(jsonData: jsonData, responseType: [Tickets.TicketObject].self, callerName: String(describing: self)) { result in
+            switch result {
+            case .success(let eventDetails):
+                completion(.success(eventDetails))
+                
+            case .failure(let networkError):
+                switch networkError {
+                case .invalidURL:
+                    completion(.failure(.networkError))
+                case .networkError(_):
+                    completion(.failure(.networkError))
+                case .invalidResponse:
+                    completion(.failure(.dataParsingError))
+                case .dataParsingError:
+                    completion(.failure(.dataParsingError))
+                }
+            }
+        }
     }
-//    
-//    func doSomeOtherWork() {
-//
-//    }
+    
+    func validateTicket(request: Tickets.TicketObject, completion: @escaping (Result<Tickets.TicketObject, Tickets.TicketFetchError>) -> Void) {
+        // TODO: Remove mocked code and validate ticket!
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            let ticket = Tickets.TicketObject(date: request.date,
+                                              isValid: false,
+                                              eventUuid: request.eventUuid,
+                                              title: request.title,
+                                              description: request.description,
+                                              imageUrl: request.imageUrl)
+            
+            completion(.success(ticket))
+        }
+    }
 }
