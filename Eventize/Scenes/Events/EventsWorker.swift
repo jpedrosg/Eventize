@@ -65,7 +65,7 @@ struct EventsWorker {
         
         // Filter by searchTerm
         if let searchTerm = filters.searchTerm?.lowercased(), !searchTerm.isEmpty {
-            filteredEvents = events.filter { event in
+            filteredEvents = filteredEvents.filter { event in
                 // Check if any of the event's fields contain the search term.
                 return event.content.title.lowercased().contains(searchTerm) ||
                 event.content.subtitle?.lowercased().contains(searchTerm) == true ||
@@ -76,7 +76,7 @@ struct EventsWorker {
         
         // Filter by favorite
         if filters.isFavorite {
-            filteredEvents = events.filter { event in
+            filteredEvents = filteredEvents.filter { event in
                 // Check if any of the event's fields contain the search term.
                 return event.isFavorite
             }

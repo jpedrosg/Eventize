@@ -43,30 +43,6 @@
 		BCC91F0D2AACD8AB00DED263 /* EventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F072AACD8AB00DED263 /* EventsPresenter.swift */; };
 		BCC91F0E2AACD8AB00DED263 /* EventsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F082AACD8AB00DED263 /* EventsWorker.swift */; };
 		BCC91F0F2AACD8AB00DED263 /* EventsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F092AACD8AB00DED263 /* EventsRouter.swift */; };
-		BCC91F162AACD8BD00DED263 /* HomeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F102AACD8BD00DED263 /* HomeWorker.swift */; };
-		BCC91F172AACD8BD00DED263 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F112AACD8BD00DED263 /* HomePresenter.swift */; };
-		BCC91F182AACD8BD00DED263 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F122AACD8BD00DED263 /* HomeViewController.swift */; };
-		BCC91F192AACD8BD00DED263 /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F132AACD8BD00DED263 /* HomeInteractor.swift */; };
-		BCC91F1A2AACD8BD00DED263 /* HomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F142AACD8BD00DED263 /* HomeModels.swift */; };
-		BCC91F1B2AACD8BD00DED263 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F152AACD8BD00DED263 /* HomeRouter.swift */; };
-		BCC91F222AACD8C300DED263 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F1C2AACD8C300DED263 /* LoginInteractor.swift */; };
-		BCC91F232AACD8C300DED263 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F1D2AACD8C300DED263 /* LoginPresenter.swift */; };
-		BCC91F242AACD8C300DED263 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F1E2AACD8C300DED263 /* LoginViewController.swift */; };
-		BCC91F252AACD8C300DED263 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F1F2AACD8C300DED263 /* LoginWorker.swift */; };
-		BCC91F262AACD8C300DED263 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F202AACD8C300DED263 /* LoginModels.swift */; };
-		BCC91F272AACD8C300DED263 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F212AACD8C300DED263 /* LoginRouter.swift */; };
-		BCC91F2E2AACD8D000DED263 /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F282AACD8D000DED263 /* ProfileInteractor.swift */; };
-		BCC91F2F2AACD8D000DED263 /* ProfileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F292AACD8D000DED263 /* ProfileWorker.swift */; };
-		BCC91F302AACD8D000DED263 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F2A2AACD8D000DED263 /* ProfilePresenter.swift */; };
-		BCC91F312AACD8D000DED263 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F2B2AACD8D000DED263 /* ProfileViewController.swift */; };
-		BCC91F322AACD8D000DED263 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F2C2AACD8D000DED263 /* ProfileRouter.swift */; };
-		BCC91F332AACD8D000DED263 /* ProfileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F2D2AACD8D000DED263 /* ProfileModels.swift */; };
-		BCC91F3A2AACD8D400DED263 /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F342AACD8D400DED263 /* RegisterPresenter.swift */; };
-		BCC91F3B2AACD8D400DED263 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F352AACD8D400DED263 /* RegisterViewController.swift */; };
-		BCC91F3C2AACD8D400DED263 /* RegisterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F362AACD8D400DED263 /* RegisterModels.swift */; };
-		BCC91F3D2AACD8D400DED263 /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F372AACD8D400DED263 /* RegisterRouter.swift */; };
-		BCC91F3E2AACD8D400DED263 /* RegisterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F382AACD8D400DED263 /* RegisterInteractor.swift */; };
-		BCC91F3F2AACD8D400DED263 /* RegisterWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F392AACD8D400DED263 /* RegisterWorker.swift */; };
 		BCC91F412AACD94C00DED263 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCC91F402AACD94C00DED263 /* GoogleService-Info.plist */; };
 		BCC91F442AACD9E000DED263 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BCC91F432AACD9E000DED263 /* FirebaseAnalytics */; };
 		BCC91F462AACD9E000DED263 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BCC91F452AACD9E000DED263 /* FirebaseAuth */; };
@@ -137,30 +113,6 @@
 		BCC91F072AACD8AB00DED263 /* EventsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsPresenter.swift; sourceTree = "<group>"; };
 		BCC91F082AACD8AB00DED263 /* EventsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsWorker.swift; sourceTree = "<group>"; };
 		BCC91F092AACD8AB00DED263 /* EventsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsRouter.swift; sourceTree = "<group>"; };
-		BCC91F102AACD8BD00DED263 /* HomeWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWorker.swift; sourceTree = "<group>"; };
-		BCC91F112AACD8BD00DED263 /* HomePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
-		BCC91F122AACD8BD00DED263 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		BCC91F132AACD8BD00DED263 /* HomeInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
-		BCC91F142AACD8BD00DED263 /* HomeModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeModels.swift; sourceTree = "<group>"; };
-		BCC91F152AACD8BD00DED263 /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
-		BCC91F1C2AACD8C300DED263 /* LoginInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
-		BCC91F1D2AACD8C300DED263 /* LoginPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		BCC91F1E2AACD8C300DED263 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		BCC91F1F2AACD8C300DED263 /* LoginWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
-		BCC91F202AACD8C300DED263 /* LoginModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModels.swift; sourceTree = "<group>"; };
-		BCC91F212AACD8C300DED263 /* LoginRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
-		BCC91F282AACD8D000DED263 /* ProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
-		BCC91F292AACD8D000DED263 /* ProfileWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileWorker.swift; sourceTree = "<group>"; };
-		BCC91F2A2AACD8D000DED263 /* ProfilePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
-		BCC91F2B2AACD8D000DED263 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		BCC91F2C2AACD8D000DED263 /* ProfileRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
-		BCC91F2D2AACD8D000DED263 /* ProfileModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModels.swift; sourceTree = "<group>"; };
-		BCC91F342AACD8D400DED263 /* RegisterPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
-		BCC91F352AACD8D400DED263 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		BCC91F362AACD8D400DED263 /* RegisterModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModels.swift; sourceTree = "<group>"; };
-		BCC91F372AACD8D400DED263 /* RegisterRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
-		BCC91F382AACD8D400DED263 /* RegisterInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterInteractor.swift; sourceTree = "<group>"; };
-		BCC91F392AACD8D400DED263 /* RegisterWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterWorker.swift; sourceTree = "<group>"; };
 		BCC91F402AACD94C00DED263 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BCC91F4A2AACDD5200DED263 /* EventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPresenter.swift; sourceTree = "<group>"; };
 		BCC91F4B2AACDD5200DED263 /* EventWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventWorker.swift; sourceTree = "<group>"; };
@@ -339,10 +291,6 @@
 			children = (
 				BC3BE0732AAD1F4800BA0006 /* Tickets */,
 				BCC91F492AACDD3B00DED263 /* Event */,
-				BCC91EC72AACD85300DED263 /* Register */,
-				BCC91EC62AACD84F00DED263 /* Profile */,
-				BCC91EC52AACD84B00DED263 /* Login */,
-				BCC91EC42AACD84700DED263 /* Home */,
 				BCC91EC32AACD83C00DED263 /* Events */,
 			);
 			path = Scenes;
@@ -360,58 +308,6 @@
 				BCC91F082AACD8AB00DED263 /* EventsWorker.swift */,
 			);
 			path = Events;
-			sourceTree = "<group>";
-		};
-		BCC91EC42AACD84700DED263 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				BCC91F132AACD8BD00DED263 /* HomeInteractor.swift */,
-				BCC91F142AACD8BD00DED263 /* HomeModels.swift */,
-				BCC91F112AACD8BD00DED263 /* HomePresenter.swift */,
-				BCC91F152AACD8BD00DED263 /* HomeRouter.swift */,
-				BCC91F122AACD8BD00DED263 /* HomeViewController.swift */,
-				BCC91F102AACD8BD00DED263 /* HomeWorker.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		BCC91EC52AACD84B00DED263 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				BCC91F1C2AACD8C300DED263 /* LoginInteractor.swift */,
-				BCC91F202AACD8C300DED263 /* LoginModels.swift */,
-				BCC91F1D2AACD8C300DED263 /* LoginPresenter.swift */,
-				BCC91F212AACD8C300DED263 /* LoginRouter.swift */,
-				BCC91F1E2AACD8C300DED263 /* LoginViewController.swift */,
-				BCC91F1F2AACD8C300DED263 /* LoginWorker.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		BCC91EC62AACD84F00DED263 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				BCC91F282AACD8D000DED263 /* ProfileInteractor.swift */,
-				BCC91F2D2AACD8D000DED263 /* ProfileModels.swift */,
-				BCC91F2A2AACD8D000DED263 /* ProfilePresenter.swift */,
-				BCC91F2C2AACD8D000DED263 /* ProfileRouter.swift */,
-				BCC91F2B2AACD8D000DED263 /* ProfileViewController.swift */,
-				BCC91F292AACD8D000DED263 /* ProfileWorker.swift */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		BCC91EC72AACD85300DED263 /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				BCC91F382AACD8D400DED263 /* RegisterInteractor.swift */,
-				BCC91F362AACD8D400DED263 /* RegisterModels.swift */,
-				BCC91F342AACD8D400DED263 /* RegisterPresenter.swift */,
-				BCC91F372AACD8D400DED263 /* RegisterRouter.swift */,
-				BCC91F352AACD8D400DED263 /* RegisterViewController.swift */,
-				BCC91F392AACD8D400DED263 /* RegisterWorker.swift */,
-			);
-			path = Register;
 			sourceTree = "<group>";
 		};
 		BCC91F492AACDD3B00DED263 /* Event */ = {
@@ -567,65 +463,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCC91F2F2AACD8D000DED263 /* ProfileWorker.swift in Sources */,
-				BCC91F242AACD8C300DED263 /* LoginViewController.swift in Sources */,
-				BCC91F302AACD8D000DED263 /* ProfilePresenter.swift in Sources */,
-				BCC91F262AACD8C300DED263 /* LoginModels.swift in Sources */,
 				BCC91F0A2AACD8AB00DED263 /* EventsModels.swift in Sources */,
 				BCA8C9732AB10D9900B9CFFD /* HapticFeedbackHelper.swift in Sources */,
 				BC3BE0942AAF57E900BA0006 /* EventsMapTableViewCell.swift in Sources */,
 				BCC91F502AACDD5200DED263 /* EventPresenter.swift in Sources */,
 				BC3BE0842AAE6A6100BA0006 /* LogError.swift in Sources */,
-				BCC91F3C2AACD8D400DED263 /* RegisterModels.swift in Sources */,
 				BCC91F0E2AACD8AB00DED263 /* EventsWorker.swift in Sources */,
 				BC3BE07A2AAD1F5E00BA0006 /* TicketsPresenter.swift in Sources */,
-				BCC91F272AACD8C300DED263 /* LoginRouter.swift in Sources */,
 				BCC91F0F2AACD8AB00DED263 /* EventsRouter.swift in Sources */,
-				BCC91F222AACD8C300DED263 /* LoginInteractor.swift in Sources */,
 				BC3BE07C2AAD1F5E00BA0006 /* TicketsRouter.swift in Sources */,
-				BCC91F1B2AACD8BD00DED263 /* HomeRouter.swift in Sources */,
 				BC3BE08C2AAED1EC00BA0006 /* EventsTableViewHeader.swift in Sources */,
-				BCC91F3F2AACD8D400DED263 /* RegisterWorker.swift in Sources */,
 				BC3BE0872AAE6A9B00BA0006 /* NetworkManager.swift in Sources */,
 				BCC91F0C2AACD8AB00DED263 /* EventsViewController.swift in Sources */,
-				BCC91F2E2AACD8D000DED263 /* ProfileInteractor.swift in Sources */,
 				BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */,
 				BC3BE0722AAD171000BA0006 /* UIView+addRoundedCornersAndShadow.swift in Sources */,
-				BCC91F3D2AACD8D400DED263 /* RegisterRouter.swift in Sources */,
 				BCC91F0D2AACD8AB00DED263 /* EventsPresenter.swift in Sources */,
 				BC3BE07D2AAD1F5E00BA0006 /* TicketsModels.swift in Sources */,
-				BCC91F322AACD8D000DED263 /* ProfileRouter.swift in Sources */,
-				BCC91F332AACD8D000DED263 /* ProfileModels.swift in Sources */,
-				BCC91F1A2AACD8BD00DED263 /* HomeModels.swift in Sources */,
-				BCC91F3E2AACD8D400DED263 /* RegisterInteractor.swift in Sources */,
-				BCC91F232AACD8C300DED263 /* LoginPresenter.swift in Sources */,
 				BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */,
 				BCC91E8F2AACD77B00DED263 /* AppDelegate.swift in Sources */,
 				BC3BE07E2AAD1F5E00BA0006 /* TicketsViewController.swift in Sources */,
 				BCA8C9752AB1287500B9CFFD /* TicketsTableViewCell.swift in Sources */,
-				BCC91F192AACD8BD00DED263 /* HomeInteractor.swift in Sources */,
 				BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */,
 				BCC91F0B2AACD8AB00DED263 /* EventsInteractor.swift in Sources */,
-				BCC91F162AACD8BD00DED263 /* HomeWorker.swift in Sources */,
 				BCC91F532AACDD5200DED263 /* EventModels.swift in Sources */,
 				BCC91E912AACD77B00DED263 /* SceneDelegate.swift in Sources */,
 				BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */,
 				BCC91F542AACDD5200DED263 /* EventViewController.swift in Sources */,
-				BCC91F3A2AACD8D400DED263 /* RegisterPresenter.swift in Sources */,
 				BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */,
 				BC3BE08E2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift in Sources */,
-				BCC91F172AACD8BD00DED263 /* HomePresenter.swift in Sources */,
 				BC3BE07F2AAD1F5E00BA0006 /* TicketsInteractor.swift in Sources */,
 				BCC91F522AACDD5200DED263 /* EventRouter.swift in Sources */,
-				BCC91F312AACD8D000DED263 /* ProfileViewController.swift in Sources */,
 				BCC91F512AACDD5200DED263 /* EventWorker.swift in Sources */,
-				BCC91F252AACD8C300DED263 /* LoginWorker.swift in Sources */,
 				BCC91F552AACDD5200DED263 /* EventInteractor.swift in Sources */,
 				BCA8C9712AB0BED100B9CFFD /* UserDefaultsManager.swift in Sources */,
-				BCC91F182AACD8BD00DED263 /* HomeViewController.swift in Sources */,
 				BC3BE0912AAEDF0800BA0006 /* LocationManager.swift in Sources */,
 				BC3BE07B2AAD1F5E00BA0006 /* TicketsWorker.swift in Sources */,
-				BCC91F3B2AACD8D400DED263 /* RegisterViewController.swift in Sources */,
 				BC3BE0812AAE67DD00BA0006 /* JsonMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

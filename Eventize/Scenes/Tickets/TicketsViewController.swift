@@ -116,7 +116,7 @@ extension TicketsViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
         
         if let ticketCell = cell as? TicketsViewCellDisplayLogic, let ticket = viewModel?.tickets[safe: indexPath.row] {
             ticketCell.displayTicket(viewModel: .init(ticket: ticket))
