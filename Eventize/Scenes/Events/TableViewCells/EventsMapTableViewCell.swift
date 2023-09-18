@@ -173,6 +173,7 @@ extension EventsMapTableViewCell: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         self.selectedEvent = viewModel?.events.filterEvent(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        updateAccessibility()
     }
     
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
