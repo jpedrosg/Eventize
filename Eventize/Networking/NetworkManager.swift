@@ -1,5 +1,5 @@
 //
-//  Copyright © Uber Technologies, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 
@@ -34,21 +34,29 @@ struct NetworkManager {
     ///   - completion: A closure to handle the result of the image fetch operation.
     ///                        It provides a `Result` object containing either a `UIImage` or a `NetworkError`.
     static func fetchImage(from url: URL, callerName: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-        // Reuse the fetchData method to fetch image data
-        fetchData(from: url, responseType: Data.self, callerName: callerName) { result in
-            switch result {
-            case .success(let imageData):
-                if let image = UIImage(data: imageData) {
-                    completion(.success(image))
-                } else {
-                    let invalidResponseError = NetworkError.invalidResponse
-                    completion(.failure(invalidResponseError))
-                }
-                
-            case .failure(let error):
-                completion(.failure(error))
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                let networkError = NetworkError.networkError(error)
+                LogError.log(.genericError(error: networkError), className: callerName)
+                completion(.failure(networkError))
+                return
             }
-        }
+            
+            guard let data = data else {
+                let invalidResponseError = NetworkError.invalidResponse
+                LogError.log(.genericError(error: invalidResponseError), className: callerName)
+                completion(.failure(invalidResponseError))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                let invalidResponseError = NetworkError.invalidResponse
+                LogError.log(.genericError(error: invalidResponseError), className: callerName)
+                completion(.failure(invalidResponseError))
+            }
+        }.resume()
     }
     
     /// Fetches data from a given URL and decodes it into a specified type.
@@ -59,7 +67,7 @@ struct NetworkManager {
     ///   - callerName: The name of the calling class or component.
     ///   - completion: A closure to handle the result of the data fetch and decoding operation.
     ///                        It provides a `Result` object containing either the decoded data or a `NetworkError`.
-    static func fetchData<T: Decodable>(from url: URL, responseType: T.Type, callerName: String, completion: @escaping (Result<T, NetworkError>) -> Void) {
+    static func fetchData<T>(from url: URL, responseType: T.Type, callerName: String, completion: @escaping (Result<T, NetworkError>) -> Void) where T: Decodable {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 let networkError = NetworkError.networkError(error)
@@ -76,7 +84,7 @@ struct NetworkManager {
             }
             
             do {
-                let decodedResponse = try decodeResponse(responseType, from: data, callerName: callerName)
+                let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedResponse))
             } catch let decodingError as DecodingError {
                 handleDecodingError(decodingError, callerName: callerName, completion: completion)

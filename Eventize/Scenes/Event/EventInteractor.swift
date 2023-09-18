@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -34,10 +34,7 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
     // MARK: - Fetch Event
     
     func fetchEvent() {
-        guard let event = event else {
-            // TODO: Implement Error Handling for Missing Event
-            return
-        }
+        guard let event = event else { return }
         
         let response = Event.EventDetails.Response(event: event, eventDetails: nil)
         presenter?.presentEvent(response: response)
@@ -51,10 +48,7 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
             
             switch result {
             case .success(let details):
-                guard let event = self.event else {
-                    // TODO: Implement Error Handling for Missing Event
-                    return
-                }
+                guard let event = self.event else { return }
                 
                 self.presenter?.presentEvent(response: .init(event: event, eventDetails: details))
             case .failure(_):

@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -28,12 +28,12 @@ enum Events {
         // MARK: - Request
         
         struct Request {
-            let address: String?
+            let coordinate: CLLocationCoordinate2D?
             let searchTerm: String?
             let isFavorite: Bool
             
-            init(address: String? = nil, searchTerm: String? = nil, isFavorite: Bool) {
-                self.address = address
+            init(coordinate: CLLocationCoordinate2D? = nil, searchTerm: String? = nil, isFavorite: Bool) {
+                self.coordinate = coordinate
                 self.searchTerm = searchTerm
                 self.isFavorite = isFavorite
             }
@@ -109,7 +109,9 @@ enum Events {
                 lhs.subtitle == rhs.subtitle &&
                 lhs.price == rhs.price &&
                 lhs.info == rhs.info &&
-                lhs.extraBottomInfo == rhs.extraBottomInfo
+                lhs.extraBottomInfo == rhs.extraBottomInfo &&
+                lhs.latitude == rhs.latitude &&
+                lhs.longitude == rhs.longitude
             }
         }
         

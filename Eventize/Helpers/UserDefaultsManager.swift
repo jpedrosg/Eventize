@@ -1,5 +1,5 @@
 //
-//  Copyright © Uber Technologies, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 
@@ -7,7 +7,7 @@ import Foundation
 import CoreLocation
 
 /// A struct to represent user preferences.
-struct UserPreferences: Codable {
+struct UserPreferences: Codable, Equatable {
     var favoriteEventsUuids: [String] = []
 
     mutating func addFavoriteEvent(uuid: String) {
@@ -19,19 +19,48 @@ struct UserPreferences: Codable {
     mutating func removeFavoriteEvent(uuid: String) {
         favoriteEventsUuids.removeAll { $0 == uuid }
     }
+    
+    static func ==(lhs: UserPreferences, rhs: UserPreferences) -> Bool {
+       return lhs.favoriteEventsUuids == rhs.favoriteEventsUuids
+    }
+}
+
+/// A protocol defining methods for managing user preferences using UserDefaults.
+protocol UserDefaultsManagerProtocol {
+    /// Retrieves the cached location from UserDefaults.
+    ///
+    /// - Returns: The cached location as a `CLLocation` instance, or `nil` if no location is cached.
+    func getCachedLocation() -> CLLocation?
+
+    /// Sets the cached location in UserDefaults.
+    ///
+    /// - Parameter location: The location to be cached as a `CLLocation` instance.
+    func setCachedLocation(_ location: CLLocation?)
+
+    /// Retrieves the user preferences from UserDefaults.
+    ///
+    /// - Returns: The user preferences as a `UserPreferences` instance, or `nil` if no preferences are found.
+    func getUserPreferences() -> UserPreferences?
+
+    /// Sets the user preferences in UserDefaults.
+    ///
+    /// - Parameter preferences: The user preferences to be stored as a `UserPreferences` instance. Pass `nil` to clear preferences.
+    func setUserPreferences(_ preferences: UserPreferences?)
 }
 
 /// A manager class for handling UserDefaults caching and user preferences.
-class UserDefaultsManager {
+public class UserDefaultsManager {
     
     // MARK: Singleton
     
-    static let shared = UserDefaultsManager()
+    static let shared: UserDefaultsManagerProtocol = UserDefaultsManager()
     
     private init() {}
-    
-    // MARK: Location Cache
-    
+}
+
+// MARK: - UserDefaultsManagerProtocol
+
+extension UserDefaultsManager: UserDefaultsManagerProtocol {
     func getCachedLocation() -> CLLocation? {
         if let cachedLocationDict = UserDefaults.standard.dictionary(forKey: "CachedLocation"),
            let latitude = cachedLocationDict["latitude"] as? CLLocationDegrees,
@@ -52,8 +81,6 @@ class UserDefaultsManager {
             UserDefaults.standard.removeObject(forKey: "CachedLocation")
         }
     }
-    
-    // MARK: User Preferences
     
     func getUserPreferences() -> UserPreferences? {
         if let data = UserDefaults.standard.data(forKey: "UserPreferences") {

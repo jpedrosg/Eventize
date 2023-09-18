@@ -1,5 +1,5 @@
 //
-//  Copyright © Uber Technologies, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 
@@ -15,6 +15,7 @@ protocol EventsHeaderDisplayLogic: AnyObject {
 }
 
 final class EventsTableViewHeader: UITableViewCell {
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     
@@ -57,6 +58,8 @@ private extension EventsTableViewHeader {
     }
     
     @objc func didTapView() {
+        HapticFeedbackHelper.shared.impactFeedback(.medium)
+        
         listener?.didTapHeader()
     }
 }

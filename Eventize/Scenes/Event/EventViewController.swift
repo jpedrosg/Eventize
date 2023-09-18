@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -10,8 +10,6 @@ protocol EventDisplayLogic: AnyObject {
 }
 
 final class EventViewController: UIViewController, EventDisplayLogic {
-    
-    
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var imageBackground: UIView!
     @IBOutlet weak var imageView: NetworkImageView!
@@ -27,20 +25,17 @@ final class EventViewController: UIViewController, EventDisplayLogic {
     var router: (NSObjectProtocol & EventRoutingLogic & EventDataPassing)?
 
     // MARK: Object lifecycle
-
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
 
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
 
     // MARK: - Setup Clean Code Design Pattern
-
     private func setup() {
         let viewController = self
         let interactor = EventInteractor()
@@ -54,41 +49,26 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         router.dataStore = interactor
     }
 
-    // MARK: - Routing
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-
     // MARK: - View lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
         fetchEvent()
     }
-    
-    // MARK: - Request data from EventInteractor
 
+    // MARK: - Request data from EventInteractor
     func fetchEvent() {
         interactor?.fetchEvent()
         interactor?.fetchDetails()
     }
 
     // MARK: - Display view model from EventPresenter
-
     func displayEvent(viewModel: Event.EventDetails.ViewModel) {
         self.viewModel = viewModel
         
         // Top
-        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) {
-            self.imageContainerView.isHidden = self.imageView.image == nil
+        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) { imageView in
+            self.imageContainerView.isHidden = imageView.image == nil
         }
         
         // Leading
@@ -108,7 +88,6 @@ final class EventViewController: UIViewController, EventDisplayLogic {
     
     func displayFavoriteButton() {
         guard let viewModel else { return }
-        
         setupNavigationItem(viewModel.event.isFavorite)
     }
 }
@@ -136,6 +115,8 @@ private extension EventViewController {
     
     func setupNavigationItem(_ isFavoriteEvent: Bool) {
         let favoriteButton = UIBarButtonItem(image: isFavoriteEvent ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
+        favoriteButton.accessibilityLabel = "Favorito"
+        favoriteButton.accessibilityHint = isFavoriteEvent ? "Remove evento dos favoritos." : "Adiciona evento aos favoritos."
         favoriteButton.target = self
         favoriteButton.action = #selector(didTapFavorite)
         self.navigationItem.setRightBarButton(favoriteButton, animated: true)

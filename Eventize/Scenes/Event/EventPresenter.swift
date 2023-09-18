@@ -1,14 +1,21 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
 
+/// Protocol for handling presentation logic of an event.
 protocol EventPresentationLogic {
+    /// Presents the event and its details.
+    ///
+    /// - Parameter response: The response containing the event and its details.
     func presentEvent(response: Event.EventDetails.Response)
+    
+    /// Presents the favorite button.
     func presentFavoriteButton()
 }
 
+/// Presenter responsible for handling event-related presentation logic.
 final class EventPresenter: EventPresentationLogic {
     weak var viewController: EventDisplayLogic?
 
@@ -22,6 +29,7 @@ final class EventPresenter: EventPresentationLogic {
         viewController?.displayEvent(viewModel: viewModel)
     }
     
+    /// Presents the favorite button to the view controller.
     func presentFavoriteButton() {
         viewController?.displayFavoriteButton()
     }

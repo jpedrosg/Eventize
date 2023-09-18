@@ -1,5 +1,5 @@
 //
-//  Copyright © Uber Technologies, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 
@@ -20,7 +20,7 @@ class NetworkImageView: UIImageView {
     ///
     /// - Parameter imageUrl: The URL of the image to be loaded.
     /// - Parameter placeholderImage: The UIImage to be set as backing on failure.
-    func setImage(fromUrl imageUrl: String?, placeholderImage: UIImage? = nil, asBlackAndWhite: Bool = false, completion: (() -> Void)? = nil) {
+    func setImage(fromUrl imageUrl: String?, placeholderImage: UIImage? = nil, asBlackAndWhite: Bool = false, completion: ((NetworkImageView) -> Void)? = nil) {
         self.imageUrl = imageUrl
         
         // Clear the current image
@@ -29,7 +29,7 @@ class NetworkImageView: UIImageView {
         guard let imageUrl = imageUrl, let url = URL(string: imageUrl) else {
             rawImage = image
             self.image = asBlackAndWhite ? placeholderImage?.convertToBlackAndWhite() : placeholderImage
-            completion?()
+            completion?(self)
             return
         }
         
@@ -46,7 +46,7 @@ class NetworkImageView: UIImageView {
                 }
             }
             
-            completion?()
+            completion?(self ?? .init())
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -65,6 +65,8 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     
     private var isSearchBarHidden: Bool = false {
         didSet {
+            guard isSearchBarHidden != oldValue else { return }
+            
             searchBar.text = nil
             setupNavigationItem()
             interactor?.filterEvents(request: .init(isFavorite: isFilteredByFavorites))
@@ -154,14 +156,14 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
+        interactor?.filterEvents(request: .init(coordinate: currentCoordinate, searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
     }
     
     // MARK: - Request Data from EventsInteractor
     
     func requestEvents() {
         searchBar.text = nil
-        interactor?.fetchEvents(request: .init(address: currentGeolocation?.name, isFavorite: false))
+        interactor?.fetchEvents(request: .init(coordinate: currentCoordinate, isFavorite: false))
     }
     
     func requestLocation() {
@@ -185,9 +187,9 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
     func displayAddress(viewModel: Events.Address.ViewModel) {
         currentCoordinate = viewModel.coordinate
         currentGeolocation = viewModel.geolocation
+        resetFilters()
         
         requestEvents()
-        tableView.reloadData()
     }
 }
 
@@ -195,7 +197,7 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
 
 extension EventsViewController: EventsCellListener {
     func didTapHeader() {
-        // TODO: Allow entering address in the future.
+        currentScreenMode = .map
     }
 }
 
@@ -211,6 +213,8 @@ extension EventsViewController {
             
             return cell
         }
+        
+        cell.accessibilityHint = currentScreenMode == .list ? "Alterna visualização para Mapa." : "Centraliza Mapa."
         
         return nil
     }
@@ -242,6 +246,8 @@ extension EventsViewController {
                 eventsCell.displayEventCell(viewModel: .init(event: event), isFilteredByFavorites: isFilteredByFavorites, isSearching: !isSearchBarHidden)
                 eventsCell.setMenuInteraction(interaction)
             }
+            
+            cell.accessibilityHint = "Abre tela de detalhes do evento."
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Self.mapReuseIdentifier, for: indexPath)
@@ -323,40 +329,61 @@ extension EventsViewController: EventsCellInteractions {
 extension EventsViewController: EventsMapInteractions {
     func selectEvent(_ event: Events.EventObject) {
         interactor?.selectEvent(event)
-        tableView.reloadData()
-        tableView.scrollToRow(at: .init(row: .zero, section: .zero), at: .bottom, animated: true)
+        tableView.reloadRows(at: [IndexPath(item: 1, section: 0)], with: .automatic)
     }
     
     func deselectEvent() {
-        tableView.scrollToRow(at: .init(row: .zero, section: .zero), at: .top, animated: true)
+        // no-op
     }
     
     func routeToEvent(_ event: Events.EventObject) {
         HapticFeedbackHelper.shared.impactFeedback(.light)
+        interactor?.selectEvent(event)
         router?.routeToEvent()
+    }
+    
+    func setUserLocation(_ newUserCoordinate: CLLocationCoordinate2D) {
+        interactor?.setUserLocation(newUserCoordinate)
+    }
+    
+    func resetUserLocation() {
+        interactor?.resetUserLocation()
     }
 }
 
 // MARK: - Private API
 
 private extension EventsViewController {
+    func resetFilters() {
+        isFilteredByFavorites = false
+        isSearchBarHidden = true
+    }
+    
     func setupNavigationItem() {
         self.navigationItem.title = currentScreenMode == .list ? "Eventos" : "Mapa"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket"))
+        ticketsButton.accessibilityLabel = "Tickets"
+        ticketsButton.accessibilityHint = "Abre tela de tickets."
         ticketsButton.target = self
         ticketsButton.action = #selector(didTapTickets)
         
         let favoriteButton = UIBarButtonItem(image: isFilteredByFavorites ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
+        favoriteButton.accessibilityLabel = "Favoritos"
+        favoriteButton.accessibilityHint = isFilteredByFavorites ? "Remove filtro por favoritos." : "Adiciona filtro por favoritos."
         favoriteButton.target = self
         favoriteButton.action = #selector(didTapFavorite)
         
         let searchButton = UIBarButtonItem(image: UIImage(systemName: isSearchBarHidden ? "magnifyingglass.circle" : "magnifyingglass.circle.fill"))
+        searchButton.accessibilityLabel = "Pesquisa"
+        searchButton.accessibilityHint = isSearchBarHidden ? "Abre campo de pesquisa." : "Fecha campo de pesquisa."
         searchButton.target = self
         searchButton.action = #selector(didTapSearch)
         
         let screenModeButton = UIBarButtonItem(image: UIImage(systemName: currentScreenMode == .list ? "tablecells.fill" : "map.fill"))
+        screenModeButton.accessibilityLabel = "Visualização"
+        screenModeButton.accessibilityHint = "Alterna visualização para \(currentScreenMode == .list ? "Mapa" : "Lista")"
         screenModeButton.target = self
         screenModeButton.action = #selector(didTapScreenMode)
         
@@ -379,12 +406,12 @@ private extension EventsViewController {
     }
     
     func handleSearch() {
-        guard let term = searchBar.text, !term.isEmpty else {
+        guard let term = searchBar.text else {
             isSearchBarHidden.toggle()
             return
         }
         
-        interactor?.filterEvents(request: .init(searchTerm: searchBar.text, isFavorite: isFilteredByFavorites))
+        interactor?.filterEvents(request: .init(searchTerm: term, isFavorite: isFilteredByFavorites))
     }
     
     @objc func refresh(sender: AnyObject) {

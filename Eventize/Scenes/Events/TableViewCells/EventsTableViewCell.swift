@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -45,6 +45,11 @@ final class EventsTableViewCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.layoutIfNeeded()
+    }
+    
     @IBAction func didTapFavoriteButton(_ sender: Any) {
         HapticFeedbackHelper.shared.impactFeedback(.rigid)
         
@@ -64,21 +69,28 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
     func displayEventCell(viewModel: Events.EventList.CellViewModel, isFilteredByFavorites: Bool, isSearching: Bool) {
         self.viewModel = viewModel
         
-        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)"))
-        bannerImageView.highlightedImage = bannerImageView.image?.convertToBlackAndWhite()
+        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) { imageView in
+            imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
+            self.favoriteButton.tintColor = isFilteredByFavorites ? UIColor(named: "AccentColor") : (imageView.image == nil ? .label : .secondarySystemBackground)
+        }
         
         titleLabel.text = viewModel.event.content.title
         locationLabel.text = viewModel.event.content.subtitle
         priceLabel.text = viewModel.event.content.price?.asCurrency
         infoLabel.text = viewModel.event.content.info
         favoriteButton.setImage(UIImage(systemName: viewModel.event.isFavorite ? "heart.fill" : "heart"), for: .normal)
-        
-        favoriteButton.tintColor = isFilteredByFavorites ? UIColor(named: "AccentColor") : .secondarySystemBackground
         titleLabel.textColor = isSearching ? UIColor(named: "AccentColor") : .label
-        
         updateBottomInfoStackView(with: viewModel.event.content.extraBottomInfo)
-        setNeedsLayout()
-        layoutIfNeeded()
+        
+        titleLabel.numberOfLines = 0
+        locationLabel.numberOfLines = 0
+        titleLabel.setContentHuggingPriority(.required, for: .vertical)
+        locationLabel.setContentHuggingPriority(.required, for: .vertical)
+        
+        favoriteButton.accessibilityLabel = "Favorito"
+        favoriteButton.accessibilityHint = viewModel.event.isFavorite ? "Remove evento dos favoritos." : "Adiciona evento aos favoritos."
+        
+        layoutSubviews()
     }
     
     func setMenuInteraction(_ interaction: UIContextMenuInteraction) {
@@ -125,7 +137,6 @@ private extension EventsTableViewCell {
         imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 22).isActive = true
         bottomInfoStackView.addArrangedSubview(imageView)
         

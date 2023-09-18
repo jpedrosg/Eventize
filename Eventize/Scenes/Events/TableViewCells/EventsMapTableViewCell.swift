@@ -1,3 +1,7 @@
+//
+//  Copyright © JJG Technologies, Inc. All rights reserved.
+//
+
 import UIKit
 import MapKit
 
@@ -7,6 +11,8 @@ protocol EventsMapInteractions: AnyObject {
     func deselectEvent()
     func selectEvent(_ event: Events.EventObject)
     func routeToEvent(_ event: Events.EventObject)
+    func setUserLocation(_ newUserCoordinate: CLLocationCoordinate2D)
+    func resetUserLocation()
 }
 
 // MARK: - EventsMapDisplayLogic Protocol
@@ -21,7 +27,9 @@ protocol EventsMapDisplayLogic: AnyObject {
 // MARK: - EventsMapTableViewCell Class
 
 final class EventsMapTableViewCell: UITableViewCell {
-
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var mapHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var customSheetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
@@ -36,6 +44,8 @@ final class EventsMapTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var extraInfoLabel: UILabel!
     @IBOutlet weak var bottomInfosStackView: UIStackView!
+    @IBOutlet weak var resetLocationButton: UIButton!
+    @IBOutlet weak var bannerImageHeight: NSLayoutConstraint!
     
     // MARK: - Private Properties
     
@@ -57,15 +67,15 @@ final class EventsMapTableViewCell: UITableViewCell {
                     subview.removeFromSuperview()
                 }
                 
-                setNeedsLayout()
-                layoutIfNeeded()
-                
+                layoutSubviews()
                 return
             }
             bannerImageView.backgroundColor = .clear
             customBackgroundView.isUserInteractionEnabled = true
             selectedEventLabel.text = Constants.selectedEventLabelText
-            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Constants.eventBannerImageName(event.eventUuid)))
+            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Constants.eventBannerImageName(event.eventUuid))) { imageView in
+                self.bannerImageHeight.constant = imageView.image == nil ? 0 : Constants.eventBannerImageHeight
+            }
             titleLabel.text = event.content.title
             addressLabel.text = event.content.subtitle
             priceLabel.text = event.content.price?.asCurrency
@@ -74,6 +84,7 @@ final class EventsMapTableViewCell: UITableViewCell {
             
             setNeedsLayout()
             layoutIfNeeded()
+            layoutSubviews()
             
             listener?.selectEvent(event)
         }
@@ -85,7 +96,7 @@ final class EventsMapTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupViews()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         contentView.backgroundColor = .systemBackground
@@ -95,6 +106,18 @@ final class EventsMapTableViewCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         contentView.backgroundColor = .systemBackground
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.layoutIfNeeded()
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func resetUserLocation(_ sender: UIButton) {
+        resetLocationButton.isEnabled = false
+        listener?.resetUserLocation()
+    }
 }
 
 // MARK: - EventsMapDisplayLogic
@@ -102,12 +125,12 @@ final class EventsMapTableViewCell: UITableViewCell {
 extension EventsMapTableViewCell: EventsMapDisplayLogic {
     func displayEvents(viewModel: Events.EventList.ViewModel) {
         guard self.viewModel != viewModel else {
-            setRegionToSelectedEvent()
             return
         }
         self.viewModel = viewModel
         
         selectedEvent = viewModel.events.first
+        updateAccessibility()
         updateMapAnnotations(viewModel)
     }
     
@@ -117,9 +140,7 @@ extension EventsMapTableViewCell: EventsMapDisplayLogic {
                 && userCoordinate?.longitude != coordinate.longitude else { return }
         userCoordinate = coordinate
         
-        mapView.setRegion(.init(center: coordinate,
-                                span: .init(latitudeDelta: Constants.userAddressRegionFocusDelta,
-                                            longitudeDelta: Constants.userAddressRegionFocusDelta)), animated: true)
+        centerMapOn(coordinate)
     }
     
     func setMenuInteraction(_ interaction: UIContextMenuInteraction) {
@@ -152,6 +173,8 @@ extension EventsMapTableViewCell: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         self.selectedEvent = viewModel?.events.filterEvent(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        
+        updateAccessibility()
     }
     
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
@@ -176,7 +199,7 @@ private extension EventsMapTableViewCell {
         static let fakeExpandabilityIndicatorRadius: CGFloat = 1.5
         static let customSheetBackgroundRadius: CGFloat = 20
         static let eventInfoImageWidth: CGFloat = 22
-        static let eventInfoImageHeight: CGFloat = 16
+        static let eventBannerImageHeight: CGFloat = 150
         
         static func eventBannerImageName(_ eventUuid: String) -> String {
             return "events_banner_\(eventUuid)"
@@ -184,6 +207,21 @@ private extension EventsMapTableViewCell {
     }
     
     // MARK: - Helper Methods
+    
+    func updateAccessibility() {
+        if let title = selectedEvent?.content.title {
+            customBackgroundView.accessibilityLabel = "Evento selecionado: \(title)"
+        }
+    }
+    
+    func centerMapOn(_ coordinate: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: coordinate,
+                                             span: .init(latitudeDelta: Constants.userAddressRegionFocusDelta,
+                                                         longitudeDelta: Constants.userAddressRegionFocusDelta))
+        if mapView.region.center != region.center {
+            mapView.setRegion(region, animated: true)
+        }
+    }
     
     func updateMapAnnotations(_ viewModel: Events.EventList.ViewModel) {
         removeAllAnnotations()
@@ -237,7 +275,6 @@ private extension EventsMapTableViewCell {
         imageView.setImage(fromUrl: bottomInfo.imageUrl, placeholderImage: UIImage(systemName: "checkmark.circle.fill")!)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalToConstant: Constants.eventInfoImageHeight).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: Constants.eventInfoImageWidth).isActive = true
         bottomInfoStackView.addArrangedSubview(imageView)
         
@@ -252,8 +289,11 @@ private extension EventsMapTableViewCell {
     func setupViews() {
         mapView.delegate = self
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEvent))
-        customBackgroundView.addGestureRecognizer(gestureRecognizer)
+        let mapLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
+        mapView.addGestureRecognizer(mapLongPressGestureRecognizer)
+        
+        let eventGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEvent))
+        customBackgroundView.addGestureRecognizer(eventGestureRecognizer)
         
         mapHeightConstraint.constant = Constants.mapHeight
         customBackgroundView.addRoundedCornersAndShadow()
@@ -262,19 +302,9 @@ private extension EventsMapTableViewCell {
         
         customSheetBackgroundView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner], radius: Constants.customSheetBackgroundRadius)
         fakeExpandabilityIndicator.addRoundedCorners(for: .all, radius: Constants.fakeExpandabilityIndicatorRadius)
-    }
-    
-    func setRegionToSelectedEvent() {
-        if let latitude = selectedEvent?.content.latitude,
-           let longitude = selectedEvent?.content.longitude {
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude + Constants.extraLatitudeToCenterPin, longitude: longitude)
-            if let annotation = mapView.annotations(in: .init(origin: .init(coordinate),
-                                                              size: .init(width: 1, height: 1))).first as? MKAnnotation {
-                mapView.selectedAnnotations = [annotation]
-            }
-            mapView.setRegion(.init(center: coordinate, span: .init(latitudeDelta: Constants.eventAddressRegionFocusDelta, longitudeDelta: Constants.eventAddressRegionFocusDelta)), animated: true)
-        }
+        
+        customBackgroundView.isAccessibilityElement = true
+        customBackgroundView.accessibilityHint = "Abre detalhes do evento."
     }
     
     @objc func didTapEvent() {
@@ -282,5 +312,15 @@ private extension EventsMapTableViewCell {
         
         guard let selectedEvent = selectedEvent else { return }
         listener?.routeToEvent(selectedEvent)
+    }
+    
+    @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
+        if sender.state != .began { return }
+        self.resetLocationButton.isEnabled = true
+        HapticFeedbackHelper.shared.impactFeedback(.heavy)
+        
+        let touchLocation = sender.location(in: mapView)
+        let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
+        listener?.setUserLocation(locationCoordinate)
     }
 }

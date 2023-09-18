@@ -1,5 +1,5 @@
 //
-//  Copyright © JJG Tech, Inc. All rights reserved.
+//  Copyright © JJG Technologies, Inc. All rights reserved.
 //
 
 import UIKit
@@ -16,6 +16,9 @@ struct EventWorker {
     ///
     /// - Note: This method fetches event details from a mocked data source for demonstration purposes.
     ///         In a real implementation, you should create a URL and use the NetworkManager for network requests.
+    ///
+    /// - Parameter completion: A closure to handle the result of the fetch operation. The closure will be called with either
+    ///                        a success result containing event details or a failure result with an error.
     func fetchDetails(completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
         // TODO: - Mocked Network Call! Create URL here in the future.
         guard let jsonData = JsonMocks.Event_EventDetails else {
