@@ -68,7 +68,7 @@ Aqui estão [vídeos demonstrativos](https://1drv.ms/f/s!AsGKu1x-W3oTkNIAB7piAEx
 Este é o **MVP (Minimum Viable Product) do Eventize**, uma versão inicial do aplicativo com funcionalidades essenciais para oferecer uma experiência básica aos usuários. Estamos comprometidos em continuar melhorando e expandindo o aplicativo. Alguns dos recursos planejados para a versão 1.0 incluem:
 
 - **Login / Register:** Permitirá aos usuários criar contas personalizadas e acessar recursos exclusivos.
-- **Location Context:** Aprimoramento da funcionalidade de localização para oferecer informações mais precisas e relevantes.
+- **Location Selector:** Aprimoramento da funcionalidade de localização que possibilitará usuarios selectionarem uma nova localização (hoje isso é possível apenas pelo mapa, quando feito um long-press em uma nova região).
 - **Profile / Preferences Screen:** Os usuários poderão personalizar suas preferências e perfis.
 - **Ticket QR Code Generation:** Geração de códigos QR para ingressos para eventos.
 - **Localization:** Suporte a múltiplos idiomas para atender a uma audiência global.
