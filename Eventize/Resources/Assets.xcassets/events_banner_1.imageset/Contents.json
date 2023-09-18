@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Image.png",
+      "filename" : "AVATAR-FORTALEZA-1.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Image 1.png",
+      "filename" : "AVATAR-FORTALEZA-1 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Image 2.png",
+      "filename" : "AVATAR-FORTALEZA-1 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

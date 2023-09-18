@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Image.png",
+      "filename" : "events_banner_15.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "events_banner_15@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "events_banner_15@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
