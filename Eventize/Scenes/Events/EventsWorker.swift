@@ -6,7 +6,7 @@ import UIKit
 import CoreLocation
 
 /// The worker responsible for fetching and filtering events.
-struct EventsWorker {
+class EventsWorker {
     
     // MARK: - Public Methods
     
@@ -30,7 +30,7 @@ struct EventsWorker {
             case .success(var events):
                 // Filter events based on the search term if provided.
                 if let searchTerm = request.searchTerm, !searchTerm.isEmpty {
-                    events = filterEvents(events: events, filters: .init(coordinate: request.coordinate, searchTerm: searchTerm, isFavorite: request.isFavorite))
+                    events = self.filterEvents(events: events, filters: .init(coordinate: request.coordinate, searchTerm: searchTerm, isFavorite: request.isFavorite))
                 }
                 
                 // TODO: Remove this mock when in production

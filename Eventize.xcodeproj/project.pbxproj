@@ -54,9 +54,9 @@
 		BCC91F532AACDD5200DED263 /* EventModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F4D2AACDD5200DED263 /* EventModels.swift */; };
 		BCC91F542AACDD5200DED263 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F4E2AACDD5200DED263 /* EventViewController.swift */; };
 		BCC91F552AACDD5200DED263 /* EventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC91F4F2AACDD5200DED263 /* EventInteractor.swift */; };
-		BCF0BB6A2AB64929004CB9AE /* UIView+addTopAndBottomSeparatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7788B72AB6449900C78C47 /* UIView+addTopAndBottomSeparatorsTests.swift */; };
-		BCF0BB6B2AB64929004CB9AE /* UIView+addRoundedCornersAndShadowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7788B52AB6448F00C78C47 /* UIView+addRoundedCornersAndShadowTests.swift */; };
-		BCF0BB6C2AB64929004CB9AE /* UIImage+convertToBlackAndWhiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7788B12AB6446F00C78C47 /* UIImage+convertToBlackAndWhiteTests.swift */; };
+		BCF0BB792AB82B91004CB9AE /* EventInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0BB782AB82B91004CB9AE /* EventInteractorTests.swift */; };
+		BCF0BB7C2AB82CD3004CB9AE /* EventsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0BB7B2AB82CD3004CB9AE /* EventsInteractorTests.swift */; };
+		BCF0BB7F2AB838CE004CB9AE /* TicketsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0BB7E2AB838CE004CB9AE /* TicketsInteractorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,10 +95,7 @@
 		BC570DEF2AB63CEB00FF81A2 /* HapticFeedbackHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackHelperTests.swift; sourceTree = "<group>"; };
 		BC570DF22AB63DAF00FF81A2 /* NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTests.swift; sourceTree = "<group>"; };
 		BC7788AF2AB6446100C78C47 /* Double+asCurrencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrencyTests.swift"; sourceTree = "<group>"; };
-		BC7788B12AB6446F00C78C47 /* UIImage+convertToBlackAndWhiteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhiteTests.swift"; sourceTree = "<group>"; };
 		BC7788B32AB6448200C78C47 /* Collection+safeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safeTests.swift"; sourceTree = "<group>"; };
-		BC7788B52AB6448F00C78C47 /* UIView+addRoundedCornersAndShadowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addRoundedCornersAndShadowTests.swift"; sourceTree = "<group>"; };
-		BC7788B72AB6449900C78C47 /* UIView+addTopAndBottomSeparatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addTopAndBottomSeparatorsTests.swift"; sourceTree = "<group>"; };
 		BC7788B92AB644A800C78C47 /* CLLocationCoordinate2D+EquatableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+EquatableTests.swift"; sourceTree = "<group>"; };
 		BCA8C9702AB0BED100B9CFFD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		BCA8C9722AB10D9900B9CFFD /* HapticFeedbackHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackHelper.swift; sourceTree = "<group>"; };
@@ -123,6 +120,9 @@
 		BCC91F4D2AACDD5200DED263 /* EventModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModels.swift; sourceTree = "<group>"; };
 		BCC91F4E2AACDD5200DED263 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		BCC91F4F2AACDD5200DED263 /* EventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInteractor.swift; sourceTree = "<group>"; };
+		BCF0BB782AB82B91004CB9AE /* EventInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInteractorTests.swift; sourceTree = "<group>"; };
+		BCF0BB7B2AB82CD3004CB9AE /* EventsInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsInteractorTests.swift; sourceTree = "<group>"; };
+		BCF0BB7E2AB838CE004CB9AE /* TicketsInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsInteractorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,9 +236,6 @@
 		BC7788AE2AB6444D00C78C47 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BC7788B52AB6448F00C78C47 /* UIView+addRoundedCornersAndShadowTests.swift */,
-				BC7788B72AB6449900C78C47 /* UIView+addTopAndBottomSeparatorsTests.swift */,
-				BC7788B12AB6446F00C78C47 /* UIImage+convertToBlackAndWhiteTests.swift */,
 				BC7788AF2AB6446100C78C47 /* Double+asCurrencyTests.swift */,
 				BC7788B32AB6448200C78C47 /* Collection+safeTests.swift */,
 				BC7788B92AB644A800C78C47 /* CLLocationCoordinate2D+EquatableTests.swift */,
@@ -282,6 +279,7 @@
 		BCC91EA42AACD77C00DED263 /* EventizeTests */ = {
 			isa = PBXGroup;
 			children = (
+				BCF0BB762AB82B7E004CB9AE /* Scenes */,
 				BC7788AE2AB6444D00C78C47 /* Extensions */,
 				BC570DF12AB63DA600FF81A2 /* Networking */,
 				BC570DE82AB633DF00FF81A2 /* Helpers */,
@@ -344,6 +342,40 @@
 				BCC91F4F2AACDD5200DED263 /* EventInteractor.swift */,
 			);
 			path = Event;
+			sourceTree = "<group>";
+		};
+		BCF0BB762AB82B7E004CB9AE /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BCF0BB7D2AB838C4004CB9AE /* Tickets */,
+				BCF0BB7A2AB82C96004CB9AE /* Events */,
+				BCF0BB772AB82B83004CB9AE /* Event */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		BCF0BB772AB82B83004CB9AE /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				BCF0BB782AB82B91004CB9AE /* EventInteractorTests.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		BCF0BB7A2AB82C96004CB9AE /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				BCF0BB7B2AB82CD3004CB9AE /* EventsInteractorTests.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		BCF0BB7D2AB838C4004CB9AE /* Tickets */ = {
+			isa = PBXGroup;
+			children = (
+				BCF0BB7E2AB838CE004CB9AE /* TicketsInteractorTests.swift */,
+			);
+			path = Tickets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,6 +447,7 @@
 			);
 			mainGroup = BCC91E822AACD77B00DED263;
 			packageReferences = (
+				BCF0BB6F2AB828AA004CB9AE /* XCRemoteSwiftPackageReference "ios-snapshot-test-case" */,
 			);
 			productRefGroup = BCC91E8C2AACD77B00DED263 /* Products */;
 			projectDirPath = "";
@@ -495,14 +528,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCF0BB6C2AB64929004CB9AE /* UIImage+convertToBlackAndWhiteTests.swift in Sources */,
+				BCF0BB7F2AB838CE004CB9AE /* TicketsInteractorTests.swift in Sources */,
 				BC7788B02AB6446100C78C47 /* Double+asCurrencyTests.swift in Sources */,
 				BC7788B42AB6448200C78C47 /* Collection+safeTests.swift in Sources */,
-				BCF0BB6B2AB64929004CB9AE /* UIView+addRoundedCornersAndShadowTests.swift in Sources */,
 				BC570DF32AB63DAF00FF81A2 /* NetworkManagerTests.swift in Sources */,
+				BCF0BB7C2AB82CD3004CB9AE /* EventsInteractorTests.swift in Sources */,
 				BC570DF02AB63CEB00FF81A2 /* HapticFeedbackHelperTests.swift in Sources */,
 				BC570DEC2AB6366700FF81A2 /* LocationManagerTests.swift in Sources */,
-				BCF0BB6A2AB64929004CB9AE /* UIView+addTopAndBottomSeparatorsTests.swift in Sources */,
+				BCF0BB792AB82B91004CB9AE /* EventInteractorTests.swift in Sources */,
 				BC7788BA2AB644A800C78C47 /* CLLocationCoordinate2D+EquatableTests.swift in Sources */,
 				BC570DEA2AB633EB00FF81A2 /* UserDefaultsManagerTests.swift in Sources */,
 			);
@@ -779,6 +812,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BCF0BB6F2AB828AA004CB9AE /* XCRemoteSwiftPackageReference "ios-snapshot-test-case" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uber/ios-snapshot-test-case.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = BCC91E832AACD77B00DED263 /* Project object */;
 }

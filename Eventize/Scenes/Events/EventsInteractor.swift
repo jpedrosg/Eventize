@@ -26,23 +26,27 @@ final class EventsInteractor: EventsBusinessLogic, EventsDataStore {
     var presenter: EventsPresentationLogic?
     var worker: EventsWorker
     
-    var lastFilterRequest: Events.EventList.Request?
+    var lastFilterRequest: Events.EventList.Request? = .init(isFavorite: false)
     var selectedEvent: Events.EventObject?
     var events: [Events.EventObject]
     var filteredEvents: [Events.EventObject]?
     private var currentCoordinate: CLLocationCoordinate2D?
     
     /// The cache manager for User Preferences.
-    private let cache = UserDefaultsManager.shared
+    private let cache: UserDefaultsManagerProtocol
     /// The location service manager.
-    private var locationManager = LocationManager.shared
+    private var locationManager: LocationManaging
     
     init(presenter: EventsPresentationLogic? = nil,
          worker: EventsWorker = EventsWorker(),
+         cache: UserDefaultsManagerProtocol = UserDefaultsManager.shared,
+         locationManager: LocationManaging = LocationManager.shared,
          selectedEvent: Events.EventObject? = nil,
          events: [Events.EventObject] = []) {
         self.presenter = presenter
         self.worker = worker
+        self.cache = cache
+        self.locationManager = locationManager
         self.selectedEvent = selectedEvent
         self.events = events
     }

@@ -5,7 +5,7 @@
 import UIKit
 
 /// Worker responsible for handling ticket-related operations.
-final class TicketsWorker {
+class TicketsWorker {
     /// Fetches a list of tickets.
     /// - Parameters:
     ///   - request: The request object containing information about the ticket list request.

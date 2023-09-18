@@ -21,13 +21,15 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
     var event: Event.EventObject?
     
     /// The cache manager for User Preferences.
-    private let cache = UserDefaultsManager.shared
+    private let cache: UserDefaultsManagerProtocol
     
     init(presenter: EventPresentationLogic? = nil,
          worker: EventWorker = EventWorker(),
+         cache: UserDefaultsManagerProtocol = UserDefaultsManager.shared,
          event: Event.EventObject? = nil) {
         self.presenter = presenter
         self.worker = worker
+        self.cache = cache
         self.event = event
     }
 

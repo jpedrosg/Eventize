@@ -5,7 +5,7 @@
 import UIKit
 
 /// The worker responsible for fetching event details.
-struct EventWorker {
+class EventWorker {
     
     // MARK: - Public Methods
     
