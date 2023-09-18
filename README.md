@@ -12,6 +12,7 @@ O Eventize é um aplicativo revolucionário que torna a descoberta e participaç
 
 - [Recursos](#recursos)
 - [Vídeos de Demonstração](#vídeos-de-demonstração)
+- [Roadmap](#roadmap)
 - [Pré-requisitos](#pré-requisitos)
 - [Instalação](#instalação)
 - [Como Usar](#como-usar)
@@ -61,6 +62,22 @@ Aqui estão [vídeos demonstrativos](https://1drv.ms/f/s!AsGKu1x-W3oTkNIAB7piAEx
 - [Vídeo da Acessibilidade (VoiceOver)](https://1drv.ms/v/s!AsGKu1x-W3oTkNIIcH2BmTao3hma4w?e=4rSDl5)
 - [Vídeo da Acessibilidade (Dynamic Texts)](https://1drv.ms/v/s!AsGKu1x-W3oTkNIJEl8mMOpE5brdOQ?e=vxeh0G)
 - [Vídeo do Dark Mode](https://1drv.ms/v/s!AsGKu1x-W3oTkNIKfukrD0s33PiI6w?e=JQsuMa)
+
+### Roadmap
+
+Este é o MVP (Minimum Viable Product) do Eventize, uma versão inicial do aplicativo com funcionalidades essenciais para oferecer uma experiência básica aos usuários. Estamos comprometidos em continuar melhorando e expandindo o aplicativo. Alguns dos recursos planejados para a versão 1.0 incluem:
+
+- **Login / Register:** Permitirá aos usuários criar contas personalizadas e acessar recursos exclusivos.
+- **Location Context:** Aprimoramento da funcionalidade de localização para oferecer informações mais precisas e relevantes.
+- **Profile / Preferences Screen:** Os usuários poderão personalizar suas preferências e perfis.
+- **Ticket QR Code Generation:** Geração de códigos QR para ingressos para eventos.
+- **Localization:** Suporte a múltiplos idiomas para atender a uma audiência global.
+- **Error States:** Lidar com erros de forma mais robusta para uma experiência de usuário mais confiável.
+- **Loading States:** Melhorias na interface do usuário para indicar o carregamento de conteúdo.
+- **CI / CD:** Implementação de integração contínua e entrega contínua para um ciclo de desenvolvimento mais eficiente.
+
+Agradecemos por usar o Eventize e estamos ansiosos para trazer essas melhorias e recursos emocionantes na versão 1.0!
+
 
 ### Pré-requisitos
 
