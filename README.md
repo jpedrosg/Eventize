@@ -75,7 +75,7 @@ Antes de começar, certifique-se de ter os seguintes requisitos em seu ambiente 
 1. Clone este repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/eventize.git
+git clone https://github.com/jpedrosg/Eventize/tree/main
 ```
 
 2. Abra o projeto no Xcode:
