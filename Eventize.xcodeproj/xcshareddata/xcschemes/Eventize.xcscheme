@@ -40,6 +40,17 @@
                ReferencedContainer = "container:Eventize.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BCF0BB832AB83D54004CB9AE"
+               BuildableName = "EventizeSnapshotTests.xctest"
+               BlueprintName = "EventizeSnapshotTests"
+               ReferencedContainer = "container:Eventize.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
