@@ -73,7 +73,7 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
             
             if !isSearchBarHidden, let frame = searchBarFrame, frame.height > .zero {
                 
-                UIView.animate(withDuration: 0.25) {
+                UIView.animate(withDuration: Floats.animationDuration) {
                     self.searchBar.frame = self.searchBarFrame ?? .zero
                     self.searchBar.isHidden = false
                 }
@@ -85,7 +85,7 @@ final class EventsViewController: UITableViewController, EventsDisplayLogic {
             } else {
                 searchBarFrame = searchBar.frame
                 
-                UIView.animate(withDuration: 0.25) {
+                UIView.animate(withDuration: Floats.animationDuration) {
                     self.searchBar.frame = .zero
                     self.searchBar.isHidden = true
                 }
@@ -214,7 +214,7 @@ extension EventsViewController {
             return cell
         }
         
-        cell.accessibilityHint = currentScreenMode == .list ? "Alterna visualização para Mapa." : "Centraliza Mapa."
+        cell.accessibilityHint = currentScreenMode == .list ? Accessibility.listModeHint : Accessibility.mapModeHint
         
         return nil
     }
@@ -247,7 +247,7 @@ extension EventsViewController {
                 eventsCell.setMenuInteraction(interaction)
             }
             
-            cell.accessibilityHint = "Abre tela de detalhes do evento."
+            cell.accessibilityHint = Accessibility.eventCellHint
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Self.mapReuseIdentifier, for: indexPath)
@@ -354,36 +354,80 @@ extension EventsViewController: EventsMapInteractions {
 // MARK: - Private API
 
 private extension EventsViewController {
+    typealias Images = Constants.Images
+    typealias Accessibility = Constants.Accessibility
+    typealias Floats = Constants.Floats
+    typealias Strings = Constants.Strings
+    
+    enum Constants {
+        enum Strings {
+            static let eventTitle: String = "Eventos"
+            static let mapTitle: String = "Mapa"
+            static let list: String = "Lista"
+        }
+        
+        enum Accessibility {
+            static let listModeHint: String = "Alterna visualização para Mapa."
+            static let mapModeHint: String = "Centraliza Mapa."
+            static let eventCellHint: String = "Abre tela de detalhes do evento."
+            static let ticketsButtonLabel: String = "Tickets"
+            static let ticketsButtonHint: String = "Abre tela de tickets."
+            static let favoriteButtonLabel: String = "Favoritos"
+            static let favoriteButtonHint: String = "Adiciona filtro por favoritos."
+            static let favoriteFilteredButtonHint: String = "Remove filtro por favoritos."
+            static let searchButtonLabel: String = "Pesquisa"
+            static let searchButtonHintOpen: String = "Abre campo de pesquisa."
+            static let searchButtonHintClose: String = "Fecha campo de pesquisa."
+            static let screenModeButtonLabel: String = "Visualização"
+            static let screenModeButtonHint: String = "Alterna visualização para "
+            static let searchBarPlaceholder: String = "Pesquisar eventos"
+        }
+        
+        enum Images {
+            static let ticket: UIImage = .init(systemName: "ticket")!
+            static let heart: UIImage = .init(systemName: "heart")!
+            static let filledHeart: UIImage = .init(systemName: "heart.fill")!
+            static let magnifyingGlass: UIImage = .init(systemName: "magnifyingglass.circle")!
+            static let filledMagnifyingGlass: UIImage = .init(systemName: "magnifyingglass.circle.fill")!
+            static let tableCells: UIImage = .init(systemName: "tablecells.fill")!
+            static let mapFill: UIImage = .init(systemName: "map.fill")!
+        }
+        
+        enum Floats {
+            static let animationDuration: CGFloat = 0.25
+        }
+    }
+    
     func resetFilters() {
         isFilteredByFavorites = false
         isSearchBarHidden = true
     }
     
     func setupNavigationItem() {
-        self.navigationItem.title = currentScreenMode == .list ? "Eventos" : "Mapa"
+        self.navigationItem.title = currentScreenMode == .list ? Strings.eventTitle : Strings.mapTitle
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket"))
-        ticketsButton.accessibilityLabel = "Tickets"
-        ticketsButton.accessibilityHint = "Abre tela de tickets."
+        let ticketsButton = UIBarButtonItem(image: Images.ticket)
+        ticketsButton.accessibilityLabel = Accessibility.ticketsButtonLabel
+        ticketsButton.accessibilityHint = Accessibility.ticketsButtonHint
         ticketsButton.target = self
         ticketsButton.action = #selector(didTapTickets)
         
-        let favoriteButton = UIBarButtonItem(image: isFilteredByFavorites ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
-        favoriteButton.accessibilityLabel = "Favoritos"
-        favoriteButton.accessibilityHint = isFilteredByFavorites ? "Remove filtro por favoritos." : "Adiciona filtro por favoritos."
+        let favoriteButton = UIBarButtonItem(image: isFilteredByFavorites ? Images.filledHeart : Images.heart)
+        favoriteButton.accessibilityLabel = Accessibility.favoriteButtonLabel
+        favoriteButton.accessibilityHint = isFilteredByFavorites ? Accessibility.favoriteFilteredButtonHint : Accessibility.favoriteButtonHint
         favoriteButton.target = self
         favoriteButton.action = #selector(didTapFavorite)
         
-        let searchButton = UIBarButtonItem(image: UIImage(systemName: isSearchBarHidden ? "magnifyingglass.circle" : "magnifyingglass.circle.fill"))
-        searchButton.accessibilityLabel = "Pesquisa"
-        searchButton.accessibilityHint = isSearchBarHidden ? "Abre campo de pesquisa." : "Fecha campo de pesquisa."
+        let searchButton = UIBarButtonItem(image: isSearchBarHidden ? Images.magnifyingGlass : Images.filledMagnifyingGlass)
+        searchButton.accessibilityLabel = Accessibility.searchButtonLabel
+        searchButton.accessibilityHint = isSearchBarHidden ? Accessibility.searchButtonHintOpen : Accessibility.searchButtonHintClose
         searchButton.target = self
         searchButton.action = #selector(didTapSearch)
         
-        let screenModeButton = UIBarButtonItem(image: UIImage(systemName: currentScreenMode == .list ? "tablecells.fill" : "map.fill"))
-        screenModeButton.accessibilityLabel = "Visualização"
-        screenModeButton.accessibilityHint = "Alterna visualização para \(currentScreenMode == .list ? "Mapa" : "Lista")"
+        let screenModeButton = UIBarButtonItem(image: currentScreenMode == .list ? Images.tableCells : Images.mapFill)
+        screenModeButton.accessibilityLabel = Accessibility.screenModeButtonLabel
+        screenModeButton.accessibilityHint = Accessibility.screenModeButtonHint + (currentScreenMode == .list ? Strings.mapTitle : Strings.list)
         screenModeButton.target = self
         screenModeButton.action = #selector(didTapScreenMode)
         

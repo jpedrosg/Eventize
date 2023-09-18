@@ -67,7 +67,7 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         self.viewModel = viewModel
         
         // Top
-        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) { imageView in
+        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: Images.eventBanner(viewModel.event.eventUuid)) { imageView in
             self.imageContainerView.isHidden = imageView.image == nil
         }
         
@@ -105,6 +105,38 @@ extension EventViewController: UIContextMenuInteractionDelegate {
 // MARK: - Private API
 
 private extension EventViewController {
+    typealias Strings = Constants.Strings
+    typealias Images = Constants.Images
+    typealias Accessibility = Constants.Accessibility
+    
+    enum Constants {
+        enum Accessibility {
+            static let favoriteButton: String = "Favorito"
+            static let addToFavoritesHint: String = "Adiciona evento aos favoritos."
+            static let removeFromFavoritesHint: String = "Remove evento dos favoritos."
+        }
+        
+        enum Images {
+            static let heartEmpty: UIImage = .init(systemName: "heart")!
+            static let heartFilled: UIImage = .init(systemName: "heart.fill")!
+            static let share: UIImage = .init(systemName: "square.and.arrow.up")!
+            static let copy: UIImage = .init(systemName: "doc.on.doc")!
+            static let saveToPhotos: UIImage = .init(systemName: "photo")!
+            static func eventBanner(_ uuid: String) -> UIImage? {
+                return .init(named: "events_banner_\(uuid)")
+            }
+        }
+        
+        enum Strings {
+            static let eventsBannerPrefix: String = "events_banner_"
+            static let shareActionTitle: String = "Share"
+            static let copyActionTitle: String = "Copy"
+            static let saveToPhotosActionTitle: String = "Save to Photos"
+            static let savingImageError: String = "Error saving image to photos:"
+            static let imageSavedSuccessfully: String = "Image saved to photos successfully."
+        }
+    }
+    
     func setupView() {
         imageBackground.addRoundedCornersAndShadow()
         
@@ -114,16 +146,16 @@ private extension EventViewController {
     }
     
     func setupNavigationItem(_ isFavoriteEvent: Bool) {
-        let favoriteButton = UIBarButtonItem(image: isFavoriteEvent ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"))
-        favoriteButton.accessibilityLabel = "Favorito"
-        favoriteButton.accessibilityHint = isFavoriteEvent ? "Remove evento dos favoritos." : "Adiciona evento aos favoritos."
+        let favoriteButton = UIBarButtonItem(image: isFavoriteEvent ? Images.heartFilled : Images.heartEmpty)
+        favoriteButton.accessibilityLabel = Accessibility.favoriteButton
+        favoriteButton.accessibilityHint = isFavoriteEvent ? Accessibility.removeFromFavoritesHint : Accessibility.addToFavoritesHint
         favoriteButton.target = self
         favoriteButton.action = #selector(didTapFavorite)
         self.navigationItem.setRightBarButton(favoriteButton, animated: true)
     }
     
     func createContextMenu() -> UIMenu {
-        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+        let shareAction = UIAction(title: Strings.shareActionTitle, image: Images.share) { [weak self] _ in
             guard let self = self else { return }
             
             // Check if the image exists
@@ -136,7 +168,7 @@ private extension EventViewController {
             self.present(activityViewController, animated: true, completion: nil)
         }
         
-        let copy = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+        let copy = UIAction(title: Strings.copyActionTitle, image: Images.copy) { [weak self] _ in
             guard let self = self else { return }
             
             // Check if the image exists
@@ -148,7 +180,7 @@ private extension EventViewController {
             UIPasteboard.general.image = image
         }
         
-        let saveToPhotos = UIAction(title: "Save to Photos", image: UIImage(systemName: "photo")) { [weak self] _ in
+        let saveToPhotos = UIAction(title: Strings.saveToPhotosActionTitle, image: Images.saveToPhotos) { [weak self] _ in
             guard let self = self else { return }
             
             // Check if the image exists
@@ -167,10 +199,10 @@ private extension EventViewController {
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // Handle the error if saving fails
-            print("Error saving image to photos: \(error.localizedDescription)")
+            print(Strings.savingImageError, error.localizedDescription)
         } else {
             // Handle the success case
-            print("Image saved to photos successfully.")
+            print(Strings.imageSavedSuccessfully)
         }
     }
     

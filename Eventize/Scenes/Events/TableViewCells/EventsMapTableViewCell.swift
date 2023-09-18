@@ -56,7 +56,7 @@ final class EventsMapTableViewCell: UITableViewCell {
         didSet {
             guard let event = selectedEvent else {
                 customBackgroundView.isUserInteractionEnabled = false
-                selectedEventLabel.text = Constants.selectedEventEmptyLabelText
+                selectedEventLabel.text = Strings.selectedEventEmptyLabelText
                 bannerImageView.image = nil
                 bannerImageView.backgroundColor = .secondarySystemBackground
                 titleLabel.text = nil
@@ -72,9 +72,9 @@ final class EventsMapTableViewCell: UITableViewCell {
             }
             bannerImageView.backgroundColor = .clear
             customBackgroundView.isUserInteractionEnabled = true
-            selectedEventLabel.text = Constants.selectedEventLabelText
-            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Constants.eventBannerImageName(event.eventUuid))) { imageView in
-                self.bannerImageHeight.constant = imageView.image == nil ? 0 : Constants.eventBannerImageHeight
+            selectedEventLabel.text = Strings.selectedEventLabelText
+            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Strings.eventBannerImageName(event.eventUuid))) { imageView in
+                self.bannerImageHeight.constant = imageView.image == nil ? 0 : Floats.eventBannerImageHeight
             }
             titleLabel.text = event.content.title
             addressLabel.text = event.content.subtitle
@@ -158,23 +158,21 @@ extension EventsMapTableViewCell: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.annotationViewIdentifier) as? MKMarkerAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Strings.annotationViewIdentifier) as? MKMarkerAnnotationView
         
         if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: Constants.annotationViewIdentifier)
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: Strings.annotationViewIdentifier)
             annotationView?.canShowCallout = true
         } else {
             annotationView?.annotation = annotation
         }
-        annotationView?.markerTintColor = UIColor(named: "AccentColor")
+        annotationView?.markerTintColor = Colors.accentColor
         
         return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         self.selectedEvent = viewModel?.events.filterEvent(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
-        
-        updateAccessibility()
     }
     
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
@@ -185,24 +183,44 @@ extension EventsMapTableViewCell: MKMapViewDelegate {
 // MARK: - Private Extension
 
 private extension EventsMapTableViewCell {
-    // MARK: - Constants
+    typealias Strings = Constants.Strings
+    typealias Images = Constants.Images
+    typealias Floats = Constants.Floats
+    typealias Accessibility = Constants.Accessibility
+    typealias Colors = Constants.Colors
     
-    private enum Constants {
-        static let eventBannerImageNamePrefix = "events_banner_"
-        static let eventAddressRegionFocusDelta: CGFloat = 0.075
-        static let userAddressRegionFocusDelta: CGFloat = 0.085
-        static let extraLatitudeToCenterPin: CGFloat = 0.005
-        static let annotationViewIdentifier: String = "annotationViewIdentifier"
-        static let selectedEventLabelText = "Evento selecionado:"
-        static let selectedEventEmptyLabelText = "Nenhum evento selecionado."
-        static let mapHeight: CGFloat = 450
-        static let fakeExpandabilityIndicatorRadius: CGFloat = 1.5
-        static let customSheetBackgroundRadius: CGFloat = 20
-        static let eventInfoImageWidth: CGFloat = 22
-        static let eventBannerImageHeight: CGFloat = 150
+    enum Constants {
+        enum Strings {
+            static let annotationViewIdentifier: String = "annotationViewIdentifier"
+            static let selectedEventLabelText: String = "Evento selecionado:"
+            static let selectedEventEmptyLabelText: String = "Nenhum evento selecionado."
+            static let eventBannerImageNamePrefix: String = "events_banner_"
+            static func eventBannerImageName(_ eventUuid: String) -> String {
+                return "events_banner_\(eventUuid)"
+            }
+        }
         
-        static func eventBannerImageName(_ eventUuid: String) -> String {
-            return "events_banner_\(eventUuid)"
+        enum Floats {
+            static let eventAddressRegionFocusDelta: CGFloat = 0.075
+            static let userAddressRegionFocusDelta: CGFloat = 0.085
+            static let extraLatitudeToCenterPin: CGFloat = 0.005
+            static let mapHeight: CGFloat = 450
+            static let fakeExpandabilityIndicatorRadius: CGFloat = 1.5
+            static let customSheetBackgroundRadius: CGFloat = 20
+            static let eventInfoImageWidth: CGFloat = 22
+            static let eventBannerImageHeight: CGFloat = 150
+        }
+        
+        enum Colors {
+            static let accentColor: UIColor = .init(named: "AccentColor")!
+        }
+        
+        enum Images {
+            static let checkmark: UIImage = .init(systemName: "checkmark.circle.fill")!
+        }
+        
+        enum Accessibility {
+            static let cellAccessibilityHint: String = "Abre detalhes do evento."
         }
     }
     
@@ -216,8 +234,8 @@ private extension EventsMapTableViewCell {
     
     func centerMapOn(_ coordinate: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: coordinate,
-                                             span: .init(latitudeDelta: Constants.userAddressRegionFocusDelta,
-                                                         longitudeDelta: Constants.userAddressRegionFocusDelta))
+                                        span: .init(latitudeDelta: Floats.userAddressRegionFocusDelta,
+                                                    longitudeDelta: Floats.userAddressRegionFocusDelta))
         if mapView.region.center != region.center {
             mapView.setRegion(region, animated: true)
         }
@@ -272,10 +290,10 @@ private extension EventsMapTableViewCell {
         bottomInfoStackView.distribution = .fillProportionally
         
         let imageView = NetworkImageView()
-        imageView.setImage(fromUrl: bottomInfo.imageUrl, placeholderImage: UIImage(systemName: "checkmark.circle.fill")!)
+        imageView.setImage(fromUrl: bottomInfo.imageUrl, placeholderImage: Images.checkmark)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: Constants.eventInfoImageWidth).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: Floats.eventInfoImageWidth).isActive = true
         bottomInfoStackView.addArrangedSubview(imageView)
         
         let textLabel = UILabel()
@@ -295,16 +313,16 @@ private extension EventsMapTableViewCell {
         let eventGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEvent))
         customBackgroundView.addGestureRecognizer(eventGestureRecognizer)
         
-        mapHeightConstraint.constant = Constants.mapHeight
+        mapHeightConstraint.constant = Floats.mapHeight
         customBackgroundView.addRoundedCornersAndShadow()
         bannerImageView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
         bannerImageView.contentMode = .scaleAspectFill
         
-        customSheetBackgroundView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner], radius: Constants.customSheetBackgroundRadius)
-        fakeExpandabilityIndicator.addRoundedCorners(for: .all, radius: Constants.fakeExpandabilityIndicatorRadius)
+        customSheetBackgroundView.addRoundedCorners(for: [.layerMaxXMinYCorner, .layerMinXMinYCorner], radius: Floats.customSheetBackgroundRadius)
+        fakeExpandabilityIndicator.addRoundedCorners(for: .all, radius: Floats.fakeExpandabilityIndicatorRadius)
         
         customBackgroundView.isAccessibilityElement = true
-        customBackgroundView.accessibilityHint = "Abre detalhes do evento."
+        customBackgroundView.accessibilityHint = Accessibility.cellAccessibilityHint
     }
     
     @objc func didTapEvent() {

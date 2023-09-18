@@ -21,7 +21,7 @@ final class EventsTableViewHeader: UITableViewCell {
     
     weak var listener: EventsCellListener?
     
-    static var headerHeight: CGFloat = 60.0
+    static let headerHeight: CGFloat = 60.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +35,7 @@ extension EventsTableViewHeader: EventsHeaderDisplayLogic {
     func displayEventHeader(viewModel: Events.EventList.HeaderViewModel) {
         guard let address = viewModel.address else { return }
         
-        titleLabel.text = "Procurando eventos perto de:"
+        titleLabel.text = Strings.title
         addressLabel.text = address
     }
     
@@ -48,6 +48,14 @@ extension EventsTableViewHeader: EventsHeaderDisplayLogic {
 // MARK: - Private API
 
 private extension EventsTableViewHeader {
+    typealias Strings = Constants.Strings
+    
+    enum Constants {
+        enum Strings {
+            static let title: String = "Procurando eventos perto de:"
+        }
+    }
+    
     func setupViews() {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))

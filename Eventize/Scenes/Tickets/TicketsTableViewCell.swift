@@ -1,22 +1,17 @@
-//
-//  Copyright © JJG Technologies, Inc. All rights reserved.
-//
-
-
 import UIKit
 
-/// Protocol for handling interactions in the TicketsTableViewCell.
+// Protocol for handling interactions in the TicketsTableViewCell.
 protocol TicketsViewCellInteractions: AnyObject {
     func validateTicket(_ ticket: Tickets.TicketObject)
 }
 
-/// Protocol for displaying ticket information in the TicketsTableViewCell.
+// Protocol for displaying ticket information in the TicketsTableViewCell.
 protocol TicketsViewCellDisplayLogic: AnyObject {
     func displayTicket(viewModel: Tickets.TicketList.CellViewModel)
     func setListener(_ listener: TicketsViewCellInteractions)
 }
 
-/// Custom table view cell for displaying ticket information.
+// Custom table view cell for displaying ticket information.
 class TicketsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -68,7 +63,7 @@ extension TicketsTableViewCell: TicketsViewCellDisplayLogic {
         titleLabel.text = viewModel.ticket.title
         if let quantity = viewModel.ticket.quantity {
             quantityLabel.text = "\(quantity)x"
-            quantityLabel.accessibilityLabel = quantity > 1 ? "\(quantity) ingressos" : "\(quantity) ingresso"
+            quantityLabel.accessibilityLabel = quantity > 1 ? "\(quantity) " + Strings.ingressos : "\(quantity) " +  Strings.ingresso
         }
         dateLabel.text = ISO8601DateFormatter().date(from: viewModel.ticket.date)?.formatted(date: .numeric, time: .omitted)
         
@@ -81,14 +76,13 @@ extension TicketsTableViewCell: TicketsViewCellDisplayLogic {
             dateLabel.accessibilityLabel = dateFormatter.string(from: date)
         }
         
-        
         descriptionLabel.text = viewModel.ticket.description
         
         if viewModel.ticket.isValid {
-            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: .init(named: "events_banner_\(viewModel.ticket.eventUuid)"))
+            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: Images.placeholderImage(viewModel.ticket.eventUuid))
             setValidState()
         } else {
-            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: .init(named: "events_banner_\(viewModel.ticket.eventUuid)"), asBlackAndWhite: true)
+            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: Images.placeholderImage(viewModel.ticket.eventUuid), asBlackAndWhite: true)
             setInvalidState()
         }
         
@@ -105,15 +99,40 @@ extension TicketsTableViewCell: TicketsViewCellDisplayLogic {
 // MARK: - Private API
 
 private extension TicketsTableViewCell {
-    
-    // MARK: - Constants
+    typealias Strings = Constants.Strings
+    typealias Images = Constants.Images
+    typealias Floats = Constants.Floats
+    typealias Colors = Constants.Colors
+    typealias Accessibility = Constants.Accessibility
     
     enum Constants {
-        static let titleLabelAlpha: CGFloat = 0.55
-        static let dateIconImageViewAlpha: CGFloat = 0.55
-        static let checkinButtonTitleValidado = "VALIDADO"
-        static let checkinButtonTitleValidar = "VALIDAR"
-        static let mapHeight: CGFloat = 450
+        enum Images {
+            static func placeholderImage(_ uuid: String) -> UIImage? {
+                return .init(named: "events_banner_\(uuid)")
+            }
+        }
+        
+        enum Strings {
+            static let ingresso: String = "ingresso"
+            static let ingressos: String = "ingressos"
+            static let checkinButtonTitleInvalid: String = "VALIDADO"
+            static let checkinButtonTitleValid: String = "VALIDAR"
+        }
+        
+        enum Floats {
+            static let alphaValue: CGFloat = 0.55
+            static let mapHeight: CGFloat = 450
+        }
+        
+        enum Colors {
+            static let accentColor: UIColor = .init(named: "AccentColor")!
+        }
+        
+        enum Accessibility {
+            static let validState: String = "Válido"
+            static let invalidState: String = "Validado"
+            static let checkinHint: String = "Toque para validar tickets"
+        }
     }
     
     func setupViews() {
@@ -130,21 +149,21 @@ private extension TicketsTableViewCell {
     }
     
     func setInvalidState() {
-        eventImageView.alpha = Constants.titleLabelAlpha
-        dateIconImageView.alpha = Constants.dateIconImageViewAlpha
-        titleLabel.alpha = Constants.titleLabelAlpha
-        descriptionLabel.alpha = Constants.titleLabelAlpha
+        eventImageView.alpha = Floats.alphaValue
+        dateIconImageView.alpha = Floats.alphaValue
+        titleLabel.alpha = Floats.alphaValue
+        descriptionLabel.alpha = Floats.alphaValue
         
         dateIconImageView.tintColor = .label
-        backgroundContainerView.backgroundColor = .systemBackground.withAlphaComponent(Constants.titleLabelAlpha)
-        checkinButton.setTitle(Constants.checkinButtonTitleValidado, for: .normal)
+        backgroundContainerView.backgroundColor = .systemBackground.withAlphaComponent(Floats.alphaValue)
+        checkinButton.setTitle(Strings.checkinButtonTitleInvalid, for: .normal)
         checkinButton.isEnabled = false
         lineCropFrontStackView.arrangedSubviews.forEach { subview in
             subview.addRoundedCorners(for: [])
             subview.backgroundColor = .secondarySystemBackground
         }
         
-        accessibilityValue = "Validado"
+        accessibilityValue = Accessibility.invalidState
     }
     
     func setValidState() {
@@ -153,16 +172,16 @@ private extension TicketsTableViewCell {
         titleLabel.alpha = 1
         descriptionLabel.alpha = 1
         
-        dateIconImageView.tintColor = .init(named: "AccentColor")
+        dateIconImageView.tintColor = Colors.accentColor
         backgroundContainerView.backgroundColor = .systemBackground
-        checkinButton.setTitle(Constants.checkinButtonTitleValidar, for: .normal)
+        checkinButton.setTitle(Strings.checkinButtonTitleValid, for: .normal)
         checkinButton.isEnabled = true
         lineCropFrontStackView.arrangedSubviews.enumerated().forEach { index, subview in
             subview.addRoundedCorners(for: .all)
             subview.backgroundColor = index % 2 != 0 ? .secondarySystemBackground : .systemBackground
         }
         
-        accessibilityValue = "Válido"
-        checkinButton.accessibilityHint = "Toque para validar tickets"
+        accessibilityValue = Accessibility.validState
+        checkinButton.accessibilityHint = Accessibility.checkinHint
     }
 }

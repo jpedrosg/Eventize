@@ -83,11 +83,24 @@ final class TicketsViewController: UITableViewController, TicketsDisplayLogic {
 // MARK: - Private API
 
 private extension TicketsViewController {
+    typealias Strings = Constants.Strings
+    typealias Images = Constants.Images
+    
+    enum Constants {
+        enum Strings {
+            static let title: String = "Ingressos"
+        }
+        
+        enum Images {
+            static let ticketFill: UIImage = .init(systemName: "ticket.fill")!
+        }
+    }
+    
     func setupNavigationItem() {
-        self.navigationItem.title = "Ingressos"
+        self.navigationItem.title = Strings.title
         self.navigationController?.navigationBar.prefersLargeTitles = true
     
-        let ticketsButton = UIBarButtonItem(image: UIImage(systemName: "ticket.fill"))
+        let ticketsButton = UIBarButtonItem(image: Images.ticketFill)
         ticketsButton.target = self
         ticketsButton.action = #selector(didTapTickets)
         

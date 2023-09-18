@@ -69,17 +69,17 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
     func displayEventCell(viewModel: Events.EventList.CellViewModel, isFilteredByFavorites: Bool, isSearching: Bool) {
         self.viewModel = viewModel
         
-        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: "events_banner_\(viewModel.event.eventUuid)")) { imageView in
+        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: Strings.eventsBannerPrefix + viewModel.event.eventUuid)) { imageView in
             imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
-            self.favoriteButton.tintColor = isFilteredByFavorites ? UIColor(named: "AccentColor") : (imageView.image == nil ? .label : .secondarySystemBackground)
+            self.favoriteButton.tintColor = isFilteredByFavorites ? Colors.accentColor : (imageView.image == nil ? .label : .secondarySystemBackground)
         }
         
         titleLabel.text = viewModel.event.content.title
         locationLabel.text = viewModel.event.content.subtitle
         priceLabel.text = viewModel.event.content.price?.asCurrency
         infoLabel.text = viewModel.event.content.info
-        favoriteButton.setImage(UIImage(systemName: viewModel.event.isFavorite ? "heart.fill" : "heart"), for: .normal)
-        titleLabel.textColor = isSearching ? UIColor(named: "AccentColor") : .label
+        favoriteButton.setImage(viewModel.event.isFavorite ? Images.heartFilled : Images.heartEmpty, for: .normal)
+        titleLabel.textColor = isSearching ? Colors.accentColor : .label
         updateBottomInfoStackView(with: viewModel.event.content.extraBottomInfo)
         
         titleLabel.numberOfLines = 0
@@ -87,8 +87,8 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         locationLabel.setContentHuggingPriority(.required, for: .vertical)
         
-        favoriteButton.accessibilityLabel = "Favorito"
-        favoriteButton.accessibilityHint = viewModel.event.isFavorite ? "Remove evento dos favoritos." : "Adiciona evento aos favoritos."
+        favoriteButton.accessibilityLabel = Accessibility.favoriteButton
+        favoriteButton.accessibilityHint = viewModel.event.isFavorite ? Accessibility.removeFromFavoritesHint : Accessibility.addToFavoritesHint
         
         layoutSubviews()
     }
@@ -105,6 +105,33 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
 // MARK: - Private API
 
 private extension EventsTableViewCell {
+    typealias Strings = Constants.Strings
+    typealias Images = Constants.Images
+    typealias Colors = Constants.Colors
+    typealias Accessibility = Constants.Accessibility
+    
+    enum Constants {
+        enum Accessibility {
+            static let favoriteButton = "Favorito"
+            static let addToFavoritesHint = "Adiciona evento aos favoritos."
+            static let removeFromFavoritesHint = "Remove evento dos favoritos."
+        }
+        
+        enum Images {
+            static let heartEmpty: UIImage = .init(systemName: "heart")!
+            static let heartFilled: UIImage = .init(systemName: "heart.fill")!
+            static let checkmarkCircle: UIImage = .init(systemName: "checkmark.circle.fill")!
+        }
+        
+        enum Colors {
+            static let accentColor: UIColor = .init(named: "AccentColor")!
+        }
+        
+        enum Strings {
+            static let eventsBannerPrefix: String = "events_banner_"
+        }
+    }
+    
     func updateBottomInfoStackView(with bottomInfo: [Events.EventObject.EventContent.BottomInfo]?) {
         bottomInfosStackView.arrangedSubviews.forEach { subview in
             subview.removeFromSuperview()
@@ -133,7 +160,7 @@ private extension EventsTableViewCell {
         bottomInfoStackView.distribution = .fillProportionally
         
         let imageView = NetworkImageView()
-        imageView.setImage(fromUrl: bottomInfo.imageUrl, placeholderImage: UIImage(systemName: "checkmark.circle.fill")!)
+        imageView.setImage(fromUrl: bottomInfo.imageUrl, placeholderImage: Images.checkmarkCircle)
         imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
