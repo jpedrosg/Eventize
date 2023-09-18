@@ -87,6 +87,18 @@ open Eventize.xcodeproj
 
 3. Execute o aplicativo no simulador ou em um dispositivo iOS.
 
+### Como Rodar Testes
+1. Abra o projeto no Xcode.
+
+2. Altere o seu simulador para um iPhone 14, iOS 16+.
+
+3. Na barra superior: Product > Test (ou aperte CMD+U)
+
+4. Testes Especiais:
+   - **LocationManagerTests:** Utilize um telefone real como RUN DESTINATION.
+   - **DoubleCurrencyFormattingTests:** Certifique-se de que seu simulador ou celular tem região definida como Brasil.
+   - **Snapshot Tests:** Certifique-se de utilizar o iPhone 14, com iOS 16+ como simulador.
+
 ### Como Usar
 
 Siga nossos [vídeos demonstrativos](#vídeos-de-demonstração) para aprender a usar o Eventize e aproveitar ao máximo todas as suas funcionalidades.
