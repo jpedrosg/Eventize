@@ -65,7 +65,7 @@ Aqui estão [vídeos demonstrativos](https://1drv.ms/f/s!AsGKu1x-W3oTkNIAB7piAEx
 
 ### Roadmap
 
-Este é o MVP (Minimum Viable Product) do Eventize, uma versão inicial do aplicativo com funcionalidades essenciais para oferecer uma experiência básica aos usuários. Estamos comprometidos em continuar melhorando e expandindo o aplicativo. Alguns dos recursos planejados para a versão 1.0 incluem:
+Este é o **MVP (Minimum Viable Product) do Eventize**, uma versão inicial do aplicativo com funcionalidades essenciais para oferecer uma experiência básica aos usuários. Estamos comprometidos em continuar melhorando e expandindo o aplicativo. Alguns dos recursos planejados para a versão 1.0 incluem:
 
 - **Login / Register:** Permitirá aos usuários criar contas personalizadas e acessar recursos exclusivos.
 - **Location Context:** Aprimoramento da funcionalidade de localização para oferecer informações mais precisas e relevantes.
