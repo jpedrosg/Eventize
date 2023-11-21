@@ -22,6 +22,7 @@
 		BC3BE08E2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE08D2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift */; };
 		BC3BE0912AAEDF0800BA0006 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0902AAEDF0800BA0006 /* LocationManager.swift */; };
 		BC3BE0942AAF57E900BA0006 /* EventsMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3BE0932AAF57E900BA0006 /* EventsMapTableViewCell.swift */; };
+		BC401CDC2B0C427F0002689E /* ImageMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401CDB2B0C427F0002689E /* ImageMocks.swift */; };
 		BC545EC02AACEA5100634334 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */; };
 		BC545EC32AACF67300634334 /* Double+asCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC22AACF67300634334 /* Double+asCurrency.swift */; };
 		BC545EC62AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */; };
@@ -96,6 +97,7 @@
 		BC3BE08D2AAEDB3700BA0006 /* UIView+addTopAndBottomSeparators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addTopAndBottomSeparators.swift"; sourceTree = "<group>"; };
 		BC3BE0902AAEDF0800BA0006 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BC3BE0932AAF57E900BA0006 /* EventsMapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsMapTableViewCell.swift; sourceTree = "<group>"; };
+		BC401CDB2B0C427F0002689E /* ImageMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMocks.swift; sourceTree = "<group>"; };
 		BC545EBF2AACEA5100634334 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		BC545EC22AACF67300634334 /* Double+asCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+asCurrency.swift"; sourceTree = "<group>"; };
 		BC545EC52AAD02D000634334 /* UIImage+convertToBlackAndWhite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+convertToBlackAndWhite.swift"; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				BC3BE0802AAE67DD00BA0006 /* JsonMocks.swift */,
 				BC3BE0832AAE6A6100BA0006 /* LogError.swift */,
 				BC3BE0862AAE6A9B00BA0006 /* NetworkManager.swift */,
+				BC401CDB2B0C427F0002689E /* ImageMocks.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				BCC91F0C2AACD8AB00DED263 /* EventsViewController.swift in Sources */,
 				BC545EC82AAD064500634334 /* Collection+safe.swift in Sources */,
 				BC3BE0722AAD171000BA0006 /* UIView+addRoundedCornersAndShadow.swift in Sources */,
+				BC401CDC2B0C427F0002689E /* ImageMocks.swift in Sources */,
 				BCC91F0D2AACD8AB00DED263 /* EventsPresenter.swift in Sources */,
 				BC3BE07D2AAD1F5E00BA0006 /* TicketsModels.swift in Sources */,
 				BC3BE08A2AAE729300BA0006 /* NetworkImageView.swift in Sources */,

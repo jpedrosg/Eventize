@@ -45,7 +45,7 @@ final class EventInteractor: EventBusinessLogic, EventDataStore {
     // MARK: - Fetch Event Details
     
     func fetchDetails() {
-        worker?.fetchDetails(completion: { [weak self] result in
+        worker?.fetchDetails(from: event?.eventUuid , completion: { [weak self] result in
             guard let self = self else { return }
             
             switch result {

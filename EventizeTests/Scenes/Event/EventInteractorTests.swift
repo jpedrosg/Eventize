@@ -25,7 +25,7 @@ class EventInteractorTests: XCTestCase {
     }
     
     class MockWorker: EventWorker {
-        override func fetchDetails(completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
+        override func fetchDetails(from eventUuid: Int?, completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
             completion(.success(.init(description: "")))
         }
     }
@@ -40,7 +40,7 @@ class EventInteractorTests: XCTestCase {
         }
         
         func getUserPreferences() -> Eventize.UserPreferences? {
-            return .init(favoriteEventsUuids: ["1234"])
+            return .init(favoriteEventsUuids: [1])
         }
         
         func setUserPreferences(_ preferences: Eventize.UserPreferences?) {
@@ -64,7 +64,7 @@ class EventInteractorTests: XCTestCase {
         interactor = EventInteractor(presenter: mockPresenter,
                                      worker: mockWorker,
                                      cache: mockCache,
-                                     event: .init(eventUuid: "uuid",
+                                     event: .init(eventUuid: 1,
                                                   content: .init(imageUrl: nil,
                                                                  title: "title",
                                                                  subtitle: nil,

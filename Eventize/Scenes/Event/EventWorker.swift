@@ -19,17 +19,16 @@ class EventWorker {
     ///
     /// - Parameter completion: A closure to handle the result of the fetch operation. The closure will be called with either
     ///                        a success result containing event details or a failure result with an error.
-    func fetchDetails(completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
-        // TODO: - Mocked Network Call! Create URL here in the future.
-        guard let jsonData = JsonMocks.Event_EventDetails else {
+    func fetchDetails(from eventUuid: Int?, completion: @escaping (Result<Event.DetailsContent, Event.EventFetchError>) -> Void) {
+        guard let eventUuid, let url = NetworkManager.createURL(path: APIEndpoint.Event.path(eventUuid)) else {
             completion(.failure(.dataParsingError))
             return
         }
         
-        NetworkManager.fetchData(jsonData: jsonData, responseType: Event.DetailsContent.self, callerName: String(describing: self)) { result in
+        NetworkManager.fetchData(from: url, responseType: Event.DetailsContent.self, callerName: String(describing: self)) { result in
             switch result {
-            case .success(let eventDetails):
-                completion(.success(eventDetails))
+            case .success(let events):
+                completion(.success(.init(description: events.description)))
                 
             case .failure(let networkError):
                 switch networkError {

@@ -30,7 +30,7 @@ class EventsInteractorTests: XCTestCase {
 
         override func fetchEvents(request: Events.EventList.Request, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
             fetchEventsCalled = true
-            completion(.success([.init(eventUuid: "uuid",
+            completion(.success([.init(eventUuid: 1,
                                        content: .init(imageUrl: nil,
                                                       title: "title",
                                                       subtitle: nil,
@@ -89,7 +89,7 @@ class EventsInteractorTests: XCTestCase {
         
         func getUserPreferences() -> Eventize.UserPreferences? {
             getUserPreferencesCalled = true
-            return .init(favoriteEventsUuids: ["1234"])
+            return .init(favoriteEventsUuids: [1])
         }
         
         func setUserPreferences(_ preferences: Eventize.UserPreferences?) {
@@ -159,7 +159,7 @@ class EventsInteractorTests: XCTestCase {
     }
 
     func testSetFavorite() {
-        let mockEvent = Events.EventObject.init(eventUuid: "uuid",
+        let mockEvent = Events.EventObject.init(eventUuid: 1,
                                                 content: .init(imageUrl: nil,
                                                                title: "title",
                                                                subtitle: nil,
@@ -176,7 +176,7 @@ class EventsInteractorTests: XCTestCase {
     }
 
     func testRemoveFavorite() {
-        let mockEvent = Events.EventObject.init(eventUuid: "uuid",
+        let mockEvent = Events.EventObject.init(eventUuid: 1,
                                                 content: .init(imageUrl: nil,
                                                                title: "title",
                                                                subtitle: nil,
@@ -194,7 +194,7 @@ class EventsInteractorTests: XCTestCase {
     }
 
     func testSelectEventAtIndex() {
-        interactor.events = [.init(eventUuid: "uuid",
+        interactor.events = [.init(eventUuid: 1,
                                    content: .init(imageUrl: nil,
                                                   title: "title",
                                                   subtitle: nil,
@@ -207,11 +207,11 @@ class EventsInteractorTests: XCTestCase {
         interactor.selectEvent(at: index)
         
         // Verify that the selected event is updated based on the index.
-        XCTAssertEqual(interactor.selectedEvent?.eventUuid, "uuid")
+        XCTAssertEqual(interactor.selectedEvent?.eventUuid, 1)
     }
 
     func testSelectEventObject() {
-        let mockEvent = Events.EventObject.init(eventUuid: "uuid",
+        let mockEvent = Events.EventObject.init(eventUuid: 1,
                                                 content: .init(imageUrl: nil,
                                                                title: "title",
                                                                subtitle: nil,
@@ -223,7 +223,7 @@ class EventsInteractorTests: XCTestCase {
         interactor.selectEvent(mockEvent)
         
         // Verify that the selected event is updated based on the provided event object.
-        XCTAssertEqual(interactor.selectedEvent?.eventUuid, "uuid")
+        XCTAssertEqual(interactor.selectedEvent?.eventUuid, 1)
     }
 
 }

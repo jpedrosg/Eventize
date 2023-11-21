@@ -23,8 +23,50 @@ enum NetworkError: Error {
     case dataParsingError
 }
 
+/// Represents the structure of the API endpoints.
+enum APIEndpoint {
+    /// The default scheme for API endpoints.
+    static let defaultScheme = "https"
+    
+    /// The default host for API endpoints.
+    static let defaultHost = "eventize-api-6bd6089a59f0.herokuapp.com"
+
+    // MARK: Events
+    
+    enum Events {
+        static let path = "/events"
+    }
+    
+    enum Event {
+        static func path(_ eventUuid: Int) -> String {
+            "/events/\(eventUuid)"
+        }
+    }
+    
+    enum Tickets {
+        static let path = "/tickets"
+    }
+    
+    enum ValidateTicket {
+        static func path(_ eventUuid: Int) -> String {
+            "/tickets/validar/\(eventUuid)"
+        }
+    }
+}
+
 /// A utility for performing network operations such as fetching data and images.
 struct NetworkManager {
+    static func createURL(path: String, queryParameters: [String: String]? = nil) -> URL? {
+        var components = URLComponents()
+        components.scheme = APIEndpoint.defaultScheme
+        components.host = APIEndpoint.defaultHost
+        components.path = path
+        if let queryParameters {
+            components.queryItems = queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) }
+        }
+        
+        return components.url
+    }
     
     /// Fetches an image from a given URL.
     ///

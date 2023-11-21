@@ -8,15 +8,15 @@ import CoreLocation
 
 /// A struct to represent user preferences.
 struct UserPreferences: Codable, Equatable {
-    var favoriteEventsUuids: [String] = []
+    var favoriteEventsUuids: [Int] = []
 
-    mutating func addFavoriteEvent(uuid: String) {
+    mutating func addFavoriteEvent(uuid: Int) {
         if !favoriteEventsUuids.contains(uuid) {
             favoriteEventsUuids.append(uuid)
         }
     }
 
-    mutating func removeFavoriteEvent(uuid: String) {
+    mutating func removeFavoriteEvent(uuid: Int) {
         favoriteEventsUuids.removeAll { $0 == uuid }
     }
     

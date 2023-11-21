@@ -67,8 +67,10 @@ final class EventViewController: UIViewController, EventDisplayLogic {
         self.viewModel = viewModel
         
         // Top
-        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: Images.eventBanner(viewModel.event.eventUuid)) { imageView in
-            self.imageContainerView.isHidden = imageView.image == nil
+        imageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: ImageMocks.randomEventImage()) { imageView in
+            DispatchQueue.main.async {
+                self.imageContainerView.isHidden = imageView.image == nil
+            }
         }
         
         // Leading

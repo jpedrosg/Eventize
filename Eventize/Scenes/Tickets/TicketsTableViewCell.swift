@@ -24,6 +24,7 @@ class TicketsTableViewCell: UITableViewCell {
     @IBOutlet weak var lineCropBackStackView: UIStackView!
     @IBOutlet weak var lineCropFrontStackView: UIStackView!
     @IBOutlet weak var dateIconImageView: UIImageView!
+    private let placeholderImage: UIImage = ImageMocks.randomEventImage()
     
     var viewModel: Tickets.TicketList.CellViewModel?
     weak var listener: TicketsViewCellInteractions?
@@ -65,24 +66,27 @@ extension TicketsTableViewCell: TicketsViewCellDisplayLogic {
             quantityLabel.text = "\(quantity)x"
             quantityLabel.accessibilityLabel = quantity > 1 ? "\(quantity) " + Strings.ingressos : "\(quantity) " +  Strings.ingresso
         }
-        dateLabel.text = ISO8601DateFormatter().date(from: viewModel.ticket.date)?.formatted(date: .numeric, time: .omitted)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "pt_BR")
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .none
 
-        if let date = ISO8601DateFormatter().date(from: viewModel.ticket.date) {
-            dateLabel.accessibilityLabel = dateFormatter.string(from: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        if let date = dateFormatter.date(from: viewModel.ticket.date) {
+            let brazilianDateFormatter = DateFormatter()
+            brazilianDateFormatter.locale = Locale(identifier: "pt_BR")
+            brazilianDateFormatter.dateFormat = "dd/MM/yyyy"
+
+            let formattedDate = brazilianDateFormatter.string(from: date)
+            dateLabel.text = formattedDate
         }
         
         descriptionLabel.text = viewModel.ticket.description
         
         if viewModel.ticket.isValid {
-            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: Images.placeholderImage(viewModel.ticket.eventUuid))
+            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: placeholderImage)
             setValidState()
         } else {
-            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: Images.placeholderImage(viewModel.ticket.eventUuid), asBlackAndWhite: true)
+            eventImageView.setImage(fromUrl: viewModel.ticket.imageUrl, placeholderImage: placeholderImage, asBlackAndWhite: true)
             setInvalidState()
         }
         
@@ -100,18 +104,11 @@ extension TicketsTableViewCell: TicketsViewCellDisplayLogic {
 
 private extension TicketsTableViewCell {
     typealias Strings = Constants.Strings
-    typealias Images = Constants.Images
     typealias Floats = Constants.Floats
     typealias Colors = Constants.Colors
     typealias Accessibility = Constants.Accessibility
     
     enum Constants {
-        enum Images {
-            static func placeholderImage(_ uuid: String) -> UIImage? {
-                return .init(named: "events_banner_\(uuid)")
-            }
-        }
-        
         enum Strings {
             static let ingresso: String = "ingresso"
             static let ingressos: String = "ingressos"

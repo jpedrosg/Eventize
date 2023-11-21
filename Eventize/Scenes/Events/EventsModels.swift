@@ -115,11 +115,11 @@ enum Events {
             }
         }
         
-        let eventUuid: String
+        let eventUuid: Int
         let content: EventContent
         
         private enum CodingKeys: String, CodingKey {
-            case eventUuid = "event_uuid"
+            case eventUuid = "id"
             case content
         }
         

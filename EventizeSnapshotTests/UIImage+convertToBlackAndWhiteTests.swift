@@ -11,7 +11,7 @@ class UIImageBlackAndWhiteConversionTests: XCTestCase {
 
     func testConvertToBlackAndWhite_WithValidImage_ShouldReturnBlackAndWhiteImage() {
         // Arrange
-        let originalImage = UIImage(named: "events_banner_1")
+        let originalImage = UIImage(named: "events_banner_test")
 
         // Act
         let blackAndWhiteImage = originalImage?.convertToBlackAndWhite()
@@ -34,7 +34,7 @@ class UIImageBlackAndWhiteConversionTests: XCTestCase {
 
     func testConvertToBlackAndWhite_WithGrayscaleImage_ShouldReturnSameImage() {
         // Arrange
-        let grayscaleImage = UIImage(named: "events_banner_1_grayscale")
+        let grayscaleImage = UIImage(named: "events_banner_test_grayscale")
 
         // Act
         let blackAndWhiteImage = grayscaleImage?.convertToBlackAndWhite()

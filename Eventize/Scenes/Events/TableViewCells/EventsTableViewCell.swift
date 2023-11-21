@@ -25,6 +25,7 @@ final class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var bottomInfosStackView: UIStackView!
+    private let placeholderImage: UIImage = ImageMocks.randomEventImage()
     
     private var viewModel: Events.EventList.CellViewModel?
     weak var listener: EventsCellInteractions?
@@ -69,9 +70,11 @@ extension EventsTableViewCell: EventsCellDisplayLogic {
     func displayEventCell(viewModel: Events.EventList.CellViewModel, isFilteredByFavorites: Bool, isSearching: Bool) {
         self.viewModel = viewModel
         
-        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: UIImage(named: Strings.eventsBannerPrefix + viewModel.event.eventUuid)) { imageView in
-            imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
-            self.favoriteButton.tintColor = isFilteredByFavorites ? Colors.accentColor : (imageView.image == nil ? .label : .secondarySystemBackground)
+        bannerImageView.setImage(fromUrl: viewModel.event.content.imageUrl, placeholderImage: placeholderImage) { imageView in
+            DispatchQueue.main.async {
+                imageView.highlightedImage = imageView.image?.convertToBlackAndWhite()
+                self.favoriteButton.tintColor = isFilteredByFavorites ? Colors.accentColor : (imageView.image == nil ? .label : .secondarySystemBackground)
+            }
         }
         
         titleLabel.text = viewModel.event.content.title

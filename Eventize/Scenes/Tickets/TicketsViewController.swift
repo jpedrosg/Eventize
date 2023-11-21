@@ -76,7 +76,9 @@ final class TicketsViewController: UITableViewController, TicketsDisplayLogic {
 
     func displayTickets(viewModel: Tickets.TicketList.ViewModel) {
         self.viewModel = viewModel
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 

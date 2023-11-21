@@ -25,7 +25,7 @@ class TicketsInteractorTests: XCTestCase {
         override func fetchTickets(request: Tickets.TicketList.Request, completion: @escaping (Result<[Tickets.TicketObject], Tickets.TicketFetchError>) -> Void) {
             fetchTicketsCalled = true
             // Simulate a successful ticket fetch with mock data
-            completion(.success([.init(date: "2023-09-18T15:30:00Z", isValid: true, eventUuid: "1234", title: "Title", description: nil, imageUrl: nil)]))
+            completion(.success([.init(date: "2023-09-18T15:30:00Z", isValid: true, eventUuid: 1234, title: "Title", description: nil, imageUrl: nil)]))
         }
 
         override func validateTicket(request: Tickets.TicketObject, completion: @escaping (Result<Tickets.TicketObject, Tickets.TicketFetchError>) -> Void) {
@@ -67,7 +67,7 @@ class TicketsInteractorTests: XCTestCase {
     }
 
     func testValidateTicketCallsPresentTickets() {
-        let mockTicket = Tickets.TicketObject.init(date: "2023-09-18T15:30:00Z", isValid: true, eventUuid: "1234", title: "Title", description: nil, imageUrl: nil)
+        let mockTicket = Tickets.TicketObject.init(date: "2023-09-18T15:30:00Z", isValid: true, eventUuid: 1234, title: "Title", description: nil, imageUrl: nil)
         interactor.validateTicket(mockTicket)
 
         // Verify that the ticket validation is called and then presentTickets is called.

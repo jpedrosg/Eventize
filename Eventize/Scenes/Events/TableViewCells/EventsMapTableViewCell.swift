@@ -49,6 +49,7 @@ final class EventsMapTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     
+    private let placeholderImage: UIImage = ImageMocks.randomEventImage()
     private var listener: EventsMapInteractions?
     private var viewModel: Events.EventList.ViewModel?
     private var userCoordinate: CLLocationCoordinate2D?
@@ -73,8 +74,10 @@ final class EventsMapTableViewCell: UITableViewCell {
             bannerImageView.backgroundColor = .clear
             customBackgroundView.isUserInteractionEnabled = true
             selectedEventLabel.text = Strings.selectedEventLabelText
-            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: UIImage(named: Strings.eventBannerImageName(event.eventUuid))) { imageView in
-                self.bannerImageHeight.constant = imageView.image == nil ? 0 : Floats.eventBannerImageHeight
+            bannerImageView.setImage(fromUrl: event.content.imageUrl, placeholderImage: placeholderImage) { imageView in
+                DispatchQueue.main.async {
+                    self.bannerImageHeight.constant = imageView.image == nil ? 0 : Floats.eventBannerImageHeight
+                }
             }
             titleLabel.text = event.content.title
             addressLabel.text = event.content.subtitle

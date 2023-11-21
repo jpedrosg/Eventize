@@ -26,7 +26,10 @@ final class EventPresenter: EventPresentationLogic {
     /// - Parameter response: The response containing the event and its details.
     func presentEvent(response: Event.EventDetails.Response) {
         let viewModel = Event.EventDetails.ViewModel(event: response.event, eventDetails: response.eventDetails)
-        viewController?.displayEvent(viewModel: viewModel)
+        
+        DispatchQueue.main.async {
+            self.viewController?.displayEvent(viewModel: viewModel)
+        }
     }
     
     /// Presents the favorite button to the view controller.

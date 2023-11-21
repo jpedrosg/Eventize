@@ -29,10 +29,15 @@ enum Tickets {
     }
     
     /// Represents a ticket object.
+    struct ValidatedTicket: Codable {
+        let validated: TicketObject
+    }
+    
+    /// Represents a ticket object.
     struct TicketObject: Codable {
         let date: String
         let isValid: Bool
-        let eventUuid: String
+        let eventUuid: Int
         let title: String
         let description: String?
         let imageUrl: String?
@@ -40,8 +45,8 @@ enum Tickets {
         
         enum CodingKeys: String, CodingKey {
             case date
-            case isValid = "is_valid"
-            case eventUuid = "event_uuid"
+            case isValid = "isValid"
+            case eventUuid = "eventId"
             case title
             case description
             case imageUrl = "image_url"

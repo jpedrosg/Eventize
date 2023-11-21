@@ -19,13 +19,12 @@ class EventsWorker {
     /// - Note: This method fetches events from a mocked data source for demonstration purposes.
     ///         In a real implementation, you should create a URL and use the NetworkManager for network requests.
     func fetchEvents(request: Events.EventList.Request, completion: @escaping (Result<[Events.EventObject], Events.EventFetchError>) -> Void) {
-        // TODO: - Mocked Network Call! Create a URL here in the future.
-        guard let jsonData = JsonMocks.Events_EventObject_Array else {
+        guard let url = NetworkManager.createURL(path: APIEndpoint.Events.path) else {
             completion(.failure(.dataParsingError))
             return
         }
         
-        NetworkManager.fetchData(jsonData: jsonData, responseType: [Events.EventObject].self, callerName: String(describing: self)) { result in
+        NetworkManager.fetchData(from: url, responseType: [Events.EventObject].self, callerName: String(describing: self)) { result in
             switch result {
             case .success(var events):
                 // Filter events based on the search term if provided.
@@ -47,9 +46,9 @@ class EventsWorker {
                                                                                          longitude: generatedCoordinate?.longitude))
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                DispatchQueue.main.async {
                     completion(.success(events))
-                })
+                }
                 
             case .failure(let networkError):
                 switch networkError {

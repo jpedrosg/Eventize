@@ -16,7 +16,7 @@ class DoubleCurrencyFormattingTests: XCTestCase {
         let formattedCurrency = positiveValue.asCurrency
         
         // Assert
-        XCTAssertEqual(formattedCurrency, "R$ 1.234,56")
+        XCTAssertEqual(formattedCurrency, "R$ 1.234,56")
     }
     
     func testAsCurrency_WithNegativeValue_ShouldFormatCorrectly() {
@@ -27,7 +27,7 @@ class DoubleCurrencyFormattingTests: XCTestCase {
         let formattedCurrency = negativeValue.asCurrency
         
         // Assert
-        XCTAssertEqual(formattedCurrency, "-R$ 789,12")
+        XCTAssertEqual(formattedCurrency, "-R$ 789,12")
     }
     
     func testAsCurrency_WithZeroValue_ShouldFormatCorrectly() {
@@ -38,7 +38,7 @@ class DoubleCurrencyFormattingTests: XCTestCase {
         let formattedCurrency = zeroValue.asCurrency
         
         // Assert
-        XCTAssertEqual(formattedCurrency, "R$ 0,00")
+        XCTAssertEqual(formattedCurrency, "R$ 0,00")
     }
     
     func testAsCurrency_WithLargeValue_ShouldFormatCorrectly() {
@@ -49,7 +49,7 @@ class DoubleCurrencyFormattingTests: XCTestCase {
         let formattedCurrency = largeValue.asCurrency
         
         // Assert
-        XCTAssertEqual(formattedCurrency, "R$ 123.456.789,00")
+        XCTAssertEqual(formattedCurrency, "R$ 123.456.789,00")
     }
 }
 

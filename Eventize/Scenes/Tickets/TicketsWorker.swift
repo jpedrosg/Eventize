@@ -11,13 +11,12 @@ class TicketsWorker {
     ///   - request: The request object containing information about the ticket list request.
     ///   - completion: A closure called when the fetch operation is completed.
     func fetchTickets(request: Tickets.TicketList.Request, completion: @escaping (Result<[Tickets.TicketObject], Tickets.TicketFetchError>) -> Void) {
-        // TODO: Replace this with a real network call and URL creation.
-        guard let jsonData = JsonMocks.Tickets_TicketObject_Array else {
+        guard let url = NetworkManager.createURL(path: APIEndpoint.Tickets.path) else {
             completion(.failure(.dataParsingError))
             return
         }
         
-        NetworkManager.fetchData(jsonData: jsonData, responseType: [Tickets.TicketObject].self, callerName: String(describing: self)) { result in
+        NetworkManager.fetchData(from: url, responseType: [Tickets.TicketObject].self, callerName: String(describing: self)) { result in
             switch result {
             case .success(let tickets):
                 completion(.success(tickets))
@@ -42,16 +41,28 @@ class TicketsWorker {
     ///   - request: The ticket object to be validated.
     ///   - completion: A closure called when the validation is completed.
     func validateTicket(request: Tickets.TicketObject, completion: @escaping (Result<Tickets.TicketObject, Tickets.TicketFetchError>) -> Void) {
-        // TODO: Remove this mocked code and implement real ticket validation logic.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-            let ticket = Tickets.TicketObject(date: request.date,
-                                              isValid: false,
-                                              eventUuid: request.eventUuid,
-                                              title: request.title,
-                                              description: request.description,
-                                              imageUrl: request.imageUrl)
-            
-            completion(.success(ticket))
+        guard let url = NetworkManager.createURL(path: APIEndpoint.ValidateTicket.path(request.eventUuid)) else {
+            completion(.failure(.dataParsingError))
+            return
+        }
+        
+        NetworkManager.fetchData(from: url, responseType: Tickets.ValidatedTicket.self, callerName: String(describing: self)) { result in
+            switch result {
+            case .success(let result):
+                completion(.success(result.validated))
+                
+            case .failure(let networkError):
+                switch networkError {
+                case .invalidURL:
+                    completion(.failure(.networkError))
+                case .networkError(_):
+                    completion(.failure(.networkError))
+                case .invalidResponse:
+                    completion(.failure(.dataParsingError))
+                case .dataParsingError:
+                    completion(.failure(.dataParsingError))
+                }
+            }
         }
     }
 }
