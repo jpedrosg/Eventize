@@ -1,3 +1,4 @@
+![Logo FIAP + Eventize](./cover.png)
 
 ---
 
